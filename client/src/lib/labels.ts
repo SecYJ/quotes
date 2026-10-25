@@ -1,4 +1,4 @@
-import type { SourceType } from './types'
+import type { Source, SourceType } from './types'
 
 export const sourceTypeLabels: Record<SourceType, string> = {
   drama: '戏剧',
@@ -8,3 +8,8 @@ export const sourceTypeLabels: Record<SourceType, string> = {
 }
 
 export const sourceTypes = Object.keys(sourceTypeLabels) as SourceType[]
+
+// 剧名、书名加书名号；现实生活、其他直接显示
+export function formatSourceTitle(source: Source) {
+  return source.type === 'drama' || source.type === 'book' ? `《${source.title}》` : source.title
+}

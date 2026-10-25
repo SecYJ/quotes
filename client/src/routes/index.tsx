@@ -1,8 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../lib/api'
+import { validateQuoteSearch } from '../lib/search'
 
+// 列表页由各个设计（design/* branch）实现，main 先保留 API 连线测试
 export const Route = createFileRoute('/')({
+  validateSearch: validateQuoteSearch,
   component: Home,
 })
 
