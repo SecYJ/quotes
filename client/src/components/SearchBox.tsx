@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { cn } from 'cn'
+import { SearchIcon } from 'lucide-react'
+import { Input } from '@/components/ui/input'
 
 type Props = {
   value: string
@@ -7,7 +10,7 @@ type Props = {
 }
 
 // 输入时先存在本地，停下 200ms 才更新筛选，避免每个字都改网址
-export function SearchBox({ value, onChange, className = '' }: Props) {
+export function SearchBox({ value, onChange, className }: Props) {
   const [draft, setDraft] = useState(value)
   const sent = useRef(value)
 
@@ -29,22 +32,11 @@ export function SearchBox({ value, onChange, className = '' }: Props) {
   }, [draft, onChange])
 
   return (
-    <div className={`relative ${className}`}>
-      <svg
-        className="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-stone-400"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          fillRule="evenodd"
-          d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.45 4.39l3.08 3.08a.75.75 0 1 1-1.06 1.06l-3.08-3.08A7 7 0 0 1 2 9Z"
-          clipRule="evenodd"
-        />
-      </svg>
-      <input
+    <div className={cn('relative', className)}>
+      <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+      <Input
         type="search"
-        className="w-full rounded-lg border border-stone-300 bg-white py-2.5 pr-3 pl-10 text-stone-900 outline-none placeholder:text-stone-400 focus:border-teal-600 focus:ring-2 focus:ring-teal-600/20"
+        className="h-10 pl-9 md:text-base"
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
         placeholder="搜索句子内容或说话的人"

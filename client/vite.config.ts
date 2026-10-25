@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -10,6 +11,12 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  resolve: {
+    // 跟 tsconfig 的 paths 一致：@/ 指向 src/
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   server: {
     proxy: {
       // 开发时把 /api 转给 wrangler dev

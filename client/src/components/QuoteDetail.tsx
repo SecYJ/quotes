@@ -1,5 +1,8 @@
-import { formatSourceTitle, sourceTypeLabels } from '../lib/labels'
-import type { Quote } from '../lib/types'
+import { PencilIcon } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { formatSourceTitle, sourceTypeLabels } from '@/lib/labels'
+import type { Quote } from '@/lib/types'
 
 type Props = {
   quote: Quote
@@ -9,11 +12,11 @@ type Props = {
 export function QuoteDetail({ quote, onEdit }: Props) {
   return (
     <article className="space-y-8">
-      <blockquote className="border-l-4 border-teal-600 pl-6 font-serif text-3xl leading-relaxed text-stone-900">
+      <blockquote className="border-l-4 border-primary pl-6 font-serif text-3xl leading-relaxed">
         {quote.content}
       </blockquote>
 
-      <dl className="grid grid-cols-[6rem_1fr] gap-x-4 gap-y-3 text-stone-700">
+      <dl className="grid grid-cols-[6rem_1fr] gap-x-4 gap-y-3">
         {quote.speaker && (
           <>
             <dt className={termClass}>谁说的</dt>
@@ -21,11 +24,9 @@ export function QuoteDetail({ quote, onEdit }: Props) {
           </>
         )}
         <dt className={termClass}>出处</dt>
-        <dd>
+        <dd className="flex items-center gap-2">
           {formatSourceTitle(quote.source)}
-          <span className="ml-2 rounded bg-stone-100 px-1.5 py-0.5 text-xs text-stone-500">
-            {sourceTypeLabels[quote.source.type]}
-          </span>
+          <Badge variant="outline">{sourceTypeLabels[quote.source.type]}</Badge>
         </dd>
         {quote.sourceDetail && (
           <>
@@ -38,9 +39,9 @@ export function QuoteDetail({ quote, onEdit }: Props) {
             <dt className={termClass}>标签</dt>
             <dd className="flex flex-wrap gap-1.5">
               {quote.tags.map((tag) => (
-                <span key={tag.id} className="rounded-full bg-teal-50 px-2.5 py-0.5 text-sm text-teal-800">
+                <Badge key={tag.id} variant="secondary">
                   #{tag.name}
-                </span>
+                </Badge>
               ))}
             </dd>
           </>
@@ -52,16 +53,13 @@ export function QuoteDetail({ quote, onEdit }: Props) {
           </>
         )}
         <dt className={termClass}>记录于</dt>
-        <dd className="text-stone-500">{formatDate(quote.createdAt)}</dd>
+        <dd className="text-muted-foreground">{formatDate(quote.createdAt)}</dd>
       </dl>
 
-      <button
-        type="button"
-        className="rounded-md border border-stone-300 px-4 py-2 text-stone-700 hover:bg-stone-100"
-        onClick={onEdit}
-      >
+      <Button variant="outline" size="lg" onClick={onEdit}>
+        <PencilIcon data-icon="inline-start" />
         编辑
-      </button>
+      </Button>
     </article>
   )
 }
@@ -70,4 +68,4 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('zh-Hans', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
-const termClass = 'text-sm leading-6 text-stone-400'
+const termClass = 'text-sm leading-6 text-muted-foreground'

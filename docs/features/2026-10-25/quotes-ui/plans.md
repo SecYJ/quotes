@@ -58,3 +58,12 @@ client/src/
 ## 风险
 - **假数据重新整理即消失**：UI 阶段可接受，specs 已说明。
 - **routeTree.gen.ts**：由 TanStack Router 插件自动产生；设计 C 新增 route 后要先跑一次 Vite（dev 或 build）再 typecheck。
+
+## 第二轮做法
+
+- **shadcn 初始化**：`shadcn init -t vite -b base -p nova`，再 `migrate base-color --to stone`（沿用原本的 stone 色系）。组件放在 `client/src/components/ui/`，由 CLI 产生，不手改。
+- **`cn`**：shadcn 4.22 产生的 `lib/utils.ts` 已经是 `export { cn } from "cn"`，不需要另外迁移。
+- **颜色**：所有自己写的组件只用语意化 token（`bg-background`、`text-muted-foreground`、`bg-primary` 等），不直接写 `stone-*` / `teal-*`，深色模式才会自动正确。主色在 `index.css` 的 `--primary` 改成 teal。
+- **Dark mode**：`.dark` class 放在 `<html>`。`ThemeProvider` 管理选择并监听系统主题变化；`index.html` 的 inline script 在 React 载入前先套用，避免闪白。
+- **表单**：`lib/quote-form.ts` 放 zod schema 与「API 资料 ↔ 表单值」的转换。字段是平的（`sourceMode` + `sourceId` / `newSourceType` / `newSourceTitle`），条件必填用 `superRefine`，比 union 好对应 RHF。每个字段用 `Controller` + shadcn `Field` / `FieldError`。
+- **row / grid**：`components/QuoteList.tsx` 依 `viewMode` 显示；grid 用 CSS columns 做 masonry（顺序是一栏一栏往下排）。

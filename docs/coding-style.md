@@ -80,3 +80,11 @@ const storage = {
   get: (key: string) => localStorage.getItem(key),
 }
 ```
+
+## 2. UI 与样式
+
+- **UI 组件先用 shadcn/ui**（Base UI 版，`@/components/ui/*`）。没有的先 `shadcn add`，不要自己从头刻。`components/ui/` 里的档案由 CLI 产生，不手改。
+- **合并 class 用 `cn`**（`import { cn } from 'cn'`），不要用字串模板拼接条件 class。
+- **颜色只用语意化 token**：`bg-background`、`text-foreground`、`text-muted-foreground`、`bg-primary`、`border` 等。不要直接写 `stone-*`、`teal-*`、`white`，否则深色模式会错。
+- **表单用 React Hook Form + zod**：schema 放在 `lib/`，每个字段用 `Controller` 搭配 shadcn 的 `Field` / `FieldLabel` / `FieldError`，并设定 `data-invalid` 与 `aria-invalid`。
+- **import 用 `@/` alias**（指向 `client/src/`）。

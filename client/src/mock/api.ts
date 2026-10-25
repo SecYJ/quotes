@@ -1,4 +1,4 @@
-import type { Quote, QuoteFilters, QuoteInput, Source, SourceInput, Tag } from '../lib/types'
+import type { Quote, QuoteFilters, QuoteInput, Source, SourceInput, Tag } from '@/lib/types'
 import { seedQuoteTags, seedQuotes, seedSources, seedTags } from './seed'
 import type { QuoteRow, QuoteTagRow } from './seed'
 

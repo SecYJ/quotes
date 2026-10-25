@@ -1,13 +1,17 @@
 import { useState } from 'react'
 import type { KeyboardEvent } from 'react'
-import { useTags } from '../lib/queries'
+import { XIcon } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { useTags } from '@/lib/queries'
 
 type Props = {
+  id?: string
   value: string[]
   onChange: (value: string[]) => void
 }
 
-export function TagInput({ value, onChange }: Props) {
+export function TagInput({ id, value, onChange }: Props) {
   const tags = useTags()
   const [draft, setDraft] = useState('')
   const suggestions = tags.data?.filter((tag) => !value.includes(tag.name)) ?? []
@@ -35,41 +39,38 @@ export function TagInput({ value, onChange }: Props) {
 
   return (
     <div className="space-y-2">
-      <div className="flex flex-wrap items-center gap-2 rounded-md border border-stone-300 bg-white px-2 py-1.5 focus-within:border-teal-600 focus-within:ring-2 focus-within:ring-teal-600/20">
+      <div className="flex min-h-8 flex-wrap items-center gap-1.5 rounded-lg border border-input px-1.5 py-1 transition-colors focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 dark:bg-input/30">
         {value.map((name) => (
-          <span key={name} className="flex items-center gap-1 rounded-full bg-teal-50 py-0.5 pr-1 pl-3 text-sm text-teal-800">
+          <Badge key={name} variant="secondary" className="h-6 gap-0.5 pr-0.5 text-sm">
             {name}
-            <button
+            <Button
               type="button"
-              className="rounded-full px-1.5 text-teal-600 hover:bg-teal-100 hover:text-teal-900"
+              variant="ghost"
+              size="icon-xs"
+              className="size-5 rounded-full"
               onClick={() => remove(name)}
               aria-label={`移除标签 ${name}`}
             >
-              ×
-            </button>
-          </span>
+              <XIcon />
+            </Button>
+          </Badge>
         ))}
         <input
-          className="min-w-40 flex-1 bg-transparent px-1 py-0.5 text-stone-900 outline-none"
+          id={id}
+          className="min-w-40 flex-1 bg-transparent px-1 text-sm outline-none placeholder:text-muted-foreground"
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={() => add(draft)}
           placeholder={value.length === 0 ? '输入标签后按 Enter' : ''}
-          aria-label="新增标签"
         />
       </div>
       {suggestions.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {suggestions.map((tag) => (
-            <button
-              key={tag.id}
-              type="button"
-              className="rounded-full border border-stone-200 px-2.5 py-0.5 text-sm text-stone-600 hover:border-teal-300 hover:bg-teal-50 hover:text-teal-800"
-              onClick={() => add(tag.name)}
-            >
+            <Button key={tag.id} type="button" variant="outline" size="xs" className="rounded-full" onClick={() => add(tag.name)}>
               + {tag.name}
-            </button>
+            </Button>
           ))}
         </div>
       )}

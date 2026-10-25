@@ -51,6 +51,21 @@ git worktree remove ../lines-<name>                 # 删除 worktree（branch �
 
 UI 阶段用的是假数据，只需要启动 client，不需要 server。
 
+Windows 上删除 worktree 的注意事项：
+- 先停掉该 worktree 的 dev server，否则档案被占用删不掉。
+- `node_modules` 路径太长时 `git worktree remove` 会失败，改用 PowerShell：`Remove-Item -LiteralPath "\\?\<完整路径>" -Recurse -Force`，再 `git worktree prune`。
+
+## shadcn/ui
+
+在 `client/` 底下执行（`components.json` 在那里）：
+
+```sh
+pnpm dlx shadcn@latest add <component>   # 例如 add dialog，产生到 src/components/ui/
+pnpm dlx shadcn@latest add <component> --overwrite   # 更新已有的组件
+```
+
+文档看 Base UI 版本：https://ui.shadcn.com/docs/components （页面上选 Base UI）。
+
 ## 新增依赖
 
 ```sh

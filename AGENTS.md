@@ -10,7 +10,7 @@
 | [docs/overview.md](docs/overview.md) | App 概览：做什么、使用情境、记录内容、第一版功能（不涉及技术） |
 | [docs/commands.md](docs/commands.md) | 常用指令：开发、build、typecheck、Wrangler、部署 |
 | [docs/structure.md](docs/structure.md) | 项目结构：client / server 内第一层的重要目录与设定档 |
-| [docs/coding-style.md](docs/coding-style.md) | Coding 规则（写 code 前必读）：函数写法等 |
+| [docs/coding-style.md](docs/coding-style.md) | Coding 规则（写 code 前必读）：函数写法、UI 组件（shadcn）、颜色 token、表单（RHF + zod） |
 | [docs/features/](docs/features/) | 各 feature 的 specs / plans / tasks，依日期分资料夹 |
 
 ## 结构

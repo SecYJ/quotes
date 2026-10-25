@@ -1,6 +1,9 @@
-import { sourceTypeLabels, sourceTypes } from '../lib/labels'
-import { useQuotes, useSources, useTags } from '../lib/queries'
-import { useQuoteFilters } from '../lib/search'
+import { cn } from 'cn'
+import { Button } from '@/components/ui/button'
+import { sourceTypeLabels, sourceTypes } from '@/lib/labels'
+import { useQuotes, useSources, useTags } from '@/lib/queries'
+import { useQuoteFilters } from '@/lib/search'
+import { ModeToggle } from './ModeToggle'
 
 export function FilterSidebar() {
   const { filters, setFilters, clearFilters } = useQuoteFilters()
@@ -20,24 +23,23 @@ export function FilterSidebar() {
   const hasFilters = filters.sourceId !== undefined || filters.tagId !== undefined || filters.q !== undefined
 
   return (
-    <nav className="flex h-full flex-col gap-8 overflow-y-auto px-6 py-8">
-      <div className="flex items-baseline justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight text-stone-900">Lines</h1>
-        {hasFilters && (
-          <button type="button" className="text-sm text-teal-700 hover:text-teal-900" onClick={clearFilters}>
-            清除筛选
-          </button>
-        )}
+    <nav className="flex h-full flex-col gap-8 overflow-y-auto px-6 py-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold tracking-tight">Lines</h1>
+        <ModeToggle />
       </div>
 
-      <button
-        type="button"
-        className={itemClass(!hasFilters)}
-        onClick={clearFilters}
-      >
-        <span>全部名句</span>
-        <span className={countClass}>{allQuotes.data?.length ?? ''}</span>
-      </button>
+      <div className="space-y-1">
+        <button type="button" className={itemClass(!hasFilters)} onClick={clearFilters}>
+          <span>全部名句</span>
+          <span className={countClass}>{allQuotes.data?.length ?? ''}</span>
+        </button>
+        {hasFilters && (
+          <Button variant="link" size="sm" className="px-3" onClick={clearFilters}>
+            清除筛选
+          </Button>
+        )}
+      </div>
 
       <section className="space-y-5">
         <h2 className={headingClass}>出处</h2>
@@ -46,15 +48,13 @@ export function FilterSidebar() {
           if (group.length === 0) return null
           return (
             <div key={type} className="space-y-1">
-              <h3 className="px-3 text-sm text-stone-400">{sourceTypeLabels[type]}</h3>
+              <h3 className="px-3 text-sm text-muted-foreground/70">{sourceTypeLabels[type]}</h3>
               {group.map((source) => (
                 <button
                   key={source.id}
                   type="button"
                   className={itemClass(filters.sourceId === source.id)}
-                  onClick={() =>
-                    setFilters({ sourceId: filters.sourceId === source.id ? undefined : source.id })
-                  }
+                  onClick={() => setFilters({ sourceId: filters.sourceId === source.id ? undefined : source.id })}
                 >
                   <span className="truncate">{source.title}</span>
                   <span className={countClass}>{countBySource(source.id)}</span>
@@ -71,17 +71,16 @@ export function FilterSidebar() {
           {tags.data?.map((tag) => {
             const active = filters.tagId === tag.id
             return (
-              <button
+              <Button
                 key={tag.id}
-                type="button"
-                className={`rounded-full px-3 py-1 text-sm ${
-                  active ? 'bg-teal-700 text-white' : 'bg-stone-200/70 text-stone-700 hover:bg-stone-200'
-                }`}
+                variant={active ? 'default' : 'secondary'}
+                size="sm"
+                className="rounded-full"
                 onClick={() => setFilters({ tagId: active ? undefined : tag.id })}
               >
                 #{tag.name}
-                <span className={`ml-1.5 ${active ? 'text-teal-100' : 'text-stone-400'}`}>{countByTag(tag.id)}</span>
-              </button>
+                <span className={active ? 'text-primary-foreground/70' : 'text-muted-foreground'}>{countByTag(tag.id)}</span>
+              </Button>
             )
           })}
         </div>
@@ -91,10 +90,11 @@ export function FilterSidebar() {
 }
 
 function itemClass(active: boolean) {
-  return `flex w-full items-center justify-between gap-3 rounded-md px-3 py-1.5 text-left ${
-    active ? 'bg-teal-700/10 font-medium text-teal-900' : 'text-stone-700 hover:bg-stone-200/60'
-  }`
+  return cn(
+    'flex w-full items-center justify-between gap-3 rounded-md px-3 py-1.5 text-left transition-colors',
+    active ? 'bg-primary/10 font-medium text-primary' : 'text-foreground/80 hover:bg-muted',
+  )
 }
 
-const headingClass = 'px-3 text-xs font-semibold tracking-widest text-stone-500 uppercase'
-const countClass = 'shrink-0 text-sm text-stone-400 tabular-nums'
+const headingClass = 'px-3 text-xs font-semibold tracking-widest text-muted-foreground uppercase'
+const countClass = 'shrink-0 text-sm text-muted-foreground tabular-nums'

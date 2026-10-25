@@ -24,5 +24,18 @@
 - [x] 每个设计 `pnpm typecheck` 通过，commit
 
 ## 4. 你来 preview
-- [ ] 在 3440×1300 下比较三个设计，按 specs.md 的验收项目试用
-- [ ] 选定设计 → 合并回 `main`，删除其他 worktree 与 branch
+- [x] 在 3440×1300 下比较三个设计，按 specs.md 的验收项目试用
+- [x] 选定设计（A. 三栏式）→ 合并回 `main`，删除其他 worktree 与 branch
+
+## 5. 第二轮调整（见 specs.md「第二轮」）
+- [x] shadcn/ui 初始化：Base UI、nova 风格、stone 底色；`@/` alias
+- [x] `cn` 改用 shadcn 提供的 `cn` 包（取代 clsx + tailwind-merge）
+- [x] 主色改成 teal（浅色 / 深色各一组）
+- [x] Dark mode：`ThemeProvider`（预设跟随系统）、`ModeToggle`、`index.html` 防闪烁脚本
+- [x] 表单改用 React Hook Form + zod（`lib/quote-form.ts`）+ shadcn `Field`
+- [x] 出处选择改用 shadcn `Select`；标签输入改用 `Badge` / `Button`
+- [x] 中间列表支援 row / grid 切换（`ToggleGroup`），选择记在 localStorage
+- [x] 其余组件的颜色改成 shadcn 的语意化 token（深色模式才会正确）
+- [x] `pnpm typecheck`、`pnpm build` 通过
+- [x] 无头浏览器（Playwright，3440×1300）跑过：浅色 / 深色、验证错误、新增（新出处 + 新标签）、编辑、筛选、搜索、grid、删除、主题切换，无 console 错误
+- [ ] 你来 preview 确认

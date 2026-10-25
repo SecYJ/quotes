@@ -1,4 +1,4 @@
-import type { Source, Tag } from '../lib/types'
+import type { Source, Tag } from '@/lib/types'
 
 // 跟数据库的表一样分开存，由 mock/api.ts 组合成 Quote
 
