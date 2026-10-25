@@ -1,7 +1,7 @@
 import { cn } from 'cn'
 import type { Quote } from '@/lib/types'
 import type { ViewMode } from '@/lib/view-mode'
-import { Attribution, Bookmark, Highlight } from './QuoteMarks'
+import { Attribution, Bookmark, Highlight } from '@/components/QuoteMarks'
 
 type Props = {
     quotes: Quote[]

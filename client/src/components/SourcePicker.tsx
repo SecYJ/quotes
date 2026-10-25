@@ -19,15 +19,16 @@ import { sourceQueries } from '@/lib/queries'
 import type { QuoteFormValues } from '@/lib/quote-form'
 import type { SourceType } from '@/lib/types'
 
-type Props = {
-    control: Control<QuoteFormValues>
-    setValue: UseFormSetValue<QuoteFormValues>
-}
-
 const NEW_VALUE = 'new'
 
 // 选已有出处，或切换成当场新增（类型 + 名称）
-export function SourcePicker({ control, setValue }: Props) {
+export function SourcePicker({
+    control,
+    setValue,
+}: {
+    control: Control<QuoteFormValues>
+    setValue: UseFormSetValue<QuoteFormValues>
+}) {
     const { data: sources } = useSuspenseQuery(sourceQueries.list())
     const mode = useWatch({ control, name: 'sourceMode' })
 

@@ -148,12 +148,13 @@ function QuoteResults({ keyword, viewMode, selectedId, onSelect }: QuoteResultsP
     )
 }
 
-type PanelProps = {
+function SidePanel({
+    panel,
+    onChange,
+}: {
     panel: PanelState
     onChange: (panel: PanelState) => void
-}
-
-function SidePanel({ panel, onChange }: PanelProps) {
+}) {
     if (panel.mode === 'empty') {
         return (
             <div className="flex h-full items-center justify-center text-center leading-loose text-muted-foreground">

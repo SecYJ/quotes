@@ -9,8 +9,8 @@ import { useCreateQuote, useCreateSource, useDeleteQuote, useUpdateQuote } from 
 import { quoteFormSchema, toFormValues, toQuoteInput } from '@/lib/quote-form'
 import type { QuoteFormValues } from '@/lib/quote-form'
 import type { Quote } from '@/lib/types'
-import { SourcePicker } from './SourcePicker'
-import { TagInput } from './TagInput'
+import { SourcePicker } from '@/components/SourcePicker'
+import { TagInput } from '@/components/TagInput'
 
 type Props = {
     // 有 quote 是编辑，没有是新增

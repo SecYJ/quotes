@@ -6,8 +6,8 @@ import { sourceTypeLabels, sourceTypes } from '@/lib/labels'
 import { quoteQueries, sourceQueries, tagQueries } from '@/lib/queries'
 import { useQuoteFilters } from '@/lib/search'
 import type { Quote, Source, Tag } from '@/lib/types'
-import { ModeToggle } from './ModeToggle'
-import { QueryBoundary } from './QueryBoundary'
+import { ModeToggle } from '@/components/ModeToggle'
+import { QueryBoundary } from '@/components/QueryBoundary'
 
 // 标题与主题切换不依赖资料，载入中也保持显示
 export function FilterSidebar() {

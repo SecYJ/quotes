@@ -6,7 +6,11 @@
     },
     "rules": {
         "react/rules-of-hooks": "error",
-        "react/exhaustive-deps": "warn"
+        "react/exhaustive-deps": "warn",
+        "no-restricted-imports": [
+            "error",
+            { "patterns": [{ "group": ["./*", "../*"], "message": "用 @/ 绝对路径 import" }] }
+        ]
     },
     "env": {
         "builtin": true,

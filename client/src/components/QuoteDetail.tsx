@@ -2,14 +2,9 @@ import { PencilIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { sourceTypeLabels } from '@/lib/labels'
 import type { Quote } from '@/lib/types'
-import { Attribution } from './QuoteMarks'
+import { Attribution } from '@/components/QuoteMarks'
 
-type Props = {
-    quote: Quote
-    onEdit: () => void
-}
-
-export function QuoteDetail({ quote, onEdit }: Props) {
+export function QuoteDetail({ quote, onEdit }: { quote: Quote; onEdit: () => void }) {
     return (
         <article className="flex h-full flex-col">
             {/* 「」用中文引号；整块左移一个字、首行再往回缩，让「挂进留白，正文与出处行左缘对齐 */}

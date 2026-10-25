@@ -1,5 +1,5 @@
 import { getRouteApi } from '@tanstack/react-router'
-import type { QuoteFilters } from './types'
+import type { QuoteFilters } from '@/lib/types'
 
 // 列表页的 search params：?sourceId=&tagId=&q=
 export function validateQuoteSearch(search: Record<string, unknown>): QuoteFilters {

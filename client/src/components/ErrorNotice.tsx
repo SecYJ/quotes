@@ -1,12 +1,7 @@
 import { RotateCwIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
-type Props = {
-    error: unknown
-    onRetry: () => void
-}
-
-export function ErrorNotice({ error, onRetry }: Props) {
+export function ErrorNotice({ error, onRetry }: { error: unknown; onRetry: () => void }) {
     return (
         <div role="alert" className="flex flex-col items-start gap-3 py-6">
             <p className="text-destructive">

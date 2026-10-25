@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { Quote, QuoteInput } from './types'
+import type { Quote, QuoteInput } from '@/lib/types'
 
 // 表单的字段是平的（不用 union），RHF 比较好对应；条件必填放在 superRefine
 export const quoteFormSchema = z

@@ -8,6 +8,7 @@
             "path": "./tsconfig.node.json"
         }
     ],
+    // 给 shadcn CLI 解析 components.json 的 aliases 用；编译时的 paths 在 tsconfig.app.json
     "compilerOptions": {
         "paths": {
             "@/*": ["./src/*"]

@@ -21,8 +21,8 @@ lines/
 | `client/src/mock/` | 假数据与内存中的假 API，UI 阶段使用（含测试错误画面的 `lines-mock-fail` 开关）；接上真 API 后移除 |
 | `client/dist/` | `vite build` 的输出，由 Worker 当成静态文件提供。自动产生，不进版本控制 |
 | `client/.tanstack/` | TanStack Router 插件的暂存。自动产生，不进版本控制 |
-| `client/vite.config.ts` | Vite 设定：插件、`@/` alias（指向 `src/`），以及开发时把 `/api` proxy 到 wrangler dev |
-| `client/components.json` | shadcn 设定：风格（`base-nova`）、底色（stone）、组件放置路径 |
+| `client/vite.config.ts` | Vite 设定：插件，以及开发时把 `/api` proxy 到 wrangler dev |
+| `client/components.json` | shadcn 设定：风格（`base-nova`）、底色（stone）、组件放置路径（`@/` aliases 经由 `client/tsconfig.json` 的 `paths` 解析；code 里也一律用 `@/` import） |
 | `client/index.html` | 入口 HTML，含在 React 载入前套用深色模式的脚本 |
 
 ## server/

@@ -12,10 +12,7 @@ export default defineConfig({
         tailwindcss(),
     ],
     resolve: {
-        // 跟 tsconfig 的 paths 一致：@/ 指向 src/
-        alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url)),
-        },
+        alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
     },
     server: {
         proxy: {

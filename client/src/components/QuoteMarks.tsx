@@ -4,13 +4,8 @@ import type { Quote } from '@/lib/types'
 
 // 读书时的记号：着重号（搜索命中）、出处行（——谁《哪里》）、书签（选中）
 
-type HighlightProps = {
-    text: string
-    keyword?: string
-}
-
 // 把 keyword 出现的地方加上着重号；不分大小写
-export function Highlight({ text, keyword }: HighlightProps) {
+export function Highlight({ text, keyword }: { text: string; keyword?: string }) {
     const trimmed = keyword?.trim()
     if (!trimmed) return text
 

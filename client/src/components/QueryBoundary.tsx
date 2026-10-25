@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import type { ReactNode } from 'react'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 import { ErrorBoundary } from 'react-error-boundary'
-import { ErrorNotice } from './ErrorNotice'
+import { ErrorNotice } from '@/components/ErrorNotice'
 
 type Props = {
     children: ReactNode

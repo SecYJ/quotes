@@ -1,7 +1,7 @@
 import { queryOptions, useMutation } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
 import { mockApi } from '@/mock/api'
-import type { Quote, QuoteFilters, QuoteInput, SourceInput } from './types'
+import type { Quote, QuoteFilters, QuoteInput, SourceInput } from '@/lib/types'
 
 // 组件只透过这里拿资料。接真 API 时把 mockApi 换成 Hono RPC client 即可
 //

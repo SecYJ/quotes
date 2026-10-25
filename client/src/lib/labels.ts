@@ -1,4 +1,4 @@
-import type { Source, SourceType } from './types'
+import type { Source, SourceType } from '@/lib/types'
 
 export const sourceTypeLabels: Record<SourceType, string> = {
     drama: '戏剧',

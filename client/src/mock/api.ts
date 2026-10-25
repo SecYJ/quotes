@@ -1,6 +1,6 @@
 import type { Quote, QuoteFilters, QuoteInput, Source, SourceInput, Tag } from '@/lib/types'
-import { seedQuoteTags, seedQuotes, seedSources, seedTags } from './seed'
-import type { QuoteRow, QuoteTagRow } from './seed'
+import { seedQuoteTags, seedQuotes, seedSources, seedTags } from '@/mock/seed'
+import type { QuoteRow, QuoteTagRow } from '@/mock/seed'
 
 // 内存中的假 API。方法都是 async、形状对齐之后的真 API，
 // 换成 Hono RPC client 时只需要改 lib/queries.ts
