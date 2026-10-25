@@ -27,7 +27,7 @@ const NEW_VALUE = 'new'
 
 // 选已有出处，或切换成当场新增（类型 + 名称）
 export function SourcePicker({ control, setValue }: Props) {
-  const sources = useSources()
+  const { data: sources } = useSources()
   const mode = useWatch({ control, name: 'sourceMode' })
 
   if (mode === 'new') {
@@ -91,7 +91,7 @@ export function SourcePicker({ control, setValue }: Props) {
 
   // Select 显示选中项时用 items 找名称
   const items: Record<string, string> = { [NEW_VALUE]: '＋ 新增出处' }
-  for (const source of sources.data ?? []) items[String(source.id)] = source.title
+  for (const source of sources) items[String(source.id)] = source.title
 
   return (
     <Controller
@@ -111,11 +111,11 @@ export function SourcePicker({ control, setValue }: Props) {
             }}
           >
             <SelectTrigger id="source-id" className="w-full" aria-invalid={fieldState.invalid} onBlur={field.onBlur}>
-              <SelectValue placeholder={sources.isPending ? '载入中…' : '选择出处'} />
+              <SelectValue placeholder="选择出处" />
             </SelectTrigger>
             <SelectContent>
               {sourceTypes.map((type) => {
-                const group = sources.data?.filter((source) => source.type === type) ?? []
+                const group = sources.filter((source) => source.type === type)
                 if (group.length === 0) return null
                 return (
                   <SelectGroup key={type}>

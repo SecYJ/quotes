@@ -12,9 +12,9 @@ type Props = {
 }
 
 export function TagInput({ id, value, onChange }: Props) {
-  const tags = useTags()
+  const { data: tags } = useTags()
   const [draft, setDraft] = useState('')
-  const suggestions = tags.data?.filter((tag) => !value.includes(tag.name)) ?? []
+  const suggestions = tags.filter((tag) => !value.includes(tag.name))
 
   function add(name: string) {
     const trimmed = name.trim()

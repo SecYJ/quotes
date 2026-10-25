@@ -7,17 +7,17 @@ import { ModeToggle } from './ModeToggle'
 
 export function FilterSidebar() {
   const { filters, setFilters, clearFilters } = useQuoteFilters()
-  const sources = useSources()
-  const tags = useTags()
+  const { data: sources } = useSources()
+  const { data: tags } = useTags()
   // 全部名句，用来算每个出处 / 标签有几句
-  const allQuotes = useQuotes({})
+  const { data: allQuotes } = useQuotes({})
 
   function countBySource(sourceId: number) {
-    return allQuotes.data?.filter((quote) => quote.source.id === sourceId).length ?? 0
+    return allQuotes.filter((quote) => quote.source.id === sourceId).length
   }
 
   function countByTag(tagId: number) {
-    return allQuotes.data?.filter((quote) => quote.tags.some((tag) => tag.id === tagId)).length ?? 0
+    return allQuotes.filter((quote) => quote.tags.some((tag) => tag.id === tagId)).length
   }
 
   const hasFilters = filters.sourceId !== undefined || filters.tagId !== undefined || filters.q !== undefined
@@ -32,7 +32,7 @@ export function FilterSidebar() {
       <div className="space-y-1">
         <button type="button" className={itemClass(!hasFilters)} onClick={clearFilters}>
           <span>全部名句</span>
-          <span className={countClass}>{allQuotes.data?.length ?? ''}</span>
+          <span className={countClass}>{allQuotes.length}</span>
         </button>
         {hasFilters && (
           <Button variant="link" size="sm" className="px-3" onClick={clearFilters}>
@@ -44,7 +44,7 @@ export function FilterSidebar() {
       <section className="space-y-5">
         <h2 className={headingClass}>出处</h2>
         {sourceTypes.map((type) => {
-          const group = sources.data?.filter((source) => source.type === type) ?? []
+          const group = sources.filter((source) => source.type === type)
           if (group.length === 0) return null
           return (
             <div key={type} className="space-y-1">
@@ -68,7 +68,7 @@ export function FilterSidebar() {
       <section className="space-y-3">
         <h2 className={headingClass}>标签</h2>
         <div className="flex flex-wrap gap-2 px-1">
-          {tags.data?.map((tag) => {
+          {tags.map((tag) => {
             const active = filters.tagId === tag.id
             return (
               <Button

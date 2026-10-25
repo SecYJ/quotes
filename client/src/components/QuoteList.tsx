@@ -4,7 +4,7 @@ import type { ViewMode } from '@/lib/view-mode'
 import { Attribution, Bookmark, Highlight } from './QuoteMarks'
 
 type Props = {
-  quotes: Quote[] | undefined
+  quotes: Quote[]
   viewMode: ViewMode
   selectedId: number | null
   keyword?: string
@@ -12,7 +12,6 @@ type Props = {
 }
 
 export function QuoteList({ quotes, viewMode, selectedId, keyword, onSelect }: Props) {
-  if (!quotes) return <p className="text-muted-foreground">载入中…</p>
   if (quotes.length === 0) {
     return (
       <p className="py-24 text-center leading-loose text-muted-foreground">
@@ -41,7 +40,7 @@ export function QuoteList({ quotes, viewMode, selectedId, keyword, onSelect }: P
   }
 
   return (
-    <ul className="mx-auto max-w-[64rem] space-y-1">
+    <ul className="mx-auto max-w-5xl space-y-1">
       {quotes.map((quote) => (
         <li key={quote.id}>
           <QuoteRow quote={quote} keyword={keyword} selected={quote.id === selectedId} onSelect={onSelect} />

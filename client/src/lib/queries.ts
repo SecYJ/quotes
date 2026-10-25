@@ -1,39 +1,62 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { mockApi } from '@/mock/api'
-import type { QuoteFilters, QuoteInput, SourceInput } from './types'
+import type { Quote, QuoteFilters, QuoteInput, SourceInput } from './types'
 
 // 组件只透过这里拿资料。接真 API 时把 mockApi 换成 Hono RPC client 即可
+//
+// 读资料的流程：route loader 先用 queryOptions 把资料放进 cache，
+// 组件再用 useSuspenseQuery 读；cache 没有资料时才会 suspend，交给外层 <Suspense> 显示载入中
 
 export const queryKeys = {
   quotes: ['quotes'] as const,
+  quoteLists: ['quotes', 'list'] as const,
   quoteList: (filters: QuoteFilters) => ['quotes', 'list', filters] as const,
   quote: (id: number) => ['quotes', 'detail', id] as const,
   sources: ['sources'] as const,
   tags: ['tags'] as const,
 }
 
-export function useQuotes(filters: QuoteFilters) {
-  return useQuery({
+export function quotesQueryOptions(filters: QuoteFilters) {
+  return queryOptions({
     queryKey: queryKeys.quoteList(filters),
     queryFn: () => mockApi.listQuotes(filters),
-    // 输入搜索时保留上一次的结果，列表不会闪烁
-    placeholderData: (previous) => previous,
   })
 }
 
-export function useQuote(id: number) {
-  return useQuery({
+export function quoteQueryOptions(id: number) {
+  return queryOptions({
     queryKey: queryKeys.quote(id),
     queryFn: () => mockApi.getQuote(id),
   })
 }
 
+export function sourcesQueryOptions() {
+  return queryOptions({ queryKey: queryKeys.sources, queryFn: () => mockApi.listSources() })
+}
+
+export function tagsQueryOptions() {
+  return queryOptions({ queryKey: queryKeys.tags, queryFn: () => mockApi.listTags() })
+}
+
+export function useQuotes(filters: QuoteFilters) {
+  return useSuspenseQuery(quotesQueryOptions(filters))
+}
+
+export function useQuote(id: number) {
+  const queryClient = useQueryClient()
+  return useSuspenseQuery({
+    ...quoteQueryOptions(id),
+    // 列表里已经有这句，先拿来显示，不必 suspend；背景再取一次最新的
+    initialData: () => findQuoteInLists(queryClient, id),
+  })
+}
+
 export function useSources() {
-  return useQuery({ queryKey: queryKeys.sources, queryFn: () => mockApi.listSources() })
+  return useSuspenseQuery(sourcesQueryOptions())
 }
 
 export function useTags() {
-  return useQuery({ queryKey: queryKeys.tags, queryFn: () => mockApi.listTags() })
+  return useSuspenseQuery(tagsQueryOptions())
 }
 
 export function useCreateSource() {
@@ -84,4 +107,12 @@ function useInvalidateQuoteData() {
   }
 
   return invalidate
+}
+
+function findQuoteInLists(queryClient: ReturnType<typeof useQueryClient>, id: number) {
+  for (const [, quotes] of queryClient.getQueriesData<Quote[]>({ queryKey: queryKeys.quoteLists })) {
+    const found = quotes?.find((quote) => quote.id === id)
+    if (found) return found
+  }
+  return undefined
 }

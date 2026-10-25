@@ -20,7 +20,7 @@ const ids = {
 
 export const mockApi = {
   async listQuotes(filters: QuoteFilters): Promise<Quote[]> {
-    await delay()
+    await delay('listQuotes')
     const keyword = filters.q?.trim().toLowerCase()
 
     return db.quotes
@@ -41,12 +41,12 @@ export const mockApi = {
   },
 
   async getQuote(id: number): Promise<Quote> {
-    await delay()
+    await delay('getQuote')
     return toQuote(findQuoteRow(id))
   },
 
   async createQuote(input: QuoteInput): Promise<Quote> {
-    await delay()
+    await delay('createQuote')
     const now = new Date().toISOString()
     const row: QuoteRow = { id: ++ids.quote, ...withoutTags(input), createdAt: now, updatedAt: now }
     db.quotes.push(row)
@@ -55,7 +55,7 @@ export const mockApi = {
   },
 
   async updateQuote(id: number, input: QuoteInput): Promise<Quote> {
-    await delay()
+    await delay('updateQuote')
     const row = findQuoteRow(id)
     Object.assign(row, withoutTags(input), { updatedAt: new Date().toISOString() })
     setQuoteTags(id, input.tags)
@@ -63,25 +63,25 @@ export const mockApi = {
   },
 
   async deleteQuote(id: number): Promise<void> {
-    await delay()
+    await delay('deleteQuote')
     db.quotes = db.quotes.filter((row) => row.id !== id)
     db.quoteTags = db.quoteTags.filter((qt) => qt.quoteId !== id)
   },
 
   async listSources(): Promise<Source[]> {
-    await delay()
+    await delay('listSources')
     return db.sources.toSorted((a, b) => a.title.localeCompare(b.title, 'zh-Hans'))
   },
 
   async createSource(input: SourceInput): Promise<Source> {
-    await delay()
+    await delay('createSource')
     const source: Source = { id: ++ids.source, ...input, createdAt: new Date().toISOString() }
     db.sources.push(source)
     return source
   },
 
   async listTags(): Promise<Tag[]> {
-    await delay()
+    await delay('listTags')
     return db.tags.toSorted((a, b) => a.name.localeCompare(b.name, 'zh-Hans'))
   },
 }
@@ -128,7 +128,17 @@ function maxId(rows: { id: number }[]) {
   return Math.max(0, ...rows.map((row) => row.id))
 }
 
-// 模拟网络延迟，让 loading 状态看得到
-function delay() {
-  return new Promise((resolve) => setTimeout(resolve, 150))
+// 模拟网络延迟，让 loading 状态看得到。
+// 测试错误画面：localStorage 的 lines-mock-fail 设成方法名（例如 listQuotes），那个方法就会失败
+async function delay(method: string) {
+  await new Promise((resolve) => setTimeout(resolve, 150))
+  if (readMockFail() === method) throw new Error(`模拟的错误：${method}`)
+}
+
+function readMockFail() {
+  try {
+    return localStorage.getItem('lines-mock-fail')
+  } catch {
+    return null
+  }
 }
