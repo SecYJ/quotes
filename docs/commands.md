@@ -10,6 +10,10 @@
 | `pnpm dev` | 同时启动 client（Vite）和 server（`wrangler dev`） |
 | `pnpm build` | build client，输出到 `client/dist`（Worker 的 static assets 目录） |
 | `pnpm typecheck` | 对所有 workspace 跑 TypeScript 类型检查 |
+| `pnpm lint` | 用 oxlint 检查整个 repo（设定：`.oxlintrc.json`） |
+| `pnpm lint:fix` | oxlint 自动修正能修的问题 |
+| `pnpm fmt` | 用 oxfmt 格式化整个 repo（设定：`.oxfmtrc.json`，4 格缩进、每行 100 字元；不处理 markdown） |
+| `pnpm fmt:check` | 只检查格式，不改档案 |
 
 本地开发时：
 - client：Vite dev server（默认 http://localhost:5173），`/api` 会 proxy 到 wrangler dev。
@@ -50,6 +54,8 @@ git worktree remove ../lines-<name>                 # 删除 worktree（branch �
 ```
 
 UI 阶段用的是假数据，只需要启动 client，不需要 server。
+
+测试错误画面：在浏览器 console 执行 `localStorage.setItem('lines-mock-fail', 'listTags')`（或其他假 API 方法名）再重新整理，那个方法就会失败；`localStorage.removeItem('lines-mock-fail')` 恢复。
 
 Windows 上删除 worktree 的注意事项：
 - 先停掉该 worktree 的 dev server，否则档案被占用删不掉。

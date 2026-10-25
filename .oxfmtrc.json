@@ -1,0 +1,13 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "printWidth": 100,
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "ignorePatterns": [
+        "**/routeTree.gen.ts",
+        "**/worker-configuration.d.ts",
+        "pnpm-lock.yaml",
+        "**/*.md"
+    ]
+}

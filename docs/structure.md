@@ -7,7 +7,7 @@ lines/
 └── docs/     项目文件
 ```
 
-根目录另有 `package.json`（一键启动前后端等 scripts）与 `pnpm-workspace.yaml`（定义 `client`、`server` 两个 workspace）。
+根目录另有 `package.json`（一键启动前后端、lint、格式化等 scripts）、`pnpm-workspace.yaml`（定义 `client`、`server` 两个 workspace），以及整个 repo 共用的 `.oxlintrc.json`（oxlint）与 `.oxfmtrc.json`（oxfmt）。
 
 ## client/
 
@@ -15,10 +15,10 @@ lines/
 | --- | --- |
 | `client/src/` | 前端源码，重要的子目录如下 |
 | `client/src/routes/` | 页面路由，TanStack Router 依文件自动产生路由（`routeTree.gen.ts`） |
-| `client/src/components/` | 自己写的组件，例如名句表单 `QuoteForm`、列表 `QuoteList`、筛选侧栏、`ThemeProvider` |
+| `client/src/components/` | 自己写的组件，例如名句表单 `QuoteForm`、列表 `QuoteList`、筛选侧栏、`ThemeProvider`、`QueryBoundary`（Suspense ＋ error boundary） |
 | `client/src/components/ui/` | shadcn/ui 组件（Base UI 版），由 `shadcn add` 产生，不手改 |
 | `client/src/lib/` | 共用模块：类型、TanStack Query hooks（`queries.ts`，组件只透过它拿资料）、表单 schema（`quote-form.ts`）、`cn`（`utils.ts`）、呼叫 API 的 Hono RPC client |
-| `client/src/mock/` | 假数据与内存中的假 API，UI 阶段使用；接上真 API 后移除 |
+| `client/src/mock/` | 假数据与内存中的假 API，UI 阶段使用（含测试错误画面的 `lines-mock-fail` 开关）；接上真 API 后移除 |
 | `client/dist/` | `vite build` 的输出，由 Worker 当成静态文件提供。自动产生，不进版本控制 |
 | `client/.tanstack/` | TanStack Router 插件的暂存。自动产生，不进版本控制 |
 | `client/vite.config.ts` | Vite 设定：插件、`@/` alias（指向 `src/`），以及开发时把 `/api` proxy 到 wrangler dev |

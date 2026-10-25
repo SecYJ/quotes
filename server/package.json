@@ -1,22 +1,22 @@
 {
-  "name": "server",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "scripts": {
-    "dev": "node -e \"require('node:fs').mkdirSync('../client/dist',{recursive:true})\" && wrangler dev",
-    "deploy": "wrangler deploy",
-    "cf-typegen": "wrangler types",
-    "typecheck": "tsc -b"
-  },
-  "dependencies": {
-    "hono": "^4.13.13"
-  },
-  "devDependencies": {
-    "@types/node": "^26.6.5",
-    "typescript": "^7.0.2",
-    "wrangler": "^4.152.0"
-  }
+    "name": "server",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "dev": "node -e \"require('node:fs').mkdirSync('../client/dist',{recursive:true})\" && wrangler dev",
+        "deploy": "wrangler deploy",
+        "cf-typegen": "wrangler types",
+        "typecheck": "tsc -b"
+    },
+    "dependencies": {
+        "hono": "^4.13.13"
+    },
+    "devDependencies": {
+        "@types/node": "^26.6.5",
+        "typescript": "^7.0.2",
+        "wrangler": "^4.152.0"
+    }
 }

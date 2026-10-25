@@ -1,6 +1,6 @@
 packages:
-  - client
-  - server
+    - client
+    - server
 allowBuilds:
-  esbuild: true
-  workerd: true
+    esbuild: true
+    workerd: true
