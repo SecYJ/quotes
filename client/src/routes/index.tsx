@@ -75,6 +75,7 @@ function QuotesPage() {
             quotes={quotes.data}
             viewMode={viewMode}
             selectedId={selectedId}
+            keyword={filters.q}
             onSelect={(id) => setPanel({ mode: 'view', id })}
           />
         </div>
@@ -97,9 +98,9 @@ function SidePanel({ panel, onChange }: PanelProps) {
     return (
       <div className="flex h-full items-center justify-center text-center leading-loose text-muted-foreground">
         <p>
-          从中间选一句名句查看详细
+          点中间的一句，在这里看完整内容。
           <br />
-          或按「新增名句」
+          听到新的句子，按「新增名句」记下来。
         </p>
       </div>
     )

@@ -37,7 +37,7 @@ lines/
 
 ## docs/
 
-需求（`init.md`）、概览、指令、coding 规则与结构说明，索引见根目录 [AGENTS.md](../AGENTS.md)。
+需求（`init.md`）、概览、指令、coding 规则、视觉设计（`design.md`）与结构说明，索引见根目录 [AGENTS.md](../AGENTS.md)。
 
 | 路径 | 说明 |
 | --- | --- |

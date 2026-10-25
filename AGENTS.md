@@ -11,6 +11,7 @@
 | [docs/commands.md](docs/commands.md) | 常用指令：开发、build、typecheck、Wrangler、部署 |
 | [docs/structure.md](docs/structure.md) | 项目结构：client / server 内第一层的重要目录与设定档 |
 | [docs/coding-style.md](docs/coding-style.md) | Coding 规则（写 code 前必读）：函数写法、UI 组件（shadcn）、颜色 token、表单（RHF + zod） |
+| [docs/design.md](docs/design.md) | 视觉设计：颜色、字体、记号（书签、着重号）与刻意避免的写法 |
 | [docs/features/](docs/features/) | 各 feature 的 specs / plans / tasks，依日期分资料夹 |
 
 ## 结构
@@ -25,5 +26,5 @@ docs/     上述所有文件
 - 分阶段进行，每阶段完成后停下来说明并等待确认（见 docs/init.md）。
 - 不加 docs/init.md 未列出的功能。
 - 写 Wrangler / D1 / Drizzle 设定前先查最新文档，不凭记忆。
-- 写 code 遵守 docs/coding-style.md。
+- 写 code 遵守 docs/coding-style.md；改 UI 外观前先看 docs/design.md。
 - 新增或修改指令、目录时，同步更新 docs/commands.md 与 docs/structure.md。

@@ -75,7 +75,7 @@ export function QuoteForm({ quote, onSaved, onCancel, onDeleted }: Props) {
               <Textarea
                 {...field}
                 id="content"
-                className="min-h-32 resize-y font-serif text-lg leading-relaxed md:text-lg"
+                className="min-h-36 resize-y font-quote text-xl leading-relaxed md:text-xl"
                 placeholder="记下你听到的那句话"
                 aria-invalid={fieldState.invalid}
                 autoFocus

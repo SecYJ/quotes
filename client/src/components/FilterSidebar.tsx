@@ -25,7 +25,7 @@ export function FilterSidebar() {
   return (
     <nav className="flex h-full flex-col gap-8 overflow-y-auto px-6 py-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight">Lines</h1>
+        <h1 className="font-quote text-3xl">Lines</h1>
         <ModeToggle />
       </div>
 
@@ -48,7 +48,7 @@ export function FilterSidebar() {
           if (group.length === 0) return null
           return (
             <div key={type} className="space-y-1">
-              <h3 className="px-3 text-sm text-muted-foreground/70">{sourceTypeLabels[type]}</h3>
+              <h3 className="px-3 text-xs text-muted-foreground/80">{sourceTypeLabels[type]}</h3>
               {group.map((source) => (
                 <button
                   key={source.id}
@@ -96,5 +96,5 @@ function itemClass(active: boolean) {
   )
 }
 
-const headingClass = 'px-3 text-xs font-semibold tracking-widest text-muted-foreground uppercase'
+const headingClass = 'px-3 text-sm font-medium'
 const countClass = 'shrink-0 text-sm text-muted-foreground tabular-nums'
