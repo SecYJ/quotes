@@ -1,0 +1,33 @@
+# 项目结构
+
+```
+lines/
+├── client/   前端 SPA
+├── server/   后端 Worker（负责 /api/*，同时提供 client 的静态文件）
+└── docs/     项目文件
+```
+
+根目录另有 `package.json`（一键启动前后端等 scripts）与 `pnpm-workspace.yaml`（定义 `client`、`server` 两个 workspace）。
+
+## client/
+
+| 路径 | 说明 |
+| --- | --- |
+| `client/src/` | 前端源码：页面路由（`routes/`，TanStack Router 依文件自动产生路由）、共用模块（`lib/`，例如呼叫 API 的 Hono RPC client）与入口 `main.tsx` |
+| `client/dist/` | `vite build` 的输出，由 Worker 当成静态文件提供。自动产生，不进版本控制 |
+| `client/.tanstack/` | TanStack Router 插件的暂存。自动产生，不进版本控制 |
+| `client/vite.config.ts` | Vite 设定：插件，以及开发时把 `/api` proxy 到 wrangler dev |
+
+## server/
+
+| 路径 | 说明 |
+| --- | --- |
+| `server/src/` | 后端源码：Hono 应用入口 `index.ts`，定义 `/api/*` 路由并 export `AppType` 给 client 使用。之后的数据库 schema 也会放在这里 |
+| `server/.wrangler/` | `wrangler dev` 的本地状态，包括本地 D1 资料。自动产生，不进版本控制 |
+| `server/dist/` | TypeScript 产生的类型声明（供 client 读取 `AppType`）。自动产生，不进版本控制 |
+| `server/wrangler.jsonc` | Worker 设定：入口、static assets（指向 `../client/dist`、SPA fallback）与 bindings |
+| `server/worker-configuration.d.ts` | 由 `wrangler types` 依 `wrangler.jsonc` 产生的 `Env` 类型，修改 bindings 后要重新产生 |
+
+## docs/
+
+需求（`init.md`）、概览、指令与结构说明，索引见根目录 [AGENTS.md](../AGENTS.md)。

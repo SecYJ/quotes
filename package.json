@@ -1,0 +1,14 @@
+{
+  "name": "lines",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --recursive run dev",
+    "build": "pnpm --filter client build",
+    "typecheck": "pnpm --recursive run typecheck"
+  }
+}
