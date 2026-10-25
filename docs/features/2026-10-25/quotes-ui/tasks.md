@@ -17,11 +17,11 @@
 - [x] `pnpm typecheck` 通过，commit
 
 ## 3. 版面设计（各自的 worktree）
-- [ ] 开出三个 worktree 并 `pnpm install`
-- [ ] A. 三栏式（`design/three-column`，port 5174）
-- [ ] B. 侧栏 + 卡片网格（`design/card-grid`，port 5175）
-- [ ] C. 置中单栏（`design/centered`，port 5176）
-- [ ] 每个设计 `pnpm typecheck` 通过，commit
+- [x] 开出三个 worktree 并 `pnpm install`
+- [x] A. 三栏式（`design/three-column`，port 5174）
+- [x] B. 侧栏 + 卡片网格（`design/card-grid`，port 5175）
+- [x] C. 置中单栏（`design/centered`，port 5176）
+- [x] 每个设计 `pnpm typecheck` 通过，commit
 
 ## 4. 你来 preview
 - [ ] 在 3440×1300 下比较三个设计，按 specs.md 的验收项目试用
