@@ -1,1 +1,12 @@
 @import 'tailwindcss';
+
+@layer base {
+  /* 34 吋带鱼屏（3440×1440，缩放 100%），基础字号稍大比较好读 */
+  html {
+    font-size: 17px;
+  }
+
+  body {
+    @apply bg-stone-50 text-stone-900 antialiased;
+  }
+}

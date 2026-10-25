@@ -11,6 +11,7 @@
 | [docs/commands.md](docs/commands.md) | 常用指令：开发、build、typecheck、Wrangler、部署 |
 | [docs/structure.md](docs/structure.md) | 项目结构：client / server 内第一层的重要目录与设定档 |
 | [docs/coding-style.md](docs/coding-style.md) | Coding 规则（写 code 前必读）：函数写法等 |
+| [docs/features/](docs/features/) | 各 feature 的 specs / plans / tasks，依日期分资料夹 |
 
 ## 结构
 

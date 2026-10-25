@@ -37,6 +37,20 @@ pnpm --filter server exec wrangler <command>
 
 例如 `pnpm --filter server exec wrangler login`、`pnpm --filter server exec wrangler whoami`。
 
+## Git worktree（同时 preview 多个设计）
+
+每个设计在自己的 worktree 与 branch，用不同 port 同时启动 client：
+
+```sh
+git worktree add ../lines-<name> -b design/<name>   # 从目前的 branch 开出新的 worktree
+pnpm --dir ../lines-<name> install                  # 每个 worktree 第一次使用前要装依赖
+pnpm --dir ../lines-<name> --filter client dev --port 5174 --strictPort
+git worktree list                                   # 列出所有 worktree
+git worktree remove ../lines-<name>                 # 删除 worktree（branch 另外用 git branch -D 删）
+```
+
+UI 阶段用的是假数据，只需要启动 client，不需要 server。
+
 ## 新增依赖
 
 ```sh

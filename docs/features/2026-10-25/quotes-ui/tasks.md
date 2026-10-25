@@ -6,15 +6,15 @@
 - [x] `git init`，第一个 commit（`main`）
 
 ## 2. 共用部分（main）
-- [ ] `lib/types.ts`、`lib/labels.ts`
-- [ ] `mock/seed.ts`：约 12 句范例资料（四种出处类型、多个标签、一句长句）
-- [ ] `mock/api.ts`：列表（筛选 + 搜索）、新增 / 编辑 / 删除名句、出处列表 / 新增、标签列表
-- [ ] `lib/queries.ts`：查询与 mutation hooks，成功后更新相关查询
-- [ ] `lib/search.ts`：`sourceId` / `tagId` / `q` search params
-- [ ] `components/SourcePicker.tsx`：选已有出处，或新增（类型 + 名称）
-- [ ] `components/TagInput.tsx`：多个标签，可选已有或输入新的
-- [ ] `components/QuoteForm.tsx`：全部字段、必填验证、删除二次确认
-- [ ] `pnpm typecheck` 通过，commit
+- [x] `lib/types.ts`、`lib/labels.ts`
+- [x] `mock/seed.ts`：约 12 句范例资料（四种出处类型、多个标签、一句长句）
+- [x] `mock/api.ts`：列表（筛选 + 搜索）、新增 / 编辑 / 删除名句、出处列表 / 新增、标签列表
+- [x] `lib/queries.ts`：查询与 mutation hooks，成功后更新相关查询
+- [x] `lib/search.ts`：`sourceId` / `tagId` / `q` search params
+- [x] `components/SourcePicker.tsx`：选已有出处，或新增（类型 + 名称）
+- [x] `components/TagInput.tsx`：多个标签，可选已有或输入新的
+- [x] `components/QuoteForm.tsx`：全部字段、必填验证、删除二次确认
+- [x] `pnpm typecheck` 通过，commit
 
 ## 3. 版面设计（各自的 worktree）
 - [ ] 开出三个 worktree 并 `pnpm install`
