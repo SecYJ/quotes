@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { LayoutGridIcon, ListIcon, PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { FilterSidebar } from '@/components/FilterSidebar'
 import { QueryBoundary } from '@/components/QueryBoundary'
@@ -15,7 +16,8 @@ import { useQuoteFilters, validateQuoteSearch } from '@/lib/search'
 import { useViewMode } from '@/lib/view-mode'
 import type { ViewMode } from '@/lib/view-mode'
 
-// 三栏式。左：筛选；中：搜索 + 列表（row / grid）；右：详细 / 表单
+// 三栏式。左：筛选；中：搜索 + 列表（row / grid）；右：详细 / 编辑。
+// 新增用 dialog，不打断右栏正在读的句子
 export const Route = createFileRoute('/')({
     validateSearch: validateQuoteSearch,
     // 只取 loader 用到的 search params，其他参数改变时不会重跑 loader
@@ -43,16 +45,13 @@ export const Route = createFileRoute('/')({
     component: QuotesPage,
 })
 
-type PanelState =
-    | { mode: 'empty' }
-    | { mode: 'new' }
-    | { mode: 'view'; id: number }
-    | { mode: 'edit'; id: number }
+type PanelState = { mode: 'empty' } | { mode: 'view'; id: number } | { mode: 'edit'; id: number }
 
 function QuotesPage() {
     const { filters, setFilters } = useQuoteFilters()
     const [viewMode, setViewMode] = useViewMode()
     const [panel, setPanel] = useState<PanelState>({ mode: 'empty' })
+    const [creating, setCreating] = useState(false)
     const selectedId = panel.mode === 'view' || panel.mode === 'edit' ? panel.id : null
 
     return (
@@ -85,11 +84,7 @@ function QuotesPage() {
                                 <LayoutGridIcon />
                             </ToggleGroupItem>
                         </ToggleGroup>
-                        <Button
-                            size="lg"
-                            className="px-4"
-                            onClick={() => setPanel({ mode: 'new' })}
-                        >
+                        <Button size="lg" className="px-4" onClick={() => setCreating(true)}>
                             <PlusIcon data-icon="inline-start" />
                             新增名句
                         </Button>
@@ -116,7 +111,33 @@ function QuotesPage() {
                     <SidePanel panel={panel} onChange={setPanel} />
                 </QueryBoundary>
             </aside>
+
+            <NewQuoteDialog open={creating} onOpenChange={setCreating} />
         </div>
+    )
+}
+
+function NewQuoteDialog({
+    open,
+    onOpenChange,
+}: {
+    open: boolean
+    onOpenChange: (open: boolean) => void
+}) {
+    return (
+        // 点外面不关闭，避免误触丢掉写到一半的句子；Esc 与「取消」仍可关闭
+        <Dialog open={open} onOpenChange={onOpenChange} disablePointerDismissal>
+            <DialogContent className="max-h-[calc(100vh-4rem)] gap-6 overflow-y-auto p-10 sm:max-w-3xl">
+                <DialogHeader>
+                    <DialogTitle className="text-xl font-semibold">新增名句</DialogTitle>
+                </DialogHeader>
+                {/* 关闭时内容会卸载，下次打开是空白的表单 */}
+                <QuoteForm
+                    onSaved={() => onOpenChange(false)}
+                    onCancel={() => onOpenChange(false)}
+                />
+            </DialogContent>
+        </Dialog>
     )
 }
 
@@ -163,18 +184,6 @@ function SidePanel({
                     <br />
                     听到新的句子，按「新增名句」记下来。
                 </p>
-            </div>
-        )
-    }
-
-    if (panel.mode === 'new') {
-        return (
-            <div className="space-y-6">
-                <h2 className="text-xl font-semibold">新增名句</h2>
-                <QuoteForm
-                    onSaved={(quote) => onChange({ mode: 'view', id: quote.id })}
-                    onCancel={() => onChange({ mode: 'empty' })}
-                />
             </div>
         )
     }

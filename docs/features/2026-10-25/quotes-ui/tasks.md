@@ -38,7 +38,7 @@
 - [x] 其余组件的颜色改成 shadcn 的语意化 token（深色模式才会正确）
 - [x] `pnpm typecheck`、`pnpm build` 通过
 - [x] 无头浏览器（Playwright，3440×1300）跑过：浅色 / 深色、验证错误、新增（新出处 + 新标签）、编辑、筛选、搜索、grid、删除、主题切换，无 console 错误
-- [ ] 你来 preview 确认
+- [x] 你来 preview 确认
 
 ## 6. 视觉设计（frontend-design）
 - [x] 设计方案：传统颜料配色（月白 / 素 / 墨 / 苍 / 石青 / 藤黄）、霞鹜文楷、读书记号；写在 `docs/design.md`
@@ -46,4 +46,11 @@
 - [x] 选中的句子挂藤黄书签；搜索命中的字加着重号；详细页用「」悬挂引号；出处改成 ——谁《哪里》
 - [x] 去掉 `·` 串接的资讯行、全大写小标签、卡片阴影
 - [x] 无头浏览器重跑全部流程，无 console 错误；局部放大确认字体载入、着重号位置、悬挂引号对齐
-- [ ] 你在实际屏幕上确认
+- [x] 你在实际屏幕上确认
+
+## 7. 新增改用 dialog（见 specs.md「第三轮」）
+- [x] `shadcn add dialog`
+- [x] `routes/index.tsx`：右栏移除 `new` 模式，新增用 `NewQuoteDialog`
+- [x] fmt / lint / typecheck 通过
+- [x] Playwright（3440×1300，浅色 / 深色）：右栏不受影响、验证错误、点外面不关闭、Esc / 取消、重开空白、新增（新出处 + 新标签）、编辑仍在右栏，无 console 错误
+- [x] 你来 preview 确认
