@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { LayoutGridIcon, ListIcon, PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
@@ -9,15 +10,8 @@ import { QuoteDetail } from '@/components/QuoteDetail'
 import { QuoteForm } from '@/components/QuoteForm'
 import { QuoteList } from '@/components/QuoteList'
 import { SearchBox } from '@/components/SearchBox'
-import {
-    quotesQueryOptions,
-    sourcesQueryOptions,
-    tagsQueryOptions,
-    useQuote,
-    useQuotes,
-} from '@/lib/queries'
+import { findQuoteInLists, quoteQueries, sourceQueries, tagQueries } from '@/lib/queries'
 import { useQuoteFilters, validateQuoteSearch } from '@/lib/search'
-import type { QuoteFilters } from '@/lib/types'
 import { useViewMode } from '@/lib/view-mode'
 import type { ViewMode } from '@/lib/view-mode'
 
@@ -25,17 +19,27 @@ import type { ViewMode } from '@/lib/view-mode'
 export const Route = createFileRoute('/')({
     validateSearch: validateQuoteSearch,
     // 只取 loader 用到的 search params，其他参数改变时不会重跑 loader
-    loaderDeps: ({ search: { sourceId, tagId, q } }) => ({ sourceId, tagId, q }),
-    // 先把这页要的资料放进 cache；已有的直接用（staleTime: 'static'），组件里的 useSuspenseQuery 就不会 suspend。
-    // 搜索、筛选改变时，router 会等 loader 完成才换画面，列表不会闪成载入中
-    loader: ({ context: { queryClient }, deps }) =>
-        Promise.all([
-            queryClient.query({ ...quotesQueryOptions(deps), staleTime: 'static' }),
+    loaderDeps({ search: { sourceId, tagId, q } }) {
+        return { sourceId, tagId, q }
+    },
+    // 依 search params 组好的 query options 放在 route context，loader 与组件共用同一份
+    context({ deps }) {
+        return { quoteListQueryOptions: quoteQueries.list(deps) }
+    },
+    // 这里要 await：搜索、筛选会换成新的 query key，若不等资料就渲染，
+    // useSuspenseQuery 会 suspend，列表每打一个字就闪成「载入中」（实测过）。
+    // 等待时 router 保留旧画面，资料到了才换。全部一起等，不要一个接一个；
+    // 失败时由 root route 的 errorComponent 处理
+    async loader({ context }) {
+        const { queryClient } = context
+        await Promise.all([
+            queryClient.query({ ...context.quoteListQueryOptions, staleTime: 'static' }),
             // 侧栏计算每个出处 / 标签的句数要用全部名句
-            queryClient.query({ ...quotesQueryOptions({}), staleTime: 'static' }),
-            queryClient.query({ ...sourcesQueryOptions(), staleTime: 'static' }),
-            queryClient.query({ ...tagsQueryOptions(), staleTime: 'static' }),
-        ]),
+            queryClient.query({ ...quoteQueries.list({}), staleTime: 'static' }),
+            queryClient.query({ ...sourceQueries.list(), staleTime: 'static' }),
+            queryClient.query({ ...tagQueries.list(), staleTime: 'static' }),
+        ])
+    },
     component: QuotesPage,
 })
 
@@ -54,9 +58,7 @@ function QuotesPage() {
     return (
         <div className="grid h-full grid-cols-[22rem_minmax(0,1fr)_52rem]">
             <aside className="min-h-0 border-r bg-sidebar text-sidebar-foreground">
-                <QueryBoundary fallback={<Loading />}>
-                    <FilterSidebar />
-                </QueryBoundary>
+                <FilterSidebar />
             </aside>
 
             <main className="flex min-h-0 flex-col">
@@ -100,7 +102,7 @@ function QuotesPage() {
                         resetKeys={[filters.sourceId, filters.tagId, filters.q]}
                     >
                         <QuoteResults
-                            filters={filters}
+                            keyword={filters.q}
                             viewMode={viewMode}
                             selectedId={selectedId}
                             onSelect={(id) => setPanel({ mode: 'view', id })}
@@ -119,14 +121,16 @@ function QuotesPage() {
 }
 
 type QuoteResultsProps = {
-    filters: QuoteFilters
+    keyword: string | undefined
     viewMode: ViewMode
     selectedId: number | null
     onSelect: (id: number) => void
 }
 
-function QuoteResults({ filters, viewMode, selectedId, onSelect }: QuoteResultsProps) {
-    const { data: quotes } = useQuotes(filters)
+function QuoteResults({ keyword, viewMode, selectedId, onSelect }: QuoteResultsProps) {
+    // 用 route context 里组好的 options，跟 loader 抓的是同一个 cache entry
+    const { quoteListQueryOptions } = Route.useRouteContext()
+    const { data: quotes } = useSuspenseQuery(quoteListQueryOptions)
 
     return (
         <>
@@ -137,7 +141,7 @@ function QuoteResults({ filters, viewMode, selectedId, onSelect }: QuoteResultsP
                 quotes={quotes}
                 viewMode={viewMode}
                 selectedId={selectedId}
-                keyword={filters.q}
+                keyword={keyword}
                 onSelect={onSelect}
             />
         </>
@@ -191,7 +195,14 @@ type SelectedQuoteProps = {
 }
 
 function SelectedQuote({ id, editing, onChange }: SelectedQuoteProps) {
-    const { data: quote } = useQuote(id)
+    const queryClient = useQueryClient()
+    const { data: quote } = useSuspenseQuery({
+        ...quoteQueries.detail(id),
+        // 列表里已经有这句，先拿来显示，不必 suspend；背景再取一次最新的
+        initialData() {
+            return findQuoteInLists(queryClient, id)
+        },
+    })
 
     if (!editing) {
         return <QuoteDetail quote={quote} onEdit={() => onChange({ mode: 'edit', id })} />

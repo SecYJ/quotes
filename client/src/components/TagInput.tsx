@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import type { KeyboardEvent } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { XIcon } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { useTags } from '@/lib/queries'
+import { tagQueries } from '@/lib/queries'
 
 type Props = {
     id?: string
@@ -12,7 +13,7 @@ type Props = {
 }
 
 export function TagInput({ id, value, onChange }: Props) {
-    const { data: tags } = useTags()
+    const { data: tags } = useSuspenseQuery(tagQueries.list())
     const [draft, setDraft] = useState('')
     const suggestions = tags.filter((tag) => !value.includes(tag.name))
 

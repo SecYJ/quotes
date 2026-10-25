@@ -89,13 +89,17 @@ const storage = {
 - **表单用 React Hook Form + zod**：schema 放在 `lib/`，每个字段用 `Controller` 搭配 shadcn 的 `Field` / `FieldLabel` / `FieldError`，并设定 `data-invalid` 与 `aria-invalid`。
 - **import 用 `@/` alias**（指向 `client/src/`）。
 
-## 3. 读资料
+## 3. 读写资料（TanStack Query）
 
-- **每种资料一个 `queryOptions` 工厂**（`lib/queries.ts` 的 `xxxQueryOptions`），loader 和组件共用同一份，query key 不会写错。
-- **route loader 先把资料放进 cache**：`context.queryClient.query({ ...xxxQueryOptions(), staleTime: 'static' })`（`ensureQueryData` 已 deprecated）。`loaderDeps` 只回传 loader 用到的 search params，不要整个 `search`。
-- **组件用 `useSuspenseQuery`**（透过 `useQuotes` 等 hook），拿到的 `data` 一定有值，不必处理 `undefined` / `isPending`。
-- **用到 suspense query 的组件外面包 `QueryBoundary`**（`<Suspense>` ＋ error boundary ＋ `QueryErrorResetBoundary`）。依赖会变的区块传 `resetKeys`，换资料时自动清掉错误。
-- loader 失败由 root route 的 `errorComponent` 处理，重试时 `router.invalidate()`。
+改 TanStack Query 相关的 code 时，遵守 `.claude/skills/tanstack-query-best-practices`。本项目的具体做法：
+
+- **每个领域一个 query factory 物件**（`lib/queries.ts` 的 `quoteQueries`、`sourceQueries`、`tagQueries`）。`all()` / `lists()` / `details()` 只用来做大范围的 cache 比对；其他地方一律用完整 options（`quoteQueries.list(filters)`、`detail(id)`）。不要另外导出 key 或包一层 `useXxx` hook。
+- **依 route 输入组成的 options 放在 route 的 `context`**，组件用 `Route.useRouteContext()` 读，不要在组件里再用 search params 组一次。`loaderDeps` 只回传 loader 用到的 search params。
+- **loader 用 `context.queryClient.query({ ...options, staleTime: 'static' })` 放进 cache**（`ensureQueryData` 已 deprecated）。预设不 await（`.catch(noop)`）；只有「没资料就不该渲染」时才 await，而且用 `Promise.all` 一起等。`/` 因为搜索时不能闪「载入中」，所以 await。
+- **组件用 `useSuspenseQuery`**；同一个组件要多个 query 时用 `useSuspenseQueries`（一起抓，不会一个等一个），衍生资料放在 module scope 的 `combine` / `select`。
+- **用到 suspense query 的组件外面包 `QueryBoundary`**（`<Suspense>` ＋ error boundary ＋ `QueryErrorResetBoundary`）。依赖会变的区块传 `resetKeys`。loader 失败由 root route 的 `errorComponent` 处理，重试时 `router.invalidate()`。
+- **mutation 的 cache 同步写在 mutation 本身的 `onSuccess`**，用 `context.client` 和 factory 做 invalidate，并 return promise。只 invalidate 真的会变的部分（例如删除不 invalidate 已删除那句的 detail）。`mutate(..., { onSuccess })` 只做这次呼叫的 UI 效果（关闭表单、切换画面）。
+- `queryFn`、`mutationFn`、callback 等函数型属性用 method shorthand。
 
 ## 4. 格式与 lint
 

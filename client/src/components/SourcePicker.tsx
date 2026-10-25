@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { Controller, useWatch } from 'react-hook-form'
 import type { Control, UseFormSetValue } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
@@ -14,7 +15,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { sourceTypeLabels, sourceTypes } from '@/lib/labels'
-import { useSources } from '@/lib/queries'
+import { sourceQueries } from '@/lib/queries'
 import type { QuoteFormValues } from '@/lib/quote-form'
 import type { SourceType } from '@/lib/types'
 
@@ -27,7 +28,7 @@ const NEW_VALUE = 'new'
 
 // 选已有出处，或切换成当场新增（类型 + 名称）
 export function SourcePicker({ control, setValue }: Props) {
-    const { data: sources } = useSources()
+    const { data: sources } = useSuspenseQuery(sourceQueries.list())
     const mode = useWatch({ control, name: 'sourceMode' })
 
     if (mode === 'new') {

@@ -7,7 +7,7 @@ lines/
 └── docs/     项目文件
 ```
 
-根目录另有 `package.json`（一键启动前后端、lint、格式化等 scripts）、`pnpm-workspace.yaml`（定义 `client`、`server` 两个 workspace），以及整个 repo 共用的 `.oxlintrc.json`（oxlint）与 `.oxfmtrc.json`（oxfmt）。
+根目录另有 `package.json`（一键启动前后端、lint、格式化等 scripts）、`pnpm-workspace.yaml`（定义 `client`、`server` 两个 workspace），以及整个 repo 共用的 `.oxlintrc.json`（oxlint）与 `.oxfmtrc.json`（oxfmt）。`.claude/skills/` 放这个项目用的 Claude Code skills（目前有 `tanstack-query-best-practices`）。
 
 ## client/
 
