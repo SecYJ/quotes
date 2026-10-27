@@ -67,4 +67,4 @@
 - [x] `docs/commands.md`：加 `db:generate`、`migrations apply --local`、`d1 execute --local`
 - [x] `docs/structure.md`：加 `server/drizzle/`、`server/src/db/`、`server/drizzle.config.ts`
 - [x] 依 [verification.md](../../../verification.md) 验证（这阶段没有 UI 改动，Playwright 只确认首页正常）
-- [ ] specs.md 的验收全部勾掉，commit（等 review）
+- [x] specs.md 的验收全部勾掉，commit

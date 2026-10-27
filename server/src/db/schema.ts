@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm'
+import { relations, sql } from 'drizzle-orm'
 import { index, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 // 字段名称写 camelCase，casing: 'snake_case' 会在数据库里转成 snake_case
@@ -61,3 +61,23 @@ export const quoteTags = sqliteTable(
         index('quote_tags_tag_id_idx').on(table.tagId),
     ],
 )
+
+// relations 只给 Drizzle 的 query API（db.query.*）用来一次带出关联资料，不会改变数据库，不需要 migration
+
+export const sourcesRelations = relations(sources, ({ many }) => ({
+    quotes: many(quotes),
+}))
+
+export const quotesRelations = relations(quotes, ({ one, many }) => ({
+    source: one(sources, { fields: [quotes.sourceId], references: [sources.id] }),
+    quoteTags: many(quoteTags),
+}))
+
+export const tagsRelations = relations(tags, ({ many }) => ({
+    quoteTags: many(quoteTags),
+}))
+
+export const quoteTagsRelations = relations(quoteTags, ({ one }) => ({
+    quote: one(quotes, { fields: [quoteTags.quoteId], references: [quotes.id] }),
+    tag: one(tags, { fields: [quoteTags.tagId], references: [tags.id] }),
+}))

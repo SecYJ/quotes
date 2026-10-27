@@ -21,6 +21,12 @@
             "migrations_dir": "drizzle",
         },
     ],
+    "vars": {
+        // Cloudflare Access 的设定，requireAccess 用来验证 JWT；阶段 5 设好 Access 后填入。
+        // 两个都不是秘密（team domain 公开、AUD 只是应用的识别码）。空字串时写入 API 一律回 403
+        "ACCESS_TEAM_DOMAIN": "", // https://<team>.cloudflareaccess.com
+        "ACCESS_AUD": "", // Access 应用的 Application Audience (AUD) tag
+    },
     "observability": {
         "enabled": true,
     },

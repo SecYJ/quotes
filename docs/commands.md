@@ -19,6 +19,7 @@
 - client：Vite dev server（默认 http://localhost:5173），`/api` 会 proxy 到 wrangler dev。
 - server：wrangler dev 跑在 http://localhost:8787，使用本地 D1（资料存在 `server/.wrangler`）。
 - 验证前后端连通：打开 http://localhost:5173/api/health 应回传 `{ "ok": true, ... }`。
+- 本地没有 Cloudflare Access：dev script 用 `--var ACCESS_DEV_BYPASS:true` 让 `/api/admin/*` 跳过 JWT 验证。直接跑 `wrangler dev`（不经过 dev script）时写入 API 会回 403。
 
 ## 只针对单一 package
 
@@ -29,8 +30,8 @@
 | `pnpm --filter client dev` | 只启动 Vite dev server |
 | `pnpm --filter client build` | 只 build client（`tsc -b && vite build`） |
 | `pnpm --filter client preview` | 预览 client 的 build 结果 |
-| `pnpm --filter server dev` | 只启动 `wrangler dev`（会先确保 `client/dist` 存在，否则 Wrangler 会因 assets 目录不存在而报错） |
-| `pnpm --filter server cf-typegen` | 依 `wrangler.jsonc` 重新产生 `server/worker-configuration.d.ts`（`Env` 类型）。**修改 bindings（例如新增 D1）后要跑** |
+| `pnpm --filter server dev` | 只启动 `wrangler dev`（会先确保 `client/dist` 存在，否则 Wrangler 会因 assets 目录不存在而报错；带 `--var ACCESS_DEV_BYPASS:true`） |
+| `pnpm --filter server cf-typegen` | 依 `wrangler.jsonc` 重新产生 `server/worker-configuration.d.ts`（`Env` 类型，`--strict-vars=false` 让 vars 是 `string`）。**修改 bindings 或 vars 后要跑** |
 | `pnpm --filter server deploy` | 部署到 Cloudflare Workers（部署前先跑 `pnpm build`） |
 
 ## 直接执行 Wrangler
