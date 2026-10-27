@@ -80,4 +80,12 @@ pnpm --filter server add <pkg>      # 加到 server
 pnpm --filter server add -D <pkg>   # 加到 server 的 devDependencies
 ```
 
-> 数据库（Drizzle / D1 migration）相关指令会在阶段 2 加入后补充到这里。
+## 数据库（Drizzle + D1）
+
+| 指令 | 作用 |
+| --- | --- |
+| `pnpm --filter server db:generate` | 改完 `server/src/db/schema.ts` 后跑：drizzle-kit 比对快照，在 `server/drizzle/` 产生新的 migration SQL（不连数据库） |
+| `pnpm --filter server db:migrate:local` | 把还没套用的 migration 套用到本地 D1（`wrangler d1 migrations apply lines --local`） |
+| `pnpm --filter server exec wrangler d1 execute lines --local --command "<SQL>"` | 对本地 D1 直接执行 SQL，例如 `"SELECT * FROM sources"` |
+
+已套用的 migration 不要修改，要改 schema 就再 `db:generate` 一个新的。

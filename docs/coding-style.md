@@ -142,7 +142,7 @@ type QuoteListProps = { ... }
 - **合并 class 用 `cn`**（`import { cn } from 'cn'`），不要用字串模板拼接条件 class。
 - **颜色只用语意化 token**：`bg-background`、`text-foreground`、`text-muted-foreground`、`bg-primary`、`border` 等。不要直接写 `stone-*`、`teal-*`、`white`，否则深色模式会错。
 - **表单用 React Hook Form + zod**：schema 放在 `lib/`，每个字段用 `Controller` 搭配 shadcn 的 `Field` / `FieldLabel` / `FieldError`，并设定 `data-invalid` 与 `aria-invalid`。
-- **import 一律用 `@/` 绝对路径**（`@/components/ui/button`、`@/lib/queries`），不用 `./`、`../` 相对路径，lint 会挡。`@/` 对应 `client/src`，由 `vite.config.ts` 的 `resolve.alias` 与 `tsconfig.app.json` 的 `paths` 解析（`client/tsconfig.json` 的 `paths` 给 shadcn CLI 用）。
+- **import 一律用 `@/` 绝对路径**（`@/components/ui/button`、`@/lib/queries`），不用 `./`、`../` 相对路径，lint 会挡。`@/` 对应 `client/src`，由 `vite.config.ts` 的 `resolve.alias` 与 `tsconfig.app.json` 的 `paths` 解析（`client/tsconfig.json` 的 `paths` 给 shadcn CLI 用）。server 用 `#/` 代替 `@/`（`#/db/schema`），由 `server/package.json` 的 `imports` 解析；不用 `@/` 是因为 client 会读 server 的声明档，`@/` 在 client 那边会被解析成 `client/src`。
 
 ## 4. 读写资料（TanStack Query）
 

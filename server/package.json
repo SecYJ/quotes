@@ -2,6 +2,9 @@
     "name": "server",
     "private": true,
     "type": "module",
+    "imports": {
+        "#/*": "./src/*.ts"
+    },
     "exports": {
         ".": "./src/index.ts"
     },
@@ -9,13 +12,18 @@
         "dev": "node -e \"require('node:fs').mkdirSync('../client/dist',{recursive:true})\" && wrangler dev",
         "deploy": "wrangler deploy",
         "cf-typegen": "wrangler types",
-        "typecheck": "tsc -b"
+        "typecheck": "tsc -b",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate:local": "wrangler d1 migrations apply lines --local"
     },
     "dependencies": {
-        "hono": "^4.13.13"
+        "drizzle-orm": "^0.45.4",
+        "hono": "^4.13.13",
+        "zod": "^4.6.7"
     },
     "devDependencies": {
         "@types/node": "^26.6.5",
+        "drizzle-kit": "^0.31.11",
         "typescript": "^7.0.2",
         "wrangler": "^4.152.0"
     }

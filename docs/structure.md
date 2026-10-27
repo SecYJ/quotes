@@ -29,10 +29,14 @@ lines/
 
 | 路径 | 说明 |
 | --- | --- |
-| `server/src/` | 后端源码：Hono 应用入口 `index.ts`，定义 `/api/*` 路由并 export `AppType` 给 client 使用。之后的数据库 schema 也会放在这里 |
+| `server/src/` | 后端源码：Hono 应用入口 `index.ts`，定义 `/api/*` 路由并 export `AppType` 给 client 使用 |
+| `server/src/db/` | `schema.ts`（四张表的 Drizzle 定义）与 `index.ts`（`createDb(env.DB)`） |
+| `server/drizzle/` | drizzle-kit 产生的 migration SQL 与快照（`meta/`），进版本控制；`wrangler.jsonc` 的 `migrations_dir` 指向这里 |
+| `server/drizzle.config.ts` | drizzle-kit 设定：dialect、schema 路径、输出目录、`casing` |
 | `server/.wrangler/` | `wrangler dev` 的本地状态，包括本地 D1 资料。自动产生，不进版本控制 |
 | `server/dist/` | TypeScript 产生的类型声明（供 client 读取 `AppType`）。自动产生，不进版本控制 |
-| `server/wrangler.jsonc` | Worker 设定：入口、static assets（指向 `../client/dist`、SPA fallback）与 bindings |
+| `server/wrangler.jsonc` | Worker 设定：入口、static assets（指向 `../client/dist`、SPA fallback）与 bindings（D1：`env.DB`） |
+| `server/package.json` | 除了依赖与 scripts，`imports` 定义 server 内的 `#/` 绝对路径（对应 `server/src/*.ts`） |
 | `server/worker-configuration.d.ts` | 由 `wrangler types` 依 `wrangler.jsonc` 产生的 `Env` 类型，修改 bindings 后要重新产生 |
 
 ## docs/
