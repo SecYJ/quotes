@@ -1,7 +1,9 @@
 # 项目：个人名句记录 App
 
 ## 目标
-做一个只给我自己用的网站，用来记录从戏剧、书、现实生活或其他地方听到的名句，并且每句都要记录出处。目前只支援 desktop：目标屏幕是 34 吋带鱼屏（ASUS PG34WCDM，3440×1440，Windows 缩放 100%），不需要做手机版。
+做一个公开的网站，用来记录从戏剧、书、现实生活或其他地方听到的名句，并且每句都要记录出处。目前只支援 desktop：目标屏幕是 34 吋带鱼屏（ASUS PG34WCDM，3440×1440，Windows 缩放 100%），不需要做手机版。
+- **所有人都可以看**名句（不用登入）。
+- **只有我可以新增 / 编辑 / 删除**，写入的功能放在独立的 `/admin` 页面。
 
 ## 背景
 - 我是有 3 年经验的前端开发者，熟悉 React、TypeScript、Tailwind。
@@ -20,7 +22,13 @@
   - `/api/*` 由 Hono 处理。
   - 其他路径提供 `/client` build 出来的静态文件，并且要有 SPA fallback（找不到的路径回传 index.html，交给 TanStack Router 处理）。
 - 使用 Workers static assets，Wrangler 设定放在 `/server`，assets 目录指向 client 的 build 输出。
-- 网站会用 **Cloudflare Access** 锁起来，只允许我的 email 进入，所以 **app 里面不需要写任何登入或用户系统**。
+- 网站挂在我自己的网域上（网域已在 Cloudflare 管理）。
+- **权限**：用 **Cloudflare Access** 只保护写入相关的路径，其他路径公开：
+  - 受保护：`/admin`、`/admin/*`、`/api/admin/*`，只允许我的 email 进入。
+  - 公开：首页与 `/api/*` 中的读取 API（只有 GET）。
+  - 关掉 `workers.dev` 网址（`workers_dev: false`），避免绕过 Access 直接打 Worker。
+  - Worker 在 `/api/admin/*` 仍要验证 Access 带来的 JWT（`Cf-Access-Jwt-Assertion` header），没有或无效就回 403。
+  - 所以 **app 里面不需要写登入或用户系统**，登入交给 Access。
 - 必须保持在 Cloudflare 免费方案的额度内。
 
 ## 本地开发
@@ -50,7 +58,7 @@
 一个出处可以有多句名句；一句名句可以有多个 tag。
 
 ## 第一版功能
-1. 新增 / 编辑 / 删除名句（新增时可以选现有出处，也可以当场新增出处）。
+1. 在 `/admin` 新增 / 编辑 / 删除名句（新增时可以选现有出处，也可以当场新增出处）。公开页面只能看，没有写入的按钮。
 2. 按出处筛选（例如看某部剧的所有句子）。
 3. Tags 分类：新增名句时可以加多个 tag，可以按 tag 筛选。
 4. 关键字搜索：搜句子内容和说话的人。第一版用简单的 SQL `LIKE` 就好。
@@ -68,6 +76,6 @@
 ### 阶段
 1. **Monorepo 骨架**：pnpm workspace、client 和 server 的基本项目、TypeScript 设定。本地可以同时跑起前后端，client 能成功呼叫 server 的一个测试 API。
 2. **数据库**：Drizzle schema、migration，套用到本地 D1。
-3. **API**：Hono 路由（名句 CRUD、出处、tags、筛选、搜索）、zod 验证，并 export API 类型给 client 使用。
-4. **前端**：名句列表（含搜索和筛选）、新增 / 编辑表单、出处和 tag 的选择，使用 Hono RPC client + TanStack Query，desktop 排版（3440×1440）。
-5. **部署**：build client、建立远端 D1、套用 migration、部署到 Cloudflare Workers。Cloudflare Access 的设定请列出 dashboard 上的操作步骤，由我自己手动完成。
+3. **API**：Hono 路由，分成公开的读取 API（列表、筛选、搜索、出处、tags）与 `/api/admin/*` 的写入 API（名句 CRUD、新增出处），写入 API 加上验证 Access JWT 的 middleware；zod 验证，并 export API 类型给 client 使用。
+4. **前端**：公开的名句列表（含搜索和筛选）；`/admin` 页面使用同一套列表，再加上新增 / 编辑 / 删除与出处、tag 的选择，使用 Hono RPC client + TanStack Query，desktop 排版（3440×1440）。
+5. **部署**：build client、建立远端 D1、套用 migration、部署到 Cloudflare Workers 并绑定我的网域、关掉 workers.dev。Cloudflare Access（只保护 `/admin` 相关路径）的设定请列出 dashboard 上的操作步骤，由我自己手动完成。
