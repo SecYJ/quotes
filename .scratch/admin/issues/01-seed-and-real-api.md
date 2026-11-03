@@ -6,11 +6,11 @@
 
 **Status:** ready-for-agent
 
-- [ ] 有一个 `db:seed:local` 指令：先清空本地 D1，再写入范例资料；重复执行结果相同
-- [ ] client 的查询与 mutation 改用 Hono RPC client 呼叫 `/api/*`，回传类型来自 server 的 `AppType`
-- [ ] 假 API、假资料和它的失败开关都已移除，没有残留的引用
-- [ ] 阅览页的列表、筛选（出处 / 标签）、搜索、row / grid 切换在真资料上正常
-- [ ] 现有的新增 / 编辑 / 删除（含当场新增出处、新标签）写入本地 D1，重新整理后仍在
-- [ ] API 回传错误时，画面显示现有的错误提示（取代原本用假 API 开关测错误画面的方法），docs/verification.md 改写对应的步骤
-- [ ] `docs/commands.md`、`docs/structure.md` 已更新（seed 指令、移除假 API 目录）
-- [ ] `pnpm fmt`、`pnpm lint`、`pnpm typecheck` 通过；Playwright（3440×1300，浅色 / 深色）跑过上述流程，无 console 错误
+- [x] 有一个 `db:seed:local` 指令：先清空本地 D1，再写入范例资料；重复执行结果相同
+- [x] client 的查询与 mutation 改用 Hono RPC client 呼叫 `/api/*`，回传类型来自 server 的 `AppType`
+- [x] 假 API、假资料和它的失败开关都已移除，没有残留的引用
+- [x] 阅览页的列表、筛选（出处 / 标签）、搜索、row / grid 切换在真资料上正常
+- [x] 现有的新增 / 编辑 / 删除（含当场新增出处、新标签）写入本地 D1，重新整理后仍在
+- [x] API 回传错误时，画面显示现有的错误提示（取代原本用假 API 开关测错误画面的方法），docs/verification.md 改写对应的步骤
+- [x] `docs/commands.md`、`docs/structure.md` 已更新（seed 指令、移除假 API 目录）
+- [x] `pnpm fmt`、`pnpm lint`、`pnpm typecheck` 通过；Playwright（3440×1300，浅色 / 深色）跑过上述流程，无 console 错误

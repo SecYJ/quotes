@@ -1,4 +1,4 @@
-// 字段与 docs/init.md 的数据结构一致，之后换成真 API 时沿用
+// 字段与 docs/init.md 的数据结构一致；API 回传的形状由 lib/queries.ts 的回传类型对照这里（typecheck 会抓出不一致）
 
 export type SourceType = 'drama' | 'book' | 'real_life' | 'other'
 

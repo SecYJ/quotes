@@ -1,9 +1,10 @@
 import { queryOptions, useMutation } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
-import { mockApi } from '@/mock/api'
-import type { Quote, QuoteFilters, QuoteInput, SourceInput } from '@/lib/types'
+import { api, request } from '@/lib/api'
+import type { Quote, QuoteFilters, QuoteInput, Source, SourceInput, Tag } from '@/lib/types'
 
-// 组件只透过这里拿资料。接真 API 时把 mockApi 换成 Hono RPC client 即可
+// 组件只透过这里拿资料（Hono RPC client 呼叫 /api/*）。
+// 每个 queryFn / mutationFn 都标明回传 lib/types.ts 的类型：server 回传的形状一旦改了，typecheck 就会报错
 //
 // 每个领域一个 factory 物件：all() / lists() / details() 只用来做大范围的 cache 比对（例如 invalidate），
 // 其他地方一律用完整的 options（list(filters)、detail(id)），loader、组件、mutation 共用同一份
@@ -18,8 +19,8 @@ export const quoteQueries = {
     list(filters: QuoteFilters) {
         return queryOptions({
             queryKey: [...quoteQueries.lists(), filters] as const,
-            queryFn() {
-                return mockApi.listQuotes(filters)
+            queryFn(): Promise<Quote[]> {
+                return request(api.quotes.$get({ query: toQuery(filters) }))
             },
         })
     },
@@ -29,8 +30,8 @@ export const quoteQueries = {
     detail(id: number) {
         return queryOptions({
             queryKey: [...quoteQueries.details(), id] as const,
-            queryFn() {
-                return mockApi.getQuote(id)
+            queryFn(): Promise<Quote> {
+                return request(api.quotes[':id'].$get({ param: { id: String(id) } }))
             },
         })
     },
@@ -40,8 +41,8 @@ export const sourceQueries = {
     list() {
         return queryOptions({
             queryKey: ['sources'] as const,
-            queryFn() {
-                return mockApi.listSources()
+            queryFn(): Promise<Source[]> {
+                return request(api.sources.$get())
             },
         })
     },
@@ -51,8 +52,8 @@ export const tagQueries = {
     list() {
         return queryOptions({
             queryKey: ['tags'] as const,
-            queryFn() {
-                return mockApi.listTags()
+            queryFn(): Promise<Tag[]> {
+                return request(api.tags.$get())
             },
         })
     },
@@ -71,8 +72,8 @@ export function findQuoteInLists(queryClient: QueryClient, id: number): Quote | 
 
 export function useCreateSource() {
     return useMutation({
-        mutationFn(input: SourceInput) {
-            return mockApi.createSource(input)
+        mutationFn(input: SourceInput): Promise<Source> {
+            return request(api.admin.sources.$post({ json: input }))
         },
         onSuccess(_data, _variables, _onMutateResult, context) {
             return context.client.invalidateQueries(sourceQueries.list())
@@ -83,8 +84,8 @@ export function useCreateSource() {
 // 新增会改变列表内容与句数；可能建立新标签
 export function useCreateQuote() {
     return useMutation({
-        mutationFn(input: QuoteInput) {
-            return mockApi.createQuote(input)
+        mutationFn(input: QuoteInput): Promise<Quote> {
+            return request(api.admin.quotes.$post({ json: input }))
         },
         onSuccess(_data, _variables, _onMutateResult, context) {
             return Promise.all([
@@ -98,8 +99,8 @@ export function useCreateQuote() {
 // 编辑会改变这句的详细、可能改变它在哪些筛选结果里；可能建立新标签
 export function useUpdateQuote() {
     return useMutation({
-        mutationFn({ id, input }: { id: number; input: QuoteInput }) {
-            return mockApi.updateQuote(id, input)
+        mutationFn({ id, input }: { id: number; input: QuoteInput }): Promise<Quote> {
+            return request(api.admin.quotes[':id'].$put({ param: { id: String(id) }, json: input }))
         },
         onSuccess(_data, variables, _onMutateResult, context) {
             return Promise.all([
@@ -114,11 +115,20 @@ export function useUpdateQuote() {
 // 删除只更新列表；这句的 detail 已经不存在，重新查询只会得到错误，留给 cache 自己回收
 export function useDeleteQuote() {
     return useMutation({
-        mutationFn(id: number) {
-            return mockApi.deleteQuote(id)
+        async mutationFn(id: number): Promise<void> {
+            await request(api.admin.quotes[':id'].$delete({ param: { id: String(id) } }))
         },
         onSuccess(_data, _variables, _onMutateResult, context) {
             return context.client.invalidateQueries({ queryKey: quoteQueries.lists() })
         },
     })
+}
+
+// query string 只有字串；没设定的条件不送
+function toQuery(filters: QuoteFilters) {
+    return {
+        sourceId: filters.sourceId === undefined ? undefined : String(filters.sourceId),
+        tagId: filters.tagId === undefined ? undefined : String(filters.tagId),
+        q: filters.q,
+    }
 }

@@ -20,8 +20,7 @@ lines/
 | `client/src/routes/` | 页面路由，TanStack Router 依文件自动产生路由（`routeTree.gen.ts`） |
 | `client/src/components/` | 自己写的组件，例如名句表单 `QuoteForm`、列表 `QuoteList`、筛选侧栏、`ThemeProvider`、`QueryBoundary`（Suspense ＋ error boundary） |
 | `client/src/components/ui/` | shadcn/ui 组件（Base UI 版），由 `shadcn add` 产生，不手改 |
-| `client/src/lib/` | 共用模块：类型、TanStack Query hooks（`queries.ts`，组件只透过它拿资料）、表单 schema（`quote-form.ts`）、`cn`（`utils.ts`）、呼叫 API 的 Hono RPC client |
-| `client/src/mock/` | 假数据与内存中的假 API，UI 阶段使用（含测试错误画面的 `lines-mock-fail` 开关）；接上真 API 后移除 |
+| `client/src/lib/` | 共用模块：类型、TanStack Query hooks（`queries.ts`，组件只透过它拿资料）、表单 schema（`quote-form.ts`）、`cn`（`utils.ts`）、Hono RPC client 与把错误转成中文讯息的 `request()`（`api.ts`） |
 | `client/dist/` | `vite build` 的输出，由 Worker 当成静态文件提供。自动产生，不进版本控制 |
 | `client/.tanstack/` | TanStack Router 插件的暂存。自动产生，不进版本控制 |
 | `client/vite.config.ts` | Vite 设定：插件，以及开发时把 `/api` proxy 到 wrangler dev |
@@ -37,6 +36,7 @@ lines/
 | `server/src/middleware/` | `access.ts`：验证 Cloudflare Access 的 JWT，保护写入 API |
 | `server/src/db/` | `schema.ts`（四张表与 relations）、`index.ts`（`createDb(env.DB)`）、`quotes.ts`（所有查询与写入） |
 | `server/drizzle/` | drizzle-kit 产生的 migration SQL 与快照（`meta/`），进版本控制；`wrangler.jsonc` 的 `migrations_dir` 指向这里 |
+| `server/seed.sql` | 本地开发用的范例资料，由 `db:seed:local` 写入本地 D1（会先清空）；不要对远端执行 |
 | `server/drizzle.config.ts` | drizzle-kit 设定：dialect、schema 路径、输出目录、`casing` |
 | `server/.wrangler/` | `wrangler dev` 的本地状态，包括本地 D1 资料。自动产生，不进版本控制 |
 | `server/dist/` | TypeScript 产生的类型声明（供 client 读取 `AppType`）。自动产生，不进版本控制 |

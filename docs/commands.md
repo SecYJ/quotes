@@ -54,9 +54,7 @@ git worktree list                                   # 列出所有 worktree
 git worktree remove ../lines-<name>                 # 删除 worktree（branch 另外用 git branch -D 删）
 ```
 
-UI 阶段用的是假数据，只需要启动 client，不需要 server。
-
-测试错误画面：在浏览器 console 执行 `localStorage.setItem('lines-mock-fail', 'listTags')`（或其他假 API 方法名）再重新整理，那个方法就会失败；`localStorage.removeItem('lines-mock-fail')` 恢复。
+资料来自 API：每个 worktree 的 client 都把 `/api` proxy 到 `localhost:8787`，所以先在主目录跑 `pnpm --filter server dev`（只跑一个，大家共用同一份本地 D1），各 worktree 只启动 client。
 
 Windows 上删除 worktree 的注意事项：
 - 先停掉该 worktree 的 dev server，否则档案被占用删不掉。
@@ -87,6 +85,7 @@ pnpm --filter server add -D <pkg>   # 加到 server 的 devDependencies
 | --- | --- |
 | `pnpm --filter server db:generate` | 改完 `server/src/db/schema.ts` 后跑：drizzle-kit 比对快照，在 `server/drizzle/` 产生新的 migration SQL（不连数据库） |
 | `pnpm --filter server db:migrate:local` | 把还没套用的 migration 套用到本地 D1（`wrangler d1 migrations apply lines --local`） |
+| `pnpm --filter server db:seed:local` | **清空**本地 D1 再写入范例资料（`server/seed.sql`）；重复执行结果相同。第一次使用前先跑 `db:migrate:local` |
 | `pnpm --filter server exec wrangler d1 execute lines --local --command "<SQL>"` | 对本地 D1 直接执行 SQL，例如 `"SELECT * FROM sources"` |
 
 已套用的 migration 不要修改，要改 schema 就再 `db:generate` 一个新的。

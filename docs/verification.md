@@ -18,7 +18,7 @@ pnpm typecheck   # 所有 workspace 的 tsc
 
 用无头浏览器实际操作一轮，确认画面与互动正常。
 
-1. 启动 client：`pnpm --filter client dev`（UI 阶段用假数据，不需要 server；需要 API 时改用 `pnpm dev`）。
+1. 先跑 `pnpm --filter server db:seed:local` 让本地 D1 回到固定的范例资料，再用 `pnpm dev` 同时启动 client 与 server。
 2. 在 scratchpad 写一次性的 Playwright 脚本（不放进 repo），viewport 用 `3440×1300`。
 3. 跑过与这次改动相关的流程，并至少涵盖：
    - 页面载入、浅色 / 深色模式
@@ -26,7 +26,7 @@ pnpm typecheck   # 所有 workspace 的 tsc
    - 表单验证错误
    - 筛选、搜索、row / grid 切换
 4. 全程监听 `console` 与 `pageerror`，不能有错误。
-5. 需要看错误画面时，用 `localStorage.setItem('lines-mock-fail', '<假 API 方法名>')` 触发（见 [commands.md](commands.md)）。
+5. 需要看错误画面时，在脚本里用 `page.route` 拦截 API：`route.fulfill({ status: 500, contentType: 'application/json', body: '{"error":"服务器错误"}' })` 模拟 server 错误，`route.abort()` 模拟连不上服务器。
 6. 跑完关掉 dev server。
 
 ## 回报
