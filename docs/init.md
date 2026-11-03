@@ -3,7 +3,7 @@
 ## 目标
 做一个公开的网站，用来记录从戏剧、书、现实生活或其他地方听到的名句，并且每句都要记录出处。目前只支援 desktop：目标屏幕是 34 吋带鱼屏（ASUS PG34WCDM，3440×1440，Windows 缩放 100%），不需要做手机版。
 - **所有人都可以看**名句（不用登入）。
-- **只有我可以新增 / 编辑 / 删除**，写入的功能放在独立的 `/admin` 页面。
+- **只有我可以新增 / 编辑 / 删除**，写入的功能放在独立的 `/admin` 页面（管理页）；`/` 是谁都能看的阅览页。用语见根目录 [GLOSSARY.md](../GLOSSARY.md)。
 
 ## 背景
 - 我是有 3 年经验的前端开发者，熟悉 React、TypeScript、Tailwind。
@@ -42,6 +42,7 @@
   - type：`drama` / `book` / `real_life` / `other`
   - title：出处名称（例如剧名、书名；现实生活可以是"朋友聊天"之类）
   - created_at
+  - 同一个 type 下 title 不能重复（区分英文大小写）
 - **quotes（名句）**
   - id
   - content：句子内容（必填）
@@ -52,16 +53,17 @@
   - created_at、updated_at
 - **tags**
   - id
-  - name（unique）
+  - name（unique，比较时忽略英文大小写）
 - **quote_tags**：quotes 和 tags 的多对多关系
 
-一个出处可以有多句名句；一句名句可以有多个 tag。
+一个出处可以有多句名句；一句名句至少有一个 tag，可以有多个。
 
 ## 第一版功能
-1. 在 `/admin` 新增 / 编辑 / 删除名句（新增时可以选现有出处，也可以当场新增出处）。公开页面只能看，没有写入的按钮。
+1. 在 `/admin` 新增 / 编辑 / 删除名句（新增时可以选现有出处，也可以当场新增出处）。阅览页只能看，没有写入的按钮，只有一个通往 `/admin` 的「登入」。
 2. 按出处筛选（例如看某部剧的所有句子）。
-3. Tags 分类：新增名句时可以加多个 tag，可以按 tag 筛选。
+3. Tags 分类：新增名句时至少加一个 tag，可以按 tag 筛选。
 4. 关键字搜索：搜句子内容和说话的人。第一版用简单的 SQL `LIKE` 就好。
+5. 在 `/admin` 管理出处与标签：新增、改名（出处也能改类型）、合并（改成跟另一个已有的相同）、删除没有名句的。细节见 [.scratch/admin/spec.md](../.scratch/admin/spec.md)。
 
 **不要加以上没有列出的功能。**
 
@@ -77,5 +79,5 @@
 1. **Monorepo 骨架**：pnpm workspace、client 和 server 的基本项目、TypeScript 设定。本地可以同时跑起前后端，client 能成功呼叫 server 的一个测试 API。
 2. **数据库**：Drizzle schema、migration，套用到本地 D1。
 3. **API**：Hono 路由，分成公开的读取 API（列表、筛选、搜索、出处、tags）与 `/api/admin/*` 的写入 API（名句 CRUD、新增出处），写入 API 加上验证 Access JWT 的 middleware；zod 验证，并 export API 类型给 client 使用。
-4. **前端**：公开的名句列表（含搜索和筛选）；`/admin` 页面使用同一套列表，再加上新增 / 编辑 / 删除与出处、tag 的选择，使用 Hono RPC client + TanStack Query，desktop 排版（3440×1440）。
+4. **前端**：公开的名句列表（含搜索和筛选）；`/admin` 页面分成名句 / 出处 / 标签三个分页，名句分页使用同一套列表，再加上新增 / 编辑 / 删除与出处、tag 的选择；出处、标签分页做第一版功能 5。使用 Hono RPC client + TanStack Query，desktop 排版（3440×1440）。这阶段也补上功能 5 需要的 migration 与 API。
 5. **部署**：build client、建立远端 D1、套用 migration、部署到 Cloudflare Workers 并绑定我的网域、关掉 workers.dev。Cloudflare Access（只保护 `/admin` 相关路径）的设定请列出 dashboard 上的操作步骤，由我自己手动完成。

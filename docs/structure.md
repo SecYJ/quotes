@@ -4,8 +4,11 @@
 lines/
 ├── client/   前端 SPA
 ├── server/   后端 Worker（负责 /api/*，同时提供 client 的静态文件）
-└── docs/     项目文件
+├── docs/     项目文件
+└── .scratch/ 新 feature 的 spec 与 ticket（进版本控制）
 ```
+
+根目录的 `GLOSSARY.md` 是领域用语表；架构决定（ADR）放 `docs/adr/`，有需要时才建立。
 
 根目录另有 `package.json`（一键启动前后端、lint、格式化等 scripts）、`pnpm-workspace.yaml`（定义 `client`、`server` 两个 workspace），以及整个 repo 共用的 `.oxlintrc.json`（oxlint）与 `.oxfmtrc.json`（oxfmt）。`.claude/skills/` 放这个项目用的 Claude Code skills（目前有 `tanstack-query-best-practices`）。
 
@@ -47,4 +50,12 @@ lines/
 
 | 路径 | 说明 |
 | --- | --- |
-| `docs/features/YYYY-MM-DD/<feature>/` | 每个 feature 的 `specs.md`（要做什么）、`plans.md`（怎么做）、`tasks.md`（进度清单） |
+| `docs/agents/` | Skills 用的 repo 设定：`issue-tracker.md`（本地 markdown，放 `.scratch/`）、`triage-labels.md`、`domain.md` |
+| `docs/features/YYYY-MM-DD/<feature>/` | 改用 `.scratch/` 之前的 feature 文件：`specs.md`、`plans.md`、`tasks.md`。只当历史记录，不再新增 |
+
+## .scratch/
+
+| 路径 | 说明 |
+| --- | --- |
+| `.scratch/<feature>/spec.md` | 这个 feature 要做什么（`/to-spec` 产生） |
+| `.scratch/<feature>/issues/<NN>-<slug>.md` | 一个 ticket 一个档，依相依顺序编号；顶端有 `Status:` 与 `Blocked by:`（`/to-tickets` 产生） |
