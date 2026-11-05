@@ -15,12 +15,11 @@ import { TagInput } from '@/components/TagInput'
 type Props = {
     // 有 quote 是编辑，没有是新增
     quote?: Quote
-    onSaved: (quote: Quote) => void
-    onCancel: () => void
+    onSaved?: (quote: Quote) => void
     onDeleted?: () => void
 }
 
-export function QuoteForm({ quote, onSaved, onCancel, onDeleted }: Props) {
+export function QuoteForm({ quote, onSaved, onDeleted }: Props) {
     const form = useForm<QuoteFormValues>({
         resolver: zodResolver(quoteFormSchema),
         defaultValues: toFormValues(quote),
@@ -49,7 +48,7 @@ export function QuoteForm({ quote, onSaved, onCancel, onDeleted }: Props) {
         const saved = quote
             ? await updateQuote.mutateAsync({ id: quote.id, input })
             : await createQuote.mutateAsync(input)
-        onSaved(saved)
+        onSaved?.(saved)
     }
 
     async function handleDelete() {
@@ -146,9 +145,6 @@ export function QuoteForm({ quote, onSaved, onCancel, onDeleted }: Props) {
                 <div className="flex items-center gap-2 border-t pt-5">
                     <Button type="submit" size="lg" className="px-5" disabled={saving}>
                         {saving ? '储存中…' : '储存'}
-                    </Button>
-                    <Button type="button" variant="ghost" size="lg" onClick={onCancel}>
-                        取消
                     </Button>
                     {quote && (
                         <Button
