@@ -17,10 +17,10 @@ lines/
 | 路径 | 说明 |
 | --- | --- |
 | `client/src/` | 前端源码，重要的子目录如下 |
-| `client/src/routes/` | 页面路由，TanStack Router 依文件自动产生路由（`routeTree.gen.ts`） |
-| `client/src/components/` | 自己写的组件，例如名句表单 `QuoteForm`、列表 `QuoteList`、筛选侧栏、`ThemeProvider`、`QueryBoundary`（Suspense ＋ error boundary） |
+| `client/src/routes/` | 页面路由，TanStack Router 依文件自动产生路由（`routeTree.gen.ts`）。`index.tsx` 是 `/` 阅览页（只读）；`admin.tsx` 是 `/admin` 的外框（上方分页列 + 登出，下面是 `<Outlet />`）；`admin/index.tsx` 是 `/admin/` 的名句分页（右栏是新增表单，点一句变编辑表单，没有 dialog） |
+| `client/src/components/` | 自己写的组件，例如三栏骨架 `QuoteBrowser`（阅览页与管理页的名句分页共用：侧栏、搜索、列表，右栏与标题列右端的操作由页面传入）、`SelectedQuote`（读取选中的那一句）、名句表单 `QuoteForm`、列表 `QuoteList`、筛选侧栏、`ThemeProvider`、`QueryBoundary`（Suspense ＋ error boundary） |
 | `client/src/components/ui/` | shadcn/ui 组件（Base UI 版），由 `shadcn add` 产生，不手改 |
-| `client/src/lib/` | 共用模块：类型、TanStack Query hooks（`queries.ts`，组件只透过它拿资料）、表单 schema（`quote-form.ts`）、`cn`（`utils.ts`）、Hono RPC client 与把错误转成中文讯息的 `request()`（`api.ts`） |
+| `client/src/lib/` | 共用模块：类型、TanStack Query hooks（`queries.ts`，组件只透过它拿资料）、表单 schema（`quote-form.ts`）、名句列表页共用的 route 设定（`quote-route.ts`：search params 验证、loader、route context）与读写筛选条件的 `useQuoteFilters`（`search.ts`）、`cn`（`utils.ts`）、Hono RPC client 与把错误转成中文讯息的 `request()`（`api.ts`） |
 | `client/dist/` | `vite build` 的输出，由 Worker 当成静态文件提供。自动产生，不进版本控制 |
 | `client/.tanstack/` | TanStack Router 插件的暂存。自动产生，不进版本控制 |
 | `client/vite.config.ts` | Vite 设定：插件，以及开发时把 `/api` proxy 到 wrangler dev |

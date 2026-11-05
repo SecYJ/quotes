@@ -10,7 +10,7 @@ export default async function ({ page, expect, shot, step, api }) {
     step('点一句，右栏显示完整内容')
     await page.getByRole('button', { name: /生存还是毁灭/ }).click()
     await expect(page.getByRole('blockquote')).toContainText('生存还是毁灭')
-    await expect(page.getByRole('button', { name: '编辑名句' })).toBeVisible()
+    await expect(page.getByRole('button', { name: '编辑名句' })).toHaveCount(0)
     await expect(page.getByRole('button', { name: /生存还是毁灭/ })).toHaveAttribute(
         'aria-current',
         'true',

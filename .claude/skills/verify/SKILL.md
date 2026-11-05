@@ -5,7 +5,7 @@ description: 启动 Lines（名句记录 App，Vite + React 前端 + Hono/Wrangl
 
 # verify：驱动 Lines 并留下证据
 
-Lines 唯一的使用介面是浏览器里的单页（`/`）：左栏筛选、中间搜索 + 列表、右栏详细 / 编辑，新增用 dialog。资料来自同一个 dev 环境里的 `/api/*`（Hono on `wrangler dev`，本地 D1）。所有操作都透过一支 helper：
+Lines 有两个页面，都是三栏（左栏筛选、中间搜索 + 列表）：阅览页 `/` 只读，右栏看详细；管理页 `/admin`（本地由 dev bypass 放行）负责所有写入，右栏预设是新增表单，点中间一句变编辑表单，没有 dialog。资料来自同一个 dev 环境里的 `/api/*`（Hono on `wrangler dev`，本地 D1）。所有操作都透过一支 helper：
 
 ```sh
 node .claude/skills/verify/scripts/lines.mjs up       # seed + 启动，等到能用
@@ -68,17 +68,18 @@ export default async function ({ page, expect, shot, step, api }) {
 | --- | --- |
 | 搜索框 | `getByRole('searchbox', { name: '搜索' })` |
 | row / grid 切换 | `getByRole('button', { name: '列表显示' })`、`'网格显示'`（选中的有 `aria-pressed="true"`） |
-| 新增 | `getByRole('button', { name: '新增名句' })` → `getByRole('dialog', { name: '新增名句' })` |
+| 进出管理页 | 阅览页角落 `getByRole('link', { name: '登入' })`（`href="/admin"`）；管理页上方 `getByRole('link', { name: '登出' })`（`href="/cdn-cgi/access/logout"`）；`getByRole('navigation', { name: '管理分页' })` 里的 `link` `'名句'`（`aria-current="page"`） |
+| 管理页右栏 | 标题 `getByRole('heading', { name: '新增名句' / '编辑名句' })`；编辑时有按钮 `'新增另一句'`，回到空白新增表单 |
 | 列表里的一句 | `getByRole('button', { name: /句子里的字/ })`（选中的有 `aria-current="true"`） |
-| 详细栏 | `getByRole('blockquote')`、`getByRole('button', { name: '编辑名句' })` |
+| 阅览页详细栏 | `getByRole('blockquote')`（阅览页没有任何写入元件） |
 | 表单栏位 | `getByLabel('句子内容' / '谁说的' / '出处细节' / '标签' / '笔记' / '新增出处')` |
 | 出处选单 | `getByRole('combobox', { name: '出处' })` → `page.getByRole('option', { name: '哈姆雷特' })`；`'＋ 新增出处'` 切换成新增；类型是 `combobox` `'出处类型'` |
 | 标签 | 输入后 `press('Enter')`；建议按钮 `'+ 人生'`；已加的标签 `'移除标签 人生'` |
-| 表单按钮 | `'储存'`、`'取消'`、`'删除'` → 再按一次 `'确定删除？'` |
+| 表单按钮（只在 `/admin`） | `'储存'`、`'删除'`（只有编辑时有）→ 再按一次 `'确定删除？'` |
 | 侧栏 | `'全部名句 12'`、出处 `'哈姆雷特 1'`、标签 `'#人生 6'`、`'清除筛选'` |
 | 主题 | `getByRole('button', { name: '切换主题' })` → `getByRole('menuitemradio', { name: '深色' / '浅色' / '跟随系统' })`，`html` 有 `dark` class |
 
-Select 与 dropdown 的选项渲染在 portal 里，要用 `page.getByRole('option')`，不能用 `dialog.getByRole`。
+Select 与 dropdown 的选项渲染在 portal 里，要用 `page.getByRole('option')`，不能用 `locator.getByRole` 限定在右栏里找。
 
 **错误画面**：只在要看错误状态时，在 journey 里用 `page.route('**/api/quotes*', (r) => r.fulfill({ status: 500, contentType: 'application/json', body: '{"error":"服务器错误"}' }))` 模拟 server 错误，`r.abort()` 模拟断线。这类 journey 会故意产生 console error（资源载入失败），结果会是 `FAIL (console errors)`：读 `report.json` 的 `consoleErrors`，确认只有被拦截的请求，再把它当成预期结果回报。
 
