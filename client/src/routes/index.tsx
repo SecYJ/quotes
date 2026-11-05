@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { QuoteBrowser } from '@/components/QuoteBrowser'
 import { QuoteDetail } from '@/components/QuoteDetail'
 import { SelectedQuote } from '@/components/SelectedQuote'
@@ -24,15 +24,17 @@ function QuotesPage() {
             selectedId={panel.mode === 'view' ? panel.id : null}
             onSelect={(id) => setPanel({ mode: 'view', id })}
             headerAction={
-                <Button
-                    variant="ghost"
-                    size="lg"
-                    className="text-muted-foreground"
-                    nativeButton={false}
-                    render={<Link to="/admin" />}
+                // 用 buttonVariants 而不是 Button 的 render：后者会把链接标成 role="button"
+                <Link
+                    to="/admin"
+                    className={buttonVariants({
+                        variant: 'ghost',
+                        size: 'lg',
+                        className: 'text-muted-foreground',
+                    })}
                 >
                     登入
-                </Button>
+                </Link>
             }
             panelResetKey={panel}
         >
