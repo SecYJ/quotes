@@ -10,7 +10,7 @@ lines/
 
 根目录的 `GLOSSARY.md` 是领域用语表；架构决定（ADR）放 `docs/adr/`，有需要时才建立。
 
-根目录另有 `package.json`（一键启动前后端、lint、格式化等 scripts）、`pnpm-workspace.yaml`（定义 `client`、`server` 两个 workspace），以及整个 repo 共用的 `.oxlintrc.json`（oxlint）与 `.oxfmtrc.json`（oxfmt）。`.claude/skills/` 放这个项目用的 Claude Code skills（目前有 `tanstack-query-best-practices`）。
+根目录另有 `package.json`（一键启动前后端、lint、格式化等 scripts）、`pnpm-workspace.yaml`（定义 `client`、`server` 两个 workspace），以及整个 repo 共用的 `.oxlintrc.json`（oxlint）与 `.oxfmtrc.json`（oxfmt）。`.claude/skills/` 放这个项目用的 Claude Code skills：`tanstack-query-best-practices`，以及 `verify`（启动 app、用 Playwright 操作并留证据；`scripts/lines.mjs` 是 helper，`features/` 是功能验证清单，`journeys/smoke.mjs` 是范本）。`verify` 的 dev log 与证据写在根目录的 `tmp/verify/`，不进版本控制。
 
 ## client/
 

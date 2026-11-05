@@ -21,6 +21,17 @@
 - 验证前后端连通：打开 http://localhost:5173/api/health 应回传 `{ "ok": true, ... }`。
 - 本地没有 Cloudflare Access：dev script 用 `--var ACCESS_DEV_BYPASS:true` 让 `/api/admin/*` 跳过 JWT 验证。直接跑 `wrangler dev`（不经过 dev script）时写入 API 会回 403。
 
+## 浏览器验证（verify skill）
+
+细节见 `.claude/skills/verify/SKILL.md`。
+
+| 指令 | 作用 |
+| --- | --- |
+| `node .claude/skills/verify/scripts/lines.mjs up` | migrate + seed 本地 D1，背景启动 `pnpm dev`，等到页面与 API 都能用 |
+| `node .claude/skills/verify/scripts/lines.mjs doctor` | 只读检查：是不是 `up` 启动的、port、health、名句数、写入 API 的 dev bypass |
+| `node .claude/skills/verify/scripts/lines.mjs drive <journey.mjs>` | 用 Playwright 跑一个 journey，证据存到 `tmp/verify/runs/<时间>-<名称>/` |
+| `node .claude/skills/verify/scripts/lines.mjs down` | 只停掉 `up` 启动的 dev server，证据保留 |
+
 ## 只针对单一 package
 
 用 `pnpm --filter <package> <script>`：

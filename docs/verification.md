@@ -16,7 +16,7 @@ pnpm typecheck   # 所有 workspace 的 tsc
 
 ## 2. Playwright 浏览器测试
 
-用无头浏览器实际操作一轮，确认画面与互动正常。
+用无头浏览器实际操作一轮，确认画面与互动正常。用 `verify` skill（`.claude/skills/verify/SKILL.md`）的 helper 做下面的启动、驱动与关闭；各功能的操作步骤见 `.claude/skills/verify/features/`。
 
 1. 先跑 `pnpm --filter server db:seed:local` 让本地 D1 回到固定的范例资料，再用 `pnpm dev` 同时启动 client 与 server。
 2. 在 scratchpad 写一次性的 Playwright 脚本（不放进 repo），viewport 用 `3440×1300`。
