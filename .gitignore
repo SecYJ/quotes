@@ -1,10 +1,11 @@
 node_modules
 dist
-*.tsbuildinfo
-.wrangler
-.dev.vars*
-!.dev.vars.example
+.astro
 .DS_Store
 
 # verify skill 的 dev log 与证据（.claude/skills/verify）
 /tmp/
+
+# Impeccable 设计过程的草稿与截图（只在本机）
+/.impeccable/mocks/
+/.impeccable/review/

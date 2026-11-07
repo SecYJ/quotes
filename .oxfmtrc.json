@@ -4,10 +4,5 @@
     "tabWidth": 4,
     "semi": false,
     "singleQuote": true,
-    "ignorePatterns": [
-        "**/routeTree.gen.ts",
-        "**/worker-configuration.d.ts",
-        "pnpm-lock.yaml",
-        "**/*.md"
-    ]
+    "ignorePatterns": ["pnpm-lock.yaml", "**/*.md", ".astro/**", "dist/**"]
 }

@@ -1,6 +1,8 @@
-packages:
-    - client
-    - server
-allowBuilds:
-    esbuild: true
-    workerd: true
+minimumReleaseAgeExclude:
+    - '@astrojs/internal-helpers@0.13.1'
+    - '@astrojs/markdown-satteri@0.4.7'
+    - astro@7.4.7
+
+overrides:
+    # @astrojs/language-server 的 wasm 绑定会解析到 2.0 beta，跟 @emnapi/core 1.x 不相容，astro check 会当掉
+    '@emnapi/runtime': 1.11.3

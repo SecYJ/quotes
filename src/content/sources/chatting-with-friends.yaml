@@ -1,0 +1,18 @@
+type: real_life
+title: 朋友聊天
+quotes:
+    - content: 不要等准备好了才开始，开始了才会准备好。
+      speaker: 小林
+      detail: 周末吃火锅的时候
+      note: 在犹豫要不要换工作时听到的。
+      tags: [工作, 勇气]
+      added: 2026-09-15
+    - content: 累的时候就休息，不要用"再撑一下"骗自己。
+      speaker: 阿珍
+      tags: [人生]
+      added: 2026-09-16
+    - content: 时间不会让事情变好，是你在那段时间里做的事让它变好。
+      speaker: 小林
+      detail: 下班一起走路回家
+      tags: [人生, 时间]
+      added: 2026-09-22

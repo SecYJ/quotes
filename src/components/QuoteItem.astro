@@ -1,0 +1,53 @@
+---
+import type { Quote } from '@/lib/quotes'
+import { isoDate, sourceName } from '@/lib/labels'
+
+type Props = {
+    quote: Quote
+    hidden?: boolean
+}
+
+const { quote, hidden } = Astro.props
+const search = `${quote.content}\n${quote.speaker ?? ''}`.toLowerCase()
+---
+
+<article
+    class="quote"
+    data-source={quote.source.id}
+    data-tags={quote.tags.join('\n')}
+    data-search={search}
+    hidden={hidden}
+>
+    <blockquote class="content" data-highlight>{quote.content}</blockquote>
+    <p class="byline">
+        {
+            quote.speaker && (
+                <>
+                    <span class="speaker" data-highlight>
+                        {quote.speaker}
+                    </span>
+                    <span class="sep" aria-hidden="true">
+                        ·
+                    </span>
+                </>
+            )
+        }
+        <a class="source-link" href={`?source=${quote.source.id}`} data-filter-source={quote.source.id}
+            >{sourceName(quote.source)}</a
+        >
+        {quote.detail && <span class="detail">{quote.detail}</span>}
+    </p>
+    {quote.note && <p class="note">{quote.note}</p>}
+    <p class="foot">
+        <time datetime={isoDate(quote.added)}>{isoDate(quote.added)}</time>
+        <span class="tags">
+            {
+                quote.tags.map((tag) => (
+                    <a href={`?tag=${encodeURIComponent(tag)}`} data-filter-tag={tag}>
+                        {tag}
+                    </a>
+                ))
+            }
+        </span>
+    </p>
+</article>

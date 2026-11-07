@@ -1,0 +1,129 @@
+---
+import '@fontsource/noto-serif-sc/600.css'
+import '@fontsource/noto-serif-sc/900.css'
+import '@/styles/global.css'
+import QuoteItem from '@/components/QuoteItem.astro'
+import { loadQuotes } from '@/lib/quotes'
+import { formatDate, sourceTypeLabel, sourceTypes } from '@/lib/labels'
+
+const quotes = await loadQuotes()
+
+const sources = new Map<string, { id: string; title: string; type: string; count: number }>()
+const tags = new Map<string, number>()
+for (const q of quotes) {
+    const s = sources.get(q.source.id) ?? { ...q.source, count: 0 }
+    s.count++
+    sources.set(q.source.id, s)
+    for (const t of q.tags) tags.set(t, (tags.get(t) ?? 0) + 1)
+}
+const sourceGroups = sourceTypes
+    .map((type) => ({
+        type,
+        label: sourceTypeLabel[type],
+        sources: [...sources.values()].filter((s) => s.type === type),
+    }))
+    .filter((g) => g.sources.length > 0)
+const tagList = [...tags].toSorted((a, b) => b[1] - a[1])
+const updated = quotes[0]?.added
+
+const SIDE = 3
+---
+
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content="#141312" />
+        <meta name="description" content="一个人收集的名句：剧、书、现实生活里听到的句子，每句都记着出处。" />
+        <title>Lines · 名句副刊</title>
+    </head>
+    <body>
+        <div class="paper">
+            <header class="mast">
+                <h1 class="mast-title">Lines<span class="stop">.</span></h1>
+                <p class="dateline">
+                    名句副刊<br />
+                    {updated && <>更新于 {formatDate(updated)} · </>}共 {quotes.length} 句
+                </p>
+            </header>
+
+            <nav class="index" aria-label="筛选名句">
+                <form class="search" role="search" action="" method="get">
+                    <label for="q" class="visually-hidden">搜索句子或说话人</label>
+                    <input id="q" name="q" type="search" placeholder="搜索句子或说话人" autocomplete="off" />
+                </form>
+
+                <details class="index-panel" open>
+                    <summary>出处与标签</summary>
+                    <div class="index-row">
+                        <h2 class="index-label">出处</h2>
+                        <ul class="index-list">
+                            <li><a href="?" data-filter-source="" aria-current="true">全部</a></li>
+                            {
+                                sourceGroups.map((g) => (
+                                    <li class="index-group">
+                                        <span class="group-label">{g.label}</span>
+                                        <ul>
+                                            {g.sources.map((s) => (
+                                                <li>
+                                                    <a href={`?source=${s.id}`} data-filter-source={s.id}>
+                                                        {s.title}
+                                                        <span class="count">{s.count}</span>
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                    <div class="index-row">
+                        <h2 class="index-label">标签</h2>
+                        <ul class="index-list">
+                            <li><a href="?" data-filter-tag="" aria-current="true">全部</a></li>
+                            {
+                                tagList.map(([tag, count]) => (
+                                    <li>
+                                        <a href={`?tag=${encodeURIComponent(tag)}`} data-filter-tag={tag}>
+                                            {tag}
+                                            <span class="count">{count}</span>
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </details>
+            </nav>
+
+            <p class="status" aria-live="polite" hidden>
+                <span class="status-text"></span>
+                <a href="?" class="clear">清除筛选</a>
+            </p>
+
+            <main class="issue">
+                <section class="lead" aria-label="最新">
+                    {quotes.slice(0, 1).map((q) => <QuoteItem quote={q} />)}
+                </section>
+                <section class="side" aria-label="接着">
+                    {quotes.slice(1, 1 + SIDE).map((q) => <QuoteItem quote={q} />)}
+                </section>
+                <section class="rest" aria-label="更早">
+                    {quotes.slice(1 + SIDE).map((q) => <QuoteItem quote={q} />)}
+                </section>
+                <p class="empty" hidden>
+                    没有符合的名句。<a href="?" class="clear">清除筛选</a>
+                </p>
+            </main>
+
+            <footer class="colophon">Lines · 一个人的名句副刊</footer>
+        </div>
+
+        <script>
+            import { startIssue } from '@/scripts/issue'
+            startIssue()
+        </script>
+    </body>
+</html>

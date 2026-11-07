@@ -1,13 +1,20 @@
 {
+    "enabledPlugins": {
+        "pstack@pstack-claude": true,
+        "impeccable@impeccable": true
+    },
     "extraKnownMarketplaces": {
         "pstack-claude": {
             "source": {
                 "source": "github",
                 "repo": "michael-denyer/pstack-claude"
             }
+        },
+        "impeccable": {
+            "source": {
+                "source": "github",
+                "repo": "pbakaus/impeccable"
+            }
         }
-    },
-    "enabledPlugins": {
-        "pstack@pstack-claude": true
     }
 }

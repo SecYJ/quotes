@@ -1,0 +1,176 @@
+{
+    "schemaVersion": 2,
+    "generatedAt": "2026-11-07T02:05:00Z",
+    "title": "Design System: Lines",
+    "extensions": {
+        "colorMeta": {
+            "newsprint-black": {
+                "role": "neutral",
+                "displayName": "Newsprint Black",
+                "tonalRamp": [
+                    "#0b0a0a",
+                    "#141312",
+                    "#1f1d1b",
+                    "#2b2926",
+                    "#3a3835",
+                    "#5a5651",
+                    "#8a857e",
+                    "#c9c4bb"
+                ]
+            },
+            "bone-ink": {
+                "role": "neutral",
+                "displayName": "Bone Ink",
+                "tonalRamp": [
+                    "#3d3a35",
+                    "#5e5a53",
+                    "#807b72",
+                    "#a29d93",
+                    "#c3beb4",
+                    "#d8d3c9",
+                    "#e8e4dc",
+                    "#f5f2ec"
+                ]
+            },
+            "ash": {
+                "role": "neutral",
+                "displayName": "Ash",
+                "tonalRamp": [
+                    "#2e2c29",
+                    "#45423e",
+                    "#5d5a54",
+                    "#76726b",
+                    "#9a948a",
+                    "#b4afa6",
+                    "#cdc9c1",
+                    "#e6e3dd"
+                ]
+            },
+            "column-rule": {
+                "role": "neutral",
+                "displayName": "Column Rule",
+                "tonalRamp": [
+                    "#1c1b19",
+                    "#262422",
+                    "#302e2b",
+                    "#3a3835",
+                    "#4a4844",
+                    "#5d5a55",
+                    "#77746e",
+                    "#95918a"
+                ]
+            },
+            "press-red": {
+                "role": "primary",
+                "displayName": "Press Red",
+                "tonalRamp": [
+                    "#4a1512",
+                    "#6e1f1a",
+                    "#932a23",
+                    "#b8352c",
+                    "#d6493f",
+                    "#e2736b",
+                    "#ee9f99",
+                    "#f8cdc9"
+                ]
+            }
+        },
+        "typographyMeta": {
+            "masthead": { "displayName": "Masthead", "purpose": "Only the Lines. masthead." },
+            "lead-quote": {
+                "displayName": "Lead quote",
+                "purpose": "The first quote of the current view."
+            },
+            "quote": { "displayName": "Quote", "purpose": "Every other quote." },
+            "body": { "displayName": "Interface", "purpose": "Index links and search." },
+            "label": {
+                "displayName": "Label",
+                "purpose": "Datelines, bylines, counts, dates; tabular numerals."
+            }
+        },
+        "shadows": [],
+        "motion": [
+            {
+                "name": "arrive",
+                "value": "0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+                "purpose": "The lead quote settling in after a filter change; off under reduced motion."
+            }
+        ],
+        "breakpoints": [
+            { "name": "tablet", "value": "48rem" },
+            { "name": "ultrawide", "value": "140rem" },
+            { "name": "ultrawide-xl", "value": "200rem" }
+        ]
+    },
+    "components": [
+        {
+            "name": "Masthead",
+            "kind": "custom",
+            "description": "Heavy serif title with the one standing red stop, dateline at right, double rule under.",
+            "html": "<header class=\"ds-mast\"><h1 class=\"ds-mast-title\">Lines<span class=\"ds-stop\">.</span></h1><p class=\"ds-dateline\">名句副刊<br>更新于 2026 年 9 月 22 日 · 共 12 句</p></header>",
+            "css": ".ds-mast { display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; padding-bottom:.875rem; border-bottom:4px double #e8e4dc; background:#141312; color:#e8e4dc; } .ds-mast-title { font-family:'Noto Serif SC',serif; font-weight:900; font-size:4rem; line-height:.95; letter-spacing:-.02em; margin:0; } .ds-stop { color:#d6493f; } .ds-dateline { font-size:.8125rem; line-height:1.7; color:#9a948a; text-align:right; margin:0; font-variant-numeric:tabular-nums; }"
+        },
+        {
+            "name": "Index link",
+            "kind": "nav",
+            "refersTo": "index-link",
+            "description": "A source or tag in the index; the current one is red, bold, underlined.",
+            "html": "<nav class=\"ds-index\"><a href=\"#\" aria-current=\"true\">全部</a><a href=\"#\">哈姆雷特<span class=\"ds-count\">1</span></a><a href=\"#\">论语<span class=\"ds-count\">2</span></a></nav>",
+            "css": ".ds-index { display:flex; gap:1.125rem; background:#141312; padding:1rem; } .ds-index a { color:#e8e4dc; text-decoration:none; font-size:.9375rem; text-underline-offset:.3em; } .ds-index a:hover { text-decoration:underline; } .ds-index a:focus-visible { outline:2px solid #d6493f; outline-offset:3px; } .ds-index a[aria-current] { color:#d6493f; font-weight:700; text-decoration:underline 2px; } .ds-count { margin-left:.2em; font-size:.75rem; color:#9a948a; font-weight:400; }"
+        },
+        {
+            "name": "Search field",
+            "kind": "input",
+            "refersTo": "search-field",
+            "description": "Underline-only search; the line turns red on focus.",
+            "html": "<input class=\"ds-search\" type=\"search\" placeholder=\"搜索句子或说话人\">",
+            "css": ".ds-search { width:20rem; padding:.5rem 0; background:#141312; color:#e8e4dc; border:0; border-bottom:1px solid #9a948a; border-radius:0; font-size:1rem; caret-color:#d6493f; } .ds-search::placeholder { color:#9a948a; } .ds-search:focus-visible { outline:none; border-bottom-color:#d6493f; box-shadow:0 1px 0 #d6493f; }"
+        },
+        {
+            "name": "Quote item",
+            "kind": "custom",
+            "description": "Quote in serif, then speaker and linked source, note, date and tags; a hairline below.",
+            "html": "<article class=\"ds-quote\"><blockquote class=\"ds-content\">先把问题讲清楚，答案通常就出来了一半。</blockquote><p class=\"ds-byline\"><span class=\"ds-speaker\">主管</span> · <a href=\"#\">公司会议</a> 季度规划会议</p><p class=\"ds-foot\">2026-09-18 <a href=\"#\">#工作</a></p></article>",
+            "css": ".ds-quote { padding:1.25rem 0; border-bottom:1px solid #3a3835; background:#141312; color:#e8e4dc; } .ds-content { margin:0; font-family:'Noto Serif SC',serif; font-weight:600; font-size:1.1875rem; line-height:1.75; } .ds-byline { margin:.625rem 0 0; font-size:.8125rem; color:#9a948a; } .ds-speaker { color:#e8e4dc; } .ds-foot { margin:.5rem 0 0; font-size:.75rem; color:#9a948a; font-variant-numeric:tabular-nums; } .ds-quote a { color:inherit; text-decoration:none; } .ds-quote a:hover { text-decoration:underline; text-underline-offset:.3em; }"
+        },
+        {
+            "name": "Search hit",
+            "kind": "custom",
+            "description": "Matched characters turn press red with an underline.",
+            "html": "<p class=\"ds-hit\">不要等准备好了才开始——<mark>小林</mark></p>",
+            "css": ".ds-hit { background:#141312; color:#e8e4dc; font-family:'Noto Serif SC',serif; font-size:1.1875rem; padding:1rem; margin:0; } .ds-hit mark { background:none; color:#d6493f; text-decoration:underline 2px; text-underline-offset:.25em; }"
+        }
+    ],
+    "narrative": {
+        "northStar": "The Evening Supplement",
+        "overview": "Lines is set as an evening literary supplement printed for one person's collection: masthead, dateline, an index of sources and tags, a lead item and columns of short items. The frame carries the character; the reading column stays calm. Dark because of the use scene, never pure white or pure black.",
+        "keyCharacteristics": [
+            "Heavy serif masthead with one red stop",
+            "Lead quote over two thirds, side column of three, columns below",
+            "Hierarchy from weight, size and rules, never cards or shadows",
+            "Every filter visible in the index"
+        ],
+        "rules": [
+            {
+                "name": "The One Red Rule",
+                "body": "Press red marks only the masthead stop, the current filter and search hits.",
+                "section": "colors"
+            },
+            {
+                "name": "Rules, not boxes",
+                "body": "Groups separate by double rules and hairlines; no cards, fills or shadows.",
+                "section": "elevation"
+            }
+        ],
+        "dos": [
+            "Do make emphasis with weight or size",
+            "Do keep every quote's source and tags clickable"
+        ],
+        "donts": [
+            "Don't use a pure white or pure black ground",
+            "Don't put kickers above quotes or number items",
+            "Don't add cards, shadows, gradients or rounded blocks",
+            "Don't use red anywhere else"
+        ]
+    }
+}
