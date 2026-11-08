@@ -60,19 +60,20 @@ export function startIssue() {
     const input = document.querySelector<HTMLInputElement>('#q')!
     const panel = document.querySelector<HTMLDetailsElement>('.index-panel')!
     const items = [...document.querySelectorAll<HTMLElement>('.quote')]
+    // 面板只有标签，出处名称从名句卡片上读
     const sourceNames = new Map(
-        [...document.querySelectorAll<HTMLElement>('.index [data-filter-source]')].map((a) => [
+        [...document.querySelectorAll<HTMLElement>('.quote [data-filter-source]')].map((a) => [
             a.dataset.filterSource!,
-            a.firstChild?.textContent?.trim() ?? '',
+            a.textContent?.trim() ?? '',
         ]),
     )
 
     let filters = readFilters()
 
-    // 宽屏永远展开；手机预设收起，让最新那句先被看到，有筛选时才展开
+    // 宽屏永远展开；手机预设收起，让最新那句先被看到，有标签筛选时才展开
     const wide = matchMedia('(min-width: 48rem)')
     function syncPanel() {
-        panel.open = wide.matches || Boolean(filters.source || filters.tag)
+        panel.open = wide.matches || Boolean(filters.tag)
     }
     wide.addEventListener('change', syncPanel)
     syncPanel()
@@ -99,8 +100,6 @@ export function startIssue() {
 
         empty.hidden = visible.length > 0
         rest.hidden = visible.length <= 1 + SIDE
-        for (const a of document.querySelectorAll<HTMLAnchorElement>('.index [data-filter-source]'))
-            a.toggleAttribute('aria-current', a.dataset.filterSource === filters.source)
         for (const a of document.querySelectorAll<HTMLAnchorElement>('.index [data-filter-tag]'))
             a.toggleAttribute(
                 'aria-current',

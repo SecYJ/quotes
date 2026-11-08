@@ -8,7 +8,7 @@ type Props = {
 }
 
 const { quote, hidden } = Astro.props
-const search = `${quote.content}\n${quote.speaker ?? ''}`.toLowerCase()
+const search = `${quote.content}\n${quote.speaker ?? ''}\n${quote.source.title}`.toLowerCase()
 ---
 
 <article
@@ -32,8 +32,11 @@ const search = `${quote.content}\n${quote.speaker ?? ''}`.toLowerCase()
                 </>
             )
         }
-        <a class="source-link" href={`?source=${quote.source.id}`} data-filter-source={quote.source.id}
-            >{sourceName(quote.source)}</a
+        <a
+            class="source-link"
+            href={`?source=${quote.source.id}`}
+            data-filter-source={quote.source.id}
+            data-highlight>{sourceName(quote.source)}</a
         >
         {quote.detail && <span class="detail">{quote.detail}</span>}
     </p>

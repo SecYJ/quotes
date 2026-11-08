@@ -54,6 +54,7 @@ const page = await open('behavior', 1440, 900)
 const total = await page.locator('.quote').count()
 check('载入：所有名句都显示', (await visible(page)) === total, `${total} 句`)
 check('载入：头条只有一句', (await page.locator('.lead .quote').count()) === 1)
+check('索引：没有出处清单', (await page.locator('.index [data-filter-source]').count()) === 0)
 
 await page.locator('.index a[data-filter-tag]').nth(1).click()
 const tag = await page
@@ -64,10 +65,17 @@ check('标签筛选：网址带 tag', new URL(page.url()).searchParams.get('tag'
 check('标签筛选：只剩有这个标签的句子', tagged > 0 && tagged < total, `${tagged} 句`)
 await shot(page, 'filter-tag')
 
-await page.locator('.index a[data-filter-source]').nth(1).click()
+const sourceLink = page.locator('.quote:not([hidden]) a[data-filter-source]').first()
+const sourceTitle = (await sourceLink.textContent()).trim()
+await sourceLink.click()
 const combo = await visible(page)
-check('出处 + 标签：结果不多于只筛标签', combo <= tagged, `${combo} 句`)
+check('出处 + 标签：结果不多于只筛标签', combo > 0 && combo <= tagged, `${combo} 句`)
 check('出处 + 标签：网址两个都有', /source=.*tag=|tag=.*source=/.test(page.url()), page.url())
+check(
+    '出处 + 标签：状态列写出出处名称',
+    (await page.locator('.status-text').textContent()).includes(`出处：${sourceTitle}`),
+    await page.locator('.status-text').textContent(),
+)
 
 await page.goBack()
 check('上一页：回到只筛标签', (await visible(page)) === tagged)
@@ -83,6 +91,14 @@ check('搜索：命中的字有标记', (await page.locator('.quote:not([hidden]
 check('搜索：网址带 q', new URL(page.url()).searchParams.get('q') === speaker)
 await shot(page, 'search')
 
+const title = sourceTitle.replace(/[《》]/g, '')
+await page.fill('#q', title)
+check('搜索出处：有结果', (await visible(page)) > 0, `「${title}」`)
+check(
+    '搜索出处：出处名称有标记',
+    (await page.locator('.quote:not([hidden]) .source-link mark').count()) > 0,
+)
+
 await page.fill('#q', 'zzzz-no-match')
 check('没有结果：显示空状态', await page.locator('.empty').isVisible())
 await shot(page, 'empty')
@@ -91,15 +107,12 @@ await page.close()
 // 分享的网址直接打开
 const shared = await open('shared-url', 390, 844, `?tag=${encodeURIComponent(tag)}`)
 check('打开带筛选的网址：直接套用', (await visible(shared)) === tagged)
-check('手机：有筛选时展开出处与标签', await shared.locator('.index-panel').evaluate((d) => d.open))
+check('手机：有标签筛选时展开', await shared.locator('.index-panel').evaluate((d) => d.open))
 await shot(shared, 'mobile-shared-url')
 await shared.close()
 
 const phone = await open('mobile-default', 390, 844)
-check(
-    '手机：没筛选时收起出处与标签',
-    !(await phone.locator('.index-panel').evaluate((d) => d.open)),
-)
+check('手机：没筛选时收起', !(await phone.locator('.index-panel').evaluate((d) => d.open)))
 await phone.close()
 
 check('没有 console error / page error', errors.length === 0, errors.join(' | '))
