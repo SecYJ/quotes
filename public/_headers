@@ -1,0 +1,6 @@
+# Cloudflare Pages 的回应标头。Astro 会把 public/ 原样复制到 dist/。
+# CSP：只允许同源的脚本、样式、字体；图片多放行 data:（纸纹是写在 CSS 里的 SVG）。
+# frame-ancestors 与 X-Frame-Options 都是禁止别的网站把这一页放进 iframe，后者给旧浏览器。
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Frame-Options: DENY

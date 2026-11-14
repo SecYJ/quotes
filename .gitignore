@@ -9,3 +9,22 @@ dist
 # Impeccable 设计过程的草稿与截图（只在本机）
 /.impeccable/mocks/
 /.impeccable/review/
+
+# 密钥与本机环境：从来不进 repo
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+.wrangler/
+*.log
+*.sqlite
+*.db
+
+# 各种工具只在本机用的东西
+/.claude/worktrees/
+/.claude/settings.local.json
+/.impeccable/hook.*.json
+/.impeccable/config.local.json
+/.impeccable/questions/
+.vscode/
+.idea/
