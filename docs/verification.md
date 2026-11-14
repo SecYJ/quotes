@@ -11,9 +11,10 @@ pnpm fmt         # 先格式化
 pnpm lint        # oxlint
 pnpm typecheck   # astro check
 pnpm build       # 也会检查资料档的规则
+pnpm knip        # 没用到的档案、export、套件
 ```
 
-都要零错误。lint 的 warning 也要看过，是这次改动造成的就修掉。
+都要零错误。knip 报出没用到的东西就删掉；真的要留（例如只给脚本用的入口）就加进 `knip.json` 的 `entry`。lint 的 warning 也要看过，是这次改动造成的就修掉。
 
 ## 2. Playwright 浏览器测试
 

@@ -9,8 +9,9 @@
 | `pnpm build` | build 到 `dist/`；资料不符合规则时会在这里失败 |
 | `pnpm preview` | 用 build 好的 `dist/` 跑一个本地伺服器，看正式版的样子 |
 | `pnpm typecheck` | `astro check`：TypeScript 与 `.astro` 档的型别检查 |
-| `pnpm lint` / `pnpm lint:fix` | oxlint |
+| `pnpm lint` / `pnpm lint:fix` | oxlint（含 `func-style` 与 eslint-plugin-zod 规则） |
 | `pnpm fmt` / `pnpm fmt:check` | oxfmt 格式化 / 只检查 |
+| `pnpm knip` | 找没用到的档案、export 与套件 |
 | `node .claude/skills/verify/scripts/shots.mjs` | 用 Playwright 截图各种画面大小与筛选状态（需要先 `pnpm build && pnpm preview`），见 docs/verification.md |
 
 ## 新增一句名句

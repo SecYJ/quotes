@@ -15,7 +15,8 @@ src/
 astro.config.mjs       Astro 设定
 tsconfig.json          继承 astro/tsconfigs/strict，`@/*` → `src/*`
 pnpm-workspace.yaml    pnpm 设定（minimumReleaseAge 例外、@emnapi/runtime override）
-.oxlintrc.json         lint 设定（含「只用 @/ import」规则）
+.oxlintrc.json         lint 设定（「只用 @/ import」、func-style、eslint-plugin-zod）
+knip.json              knip 设定（verify 脚本当 entry）
 .oxfmtrc.json          格式设定
 PRODUCT.md             Impeccable 用的产品描述
 .impeccable/           Impeccable 的 surface brief 与 design.json（mocks/、review/ 是本机草稿，已 gitignore）

@@ -1,19 +1,19 @@
 {
     "enabledPlugins": {
-        "pstack@pstack-claude": true,
-        "impeccable@impeccable": true
+        "impeccable@impeccable": true,
+        "cloudflare@cloudflare": true
     },
     "extraKnownMarketplaces": {
-        "pstack-claude": {
-            "source": {
-                "source": "github",
-                "repo": "michael-denyer/pstack-claude"
-            }
-        },
         "impeccable": {
             "source": {
                 "source": "github",
                 "repo": "pbakaus/impeccable"
+            }
+        },
+        "cloudflare": {
+            "source": {
+                "source": "github",
+                "repo": "cloudflare/skills"
             }
         }
     }

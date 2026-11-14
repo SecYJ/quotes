@@ -10,17 +10,21 @@
         "lint": "oxlint",
         "lint:fix": "oxlint --fix",
         "fmt": "oxfmt",
-        "fmt:check": "oxfmt --check"
+        "fmt:check": "oxfmt --check",
+        "knip": "knip"
     },
     "dependencies": {
         "@fontsource/noto-serif-sc": "5.3.1",
-        "astro": "7.4.7"
+        "astro": "7.4.11",
+        "zod": "4.6.7"
     },
     "devDependencies": {
         "@astrojs/check": "^0.9.12",
-        "oxfmt": "^0.76.0",
-        "oxlint": "^1.91.0",
-        "playwright": "^1.64.1",
+        "eslint-plugin-zod": "^5.2.2",
+        "knip": "^6.45.1",
+        "oxfmt": "^0.78.0",
+        "oxlint": "^1.93.0",
+        "playwright": "^1.65.0",
         "typescript": "^6.0.3"
     },
     "engines": {

@@ -1,16 +1,16 @@
 import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
-import { z } from 'astro/zod'
+import * as z from 'zod'
 
-const text = z.string().trim().min(1)
+const textSchema = z.string().trim().min(1)
 
-const quote = z
+const quoteSchema = z
     .object({
-        content: text,
-        speaker: text.optional(),
-        detail: text.optional(),
-        note: text.optional(),
-        tags: z.array(text).min(1, '每句名句至少要有一个标签'),
+        content: textSchema,
+        speaker: textSchema.optional(),
+        detail: textSchema.optional(),
+        note: textSchema.optional(),
+        tags: z.array(textSchema).min(1, '每句名句至少要有一个标签'),
         added: z.date({ error: 'added 要写成日期，例如 2026-11-06' }),
     })
     .strict()
@@ -25,8 +25,8 @@ const sources = defineCollection({
     schema: z
         .object({
             type: z.enum(['drama', 'book', 'real_life', 'other']),
-            title: text,
-            quotes: z.array(quote).min(1),
+            title: textSchema,
+            quotes: z.array(quoteSchema).min(1),
         })
         .strict(),
 })

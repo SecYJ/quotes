@@ -32,7 +32,7 @@ docs/     上述所有文件
 - 不加 docs/init.md 未列出的功能。
 - 写 Astro / Cloudflare Pages 设定前先查最新文档，不凭记忆。
 - 写 code 遵守 docs/coding-style.md；改 UI 外观前先看 docs/design.md（设计工作用 Impeccable skill）。
-- 完成修改后依 docs/verification.md 验证：先跑 `pnpm fmt`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，再用 verify skill 测一轮。
+- 完成修改后依 docs/verification.md 验证：先跑 `pnpm fmt`、`pnpm lint`、`pnpm typecheck`、`pnpm build`、`pnpm knip`，再用 verify skill 测一轮。
 - 新增或修改指令、目录时，同步更新 docs/commands.md 与 docs/structure.md。
 
 ## Agent skills

@@ -6,7 +6,7 @@
 
 ### 具名函数用 function declaration
 
-模块里的函数都用 `function` 声明，不用 `const x = () => {}`；函数里面的具名小函数也一样。
+模块里的函数都用 `function` 声明，不用 `const x = () => {}`；函数里面的具名小函数也一样。lint 的 `func-style` 会挡。
 
 ```ts
 // ✅
@@ -49,6 +49,7 @@ const storage = {
 
 - **能在 build 时做的就在 build 时做**：资料读取、排序、分组、计数都在 `.astro` 的 frontmatter 或 `src/lib/` 完成；浏览器里的 script 只负责筛选、搜索与网址同步。
 - **资料规则放在 schema**：单一档案内的规则写在 `src/content.config.ts` 的 zod schema；需要看到所有档案的规则写在 `src/lib/quotes.ts` 的 `loadQuotes()`，违规就 `throw`，让 build 失败。错误讯息用中文，写出哪个档案、要怎么改。
+- **zod 从 `zod` import**：写 `import * as z from 'zod'`，不用 `astro/zod`。eslint-plugin-zod 只认得 `zod`，用 `astro/zod` 的话 zod 规则就不会检查。schema 变数名以 `Schema` 结尾（`quoteSchema`）。`zod` 版本要跟 astro 用的一样，`pnpm why zod` 应该只看到一个版本。
 - **不加 UI 框架**（React 等）；互动用原生 TypeScript。
 - **import 一律用 `@/` 绝对路径**（`@/lib/quotes`），不用 `./`、`../`，lint 会挡。`@/` 对应 `src/`，由 `tsconfig.json` 的 `paths` 解析。
 
