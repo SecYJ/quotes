@@ -194,12 +194,12 @@ importers:
 
   .:
     dependencies:
-      '@fontsource/noto-serif-sc':
-        specifier: 5.3.1
-        version: 5.3.1
       astro:
         specifier: 7.4.11
         version: 7.4.11(jiti@2.7.0)(yaml@2.9.1)
+      lxgw-wenkai-screen-webfont:
+        specifier: 1.7.0
+        version: 1.7.0
       zod:
         specifier: 4.6.7
         version: 4.6.7
@@ -482,9 +482,6 @@ packages:
   '@eslint-zod/utils@6.4.0':
     resolution: {integrity: sha512-S5txT8FeUircxA9w/Uhe3GJXvcOTI4TK5CsAbrgecLsgCRsV67+2MBk6FT3/GjgfXgFahox10iwm9LOePDhnjA==}
     engines: {node: ^20.19 || ^22.12 || >=24}
-
-  '@fontsource/noto-serif-sc@5.3.1':
-    resolution: {integrity: sha512-nIK2HyNGcUi2TGwIfrk2MItkh0O3Y5+TI8iPfPSzoNY6uyXYfQ9qqch8czk3aa1VhV4EU52uwCYCe1UDKJELpg==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -1756,6 +1753,9 @@ packages:
     resolution: {integrity: sha512-U4N8FgzmWxc8k1VH8Kr6lQg18U7Fjvby6wXHVRX/ZZ7IwWbRMgrRbP0Wrb5q5NVinryp4SQampHKdvtecItxUg==}
     engines: {node: 20 || >=22}
 
+  lxgw-wenkai-screen-webfont@1.7.0:
+    resolution: {integrity: sha512-xvfF4V26Mb335xKg3uxljz+V2nq4F5ek0ku9pmyKgT0Dzo/d2rHi7WpnqgvM9mlXAcAKOrxrcDmUZiIs/ZQ9bQ==}
+
   magic-string@1.4.5:
     resolution: {integrity: sha512-oLLC2+YvQUfAa+vxoufE/yc1icb87M9iXIRqAoR/2EhE/8cb3SF/+Gi0c2By1B+5Vz2e2vQtUvHiu1+63Znh+w==}
 
@@ -2671,8 +2671,6 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.72.2
       esquery: 1.7.0
-
-  '@fontsource/noto-serif-sc@5.3.1': {}
 
   '@img/colour@1.1.0':
     optional: true
@@ -3652,6 +3650,8 @@ snapshots:
       lightningcss-win32-x64-msvc: 1.33.0
 
   lru-cache@11.5.3: {}
+
+  lxgw-wenkai-screen-webfont@1.7.0: {}
 
   magic-string@1.4.5:
     dependencies:

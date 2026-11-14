@@ -1,4 +1,4 @@
-// 驱动 build 好的 Lines（pnpm build && pnpm preview），检查行为并截图到 tmp/verify/<时间>/
+// 驱动 build 好的拾句（pnpm build && pnpm preview），检查行为并截图到 tmp/verify/<时间>/
 // 用法：node .claude/skills/verify/scripts/shots.mjs [baseURL]
 import { mkdirSync } from 'node:fs'
 import { chromium } from 'playwright'
@@ -83,12 +83,16 @@ check('上一页：回到只筛标签', (await visible(page)) === tagged)
 await page.locator('.status .clear').click()
 check('清除筛选：全部回来', (await visible(page)) === total)
 
-const speaker = (await page.locator('.speaker').first().textContent()).trim()
-await page.fill('#q', speaker)
+// 说话人是选填的：资料里有就搜说话人，没有就搜第一句内容的前几个字
+const hasSpeaker = (await page.locator('.speaker').count()) > 0
+const word = hasSpeaker
+    ? (await page.locator('.speaker').first().textContent()).trim()
+    : (await page.locator('.content').first().textContent()).trim().slice(0, 3)
+await page.fill('#q', word)
 const hits = await visible(page)
-check('搜索说话人：有结果', hits > 0, `「${speaker}」${hits} 句`)
+check(`搜索${hasSpeaker ? '说话人' : '内容'}：有结果`, hits > 0, `「${word}」${hits} 句`)
 check('搜索：命中的字有标记', (await page.locator('.quote:not([hidden]) mark').count()) >= hits)
-check('搜索：网址带 q', new URL(page.url()).searchParams.get('q') === speaker)
+check('搜索：网址带 q', new URL(page.url()).searchParams.get('q') === word)
 await shot(page, 'search')
 
 const title = sourceTitle.replace(/[《》]/g, '')

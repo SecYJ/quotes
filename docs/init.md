@@ -11,7 +11,7 @@
 ## 技术栈
 - **Astro**（静态输出），单一项目，不再是 monorepo。
 - **资料**：Astro content collections，`src/content/sources/` 里一个出处一个 YAML 档，schema（zod）写在 `src/content.config.ts`。
-- **前端互动**：只有筛选与搜索，用一支原生 TypeScript script（`src/scripts/issue.ts`），不用 UI 框架。
+- **前端互动**：只有筛选、搜索与复制，用原生 TypeScript script（`src/scripts/issue.ts`、`src/scripts/copy.ts`），不用 UI 框架。
 - **样式**：纯 CSS（`src/styles/global.css`），视觉见 [design.md](./design.md)。
 - **字体**：Noto Serif SC 用 `@fontsource` 自托管。
 - 所有套件使用当前最新稳定版本。写设定之前先查最新文档，不凭记忆。
@@ -48,6 +48,7 @@ build 时会检查，不符合就 build 失败：
 3. 按出处筛选：点名句上的出处（例如看某部剧的所有句子），可以和标签筛选一起用。出处会一直增加，所以不在索引里列出。
 4. 关键字搜索：搜句子内容、说话的人和出处名称，命中的字会标出来。
 5. 筛选与搜索状态写在网址（`?source=…&tag=…&q=…`），可以直接分享。
+6. 复制：每句名句有一个复制图标，只复制内容（不带说话人、出处、笔记或标签）。
 
 **不要加以上没有列出的功能。**
 

@@ -28,7 +28,7 @@ A public, personal commonplace book of quotes. Every quote keeps where it came f
 - No login, no writing, no features beyond the list above.
 - Static site (Astro), hosted on Cloudflare Pages.
 - Terms are defined in GLOSSARY.md.
-- **Open decision:** the product name. "Lines" is the working name; the owner left the name open for the redesign.
+- Product name: **拾句** ("picking up lines", chosen by the owner on 2026-11-14). "Lines" was the working name and survives only as the repo and package name.
 
 ## Brand Commitments
 
@@ -37,7 +37,7 @@ A public, personal commonplace book of quotes. Every quote keeps where it came f
 
 ## Evidence on Hand
 
-- Sample content: `src/content/sources/*.yaml` (12 test quotes across 9 sources). These are placeholders the owner will replace; no real collection is on hand yet.
+- Content: `src/content/sources/*.yaml` holds the owner's real collection (the test quotes were removed on 2026-11-14). It is still small: a handful of quotes, mostly witty one-liners seen online.
 
 ## Product Principles
 
