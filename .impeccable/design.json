@@ -1,176 +1,227 @@
 {
     "schemaVersion": 2,
-    "generatedAt": "2026-11-07T02:05:00Z",
-    "title": "Design System: Lines",
+    "generatedAt": "2026-11-14T13:30:00Z",
+    "title": "Design System: 拾句",
     "extensions": {
         "colorMeta": {
-            "newsprint-black": {
+            "night-ground": {
                 "role": "neutral",
-                "displayName": "Newsprint Black",
+                "displayName": "Night Ground",
                 "tonalRamp": [
-                    "#0b0a0a",
-                    "#141312",
-                    "#1f1d1b",
-                    "#2b2926",
-                    "#3a3835",
-                    "#5a5651",
-                    "#8a857e",
-                    "#c9c4bb"
+                    "#0b0c0e",
+                    "#14161a",
+                    "#1c1f24",
+                    "#2a2e35",
+                    "#3b4049",
+                    "#585e69",
+                    "#868c96",
+                    "#c2c6cc"
                 ]
             },
-            "bone-ink": {
+            "page-ink": {
                 "role": "neutral",
-                "displayName": "Bone Ink",
+                "displayName": "Page Ink",
                 "tonalRamp": [
-                    "#3d3a35",
-                    "#5e5a53",
-                    "#807b72",
-                    "#a29d93",
-                    "#c3beb4",
-                    "#d8d3c9",
-                    "#e8e4dc",
-                    "#f5f2ec"
+                    "#3f3c35",
+                    "#615d53",
+                    "#847f73",
+                    "#a6a093",
+                    "#c9c3b6",
+                    "#dcd6c8",
+                    "#ece6d8",
+                    "#f7f3ea"
                 ]
             },
-            "ash": {
+            "soft-ink": {
                 "role": "neutral",
-                "displayName": "Ash",
+                "displayName": "Soft Ink",
                 "tonalRamp": [
-                    "#2e2c29",
-                    "#45423e",
-                    "#5d5a54",
-                    "#76726b",
-                    "#9a948a",
-                    "#b4afa6",
-                    "#cdc9c1",
-                    "#e6e3dd"
+                    "#35332f",
+                    "#514e48",
+                    "#6e6a62",
+                    "#8f8a7e",
+                    "#aca69a",
+                    "#c9c3b6",
+                    "#dad5ca",
+                    "#ebe7df"
                 ]
             },
-            "column-rule": {
+            "pencil": {
                 "role": "neutral",
-                "displayName": "Column Rule",
+                "displayName": "Pencil",
                 "tonalRamp": [
-                    "#1c1b19",
-                    "#262422",
-                    "#302e2b",
-                    "#3a3835",
-                    "#4a4844",
-                    "#5d5a55",
-                    "#77746e",
-                    "#95918a"
+                    "#2b2a27",
+                    "#42403b",
+                    "#5a5750",
+                    "#737067",
+                    "#8f8a7e",
+                    "#aaa59b",
+                    "#c5c1b8",
+                    "#e0ddd6"
                 ]
             },
-            "press-red": {
+            "ruling": {
+                "role": "neutral",
+                "displayName": "Ruling",
+                "tonalRamp": [
+                    "#15171b",
+                    "#1b1e23",
+                    "#22262c",
+                    "#2a2e35",
+                    "#383d46",
+                    "#4a505b",
+                    "#646b77",
+                    "#858c98"
+                ]
+            },
+            "lamp": {
                 "role": "primary",
-                "displayName": "Press Red",
+                "displayName": "Lamp",
                 "tonalRamp": [
-                    "#4a1512",
-                    "#6e1f1a",
-                    "#932a23",
-                    "#b8352c",
-                    "#d6493f",
-                    "#e2736b",
-                    "#ee9f99",
-                    "#f8cdc9"
+                    "#4a3411",
+                    "#6f4f1a",
+                    "#966b24",
+                    "#bc892f",
+                    "#e0a84e",
+                    "#e9bd76",
+                    "#f1d3a2",
+                    "#f9e9d0"
                 ]
             }
         },
         "typographyMeta": {
-            "masthead": { "displayName": "Masthead", "purpose": "Only the Lines. masthead." },
+            "title": {
+                "displayName": "Title",
+                "purpose": "Only the 拾句 site name."
+            },
             "lead-quote": {
                 "displayName": "Lead quote",
-                "purpose": "The first quote of the current view."
+                "purpose": "The first quote of the current view, under the lamp; breaks only after punctuation."
             },
-            "quote": { "displayName": "Quote", "purpose": "Every other quote." },
-            "body": { "displayName": "Interface", "purpose": "Index links and search." },
+            "quote": {
+                "displayName": "Quote",
+                "purpose": "Every other quote; the three after the lead are one step larger."
+            },
+            "index": {
+                "displayName": "Index",
+                "purpose": "Tags in the rail, set in the hand face."
+            },
+            "body": {
+                "displayName": "Interface",
+                "purpose": "Bylines, sources, search and status."
+            },
             "label": {
                 "displayName": "Label",
-                "purpose": "Datelines, bylines, counts, dates; tabular numerals."
+                "purpose": "Margin dates, counts, tags under a quote; tabular numerals."
             }
         },
         "shadows": [],
         "motion": [
             {
                 "name": "arrive",
-                "value": "0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-                "purpose": "The lead quote settling in after a filter change; off under reduced motion."
+                "value": "0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+                "purpose": "The lead quote coming into focus after a filter change; off under reduced motion."
+            },
+            {
+                "name": "copy",
+                "value": "0.15s",
+                "purpose": "Colour change on the copy button; off under reduced motion."
             }
         ],
         "breakpoints": [
-            { "name": "tablet", "value": "48rem" },
-            { "name": "ultrawide", "value": "140rem" },
-            { "name": "ultrawide-xl", "value": "200rem" }
+            {
+                "name": "tablet",
+                "value": "48rem"
+            },
+            {
+                "name": "ultrawide",
+                "value": "140rem"
+            },
+            {
+                "name": "ultrawide-xl",
+                "value": "200rem"
+            }
         ]
     },
     "components": [
         {
-            "name": "Masthead",
+            "name": "Title",
             "kind": "custom",
-            "description": "Heavy serif title with the one standing red stop, dateline at right, double rule under.",
-            "html": "<header class=\"ds-mast\"><h1 class=\"ds-mast-title\">Lines<span class=\"ds-stop\">.</span></h1><p class=\"ds-dateline\">名句副刊<br>更新于 2026 年 9 月 22 日 · 共 12 句</p></header>",
-            "css": ".ds-mast { display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; padding-bottom:.875rem; border-bottom:4px double #e8e4dc; background:#141312; color:#e8e4dc; } .ds-mast-title { font-family:'Noto Serif SC',serif; font-weight:900; font-size:4rem; line-height:.95; letter-spacing:-.02em; margin:0; } .ds-stop { color:#d6493f; } .ds-dateline { font-size:.8125rem; line-height:1.7; color:#9a948a; text-align:right; margin:0; font-variant-numeric:tabular-nums; }"
+            "description": "Site name in the hand face with the lamp coloured subtitle and two grey lines of counts.",
+            "html": "<header class=\"ds-mast\"><h1 class=\"ds-title\">拾句</h1><p class=\"ds-sub\">夜里的摘抄本</p><p class=\"ds-dateline\">5 句 · 2 个出处<br>最后写下 2026 年 11 月 14 日</p></header>",
+            "css": ".ds-mast { background:#14161a; color:#ece6d8; padding:1rem; } .ds-title { margin:0; font-family:'LXGW WenKai Screen','Kaiti SC','KaiTi',serif; font-weight:700; font-size:2.5rem; line-height:1.1; } .ds-sub { margin:.125rem 0 0; font-family:'LXGW WenKai Screen','Kaiti SC','KaiTi',serif; font-size:1.0625rem; color:#e0a84e; } .ds-dateline { margin:.5rem 0 0; font-size:.8125rem; line-height:1.7; color:#8f8a7e; font-variant-numeric:tabular-nums; }"
         },
         {
             "name": "Index link",
             "kind": "nav",
             "refersTo": "index-link",
-            "description": "A source or tag in the index; the current one is red, bold, underlined.",
-            "html": "<nav class=\"ds-index\"><a href=\"#\" aria-current=\"true\">全部</a><a href=\"#\">哈姆雷特<span class=\"ds-count\">1</span></a><a href=\"#\">论语<span class=\"ds-count\">2</span></a></nav>",
-            "css": ".ds-index { display:flex; gap:1.125rem; background:#141312; padding:1rem; } .ds-index a { color:#e8e4dc; text-decoration:none; font-size:.9375rem; text-underline-offset:.3em; } .ds-index a:hover { text-decoration:underline; } .ds-index a:focus-visible { outline:2px solid #d6493f; outline-offset:3px; } .ds-index a[aria-current] { color:#d6493f; font-weight:700; text-decoration:underline 2px; } .ds-count { margin-left:.2em; font-size:.75rem; color:#9a948a; font-weight:400; }"
+            "description": "A tag in the rail: name, dotted leader, count. The current one is lamp coloured, with its leader in lamp too.",
+            "html": "<nav class=\"ds-index\"><a href=\"#\" aria-current=\"true\">全部</a><a href=\"#\">职场<span class=\"ds-count\">2</span></a><a href=\"#\">人生<span class=\"ds-count\">2</span></a></nav>",
+            "css": ".ds-index { display:grid; width:13.5rem; background:#14161a; padding:1rem; } .ds-index a { display:flex; align-items:baseline; padding:.3125rem 0; font-family:'LXGW WenKai Screen','Kaiti SC','KaiTi',serif; font-size:1.0625rem; color:#c9c3b6; text-decoration:none; } .ds-index a:hover { color:#ece6d8; } .ds-index a:focus-visible { outline:2px solid #e0a84e; outline-offset:3px; } .ds-index a[aria-current] { color:#e0a84e; } .ds-index a[aria-current] .ds-count::before { border-bottom-color:#e0a84e80; } .ds-count { flex:1; display:flex; align-items:baseline; font-family:system-ui,sans-serif; font-size:.75rem; color:#8f8a7e; } .ds-count::before { content:''; flex:1; margin:0 .5rem; border-bottom:1px dotted #2a2e35; translate:0 -.25em; }"
         },
         {
             "name": "Search field",
             "kind": "input",
             "refersTo": "search-field",
-            "description": "Underline-only search; the line turns red on focus.",
-            "html": "<input class=\"ds-search\" type=\"search\" placeholder=\"搜索句子或说话人\">",
-            "css": ".ds-search { width:20rem; padding:.5rem 0; background:#141312; color:#e8e4dc; border:0; border-bottom:1px solid #9a948a; border-radius:0; font-size:1rem; caret-color:#d6493f; } .ds-search::placeholder { color:#9a948a; } .ds-search:focus-visible { outline:none; border-bottom-color:#d6493f; box-shadow:0 1px 0 #d6493f; }"
+            "description": "Underline-only search; the line turns lamp coloured on focus.",
+            "html": "<input class=\"ds-search\" type=\"search\" placeholder=\"搜索句子、说话人或出处\">",
+            "css": ".ds-search { width:14rem; padding:.5rem 0; background:#14161a; color:#ece6d8; border:0; border-bottom:1px solid #2a2e35; border-radius:0; font-size:1rem; caret-color:#e0a84e; } .ds-search::placeholder { color:#8f8a7e; } .ds-search:focus-visible { outline:none; border-bottom-color:#e0a84e; }"
         },
         {
             "name": "Quote item",
             "kind": "custom",
-            "description": "Quote in serif, then speaker and linked source, note, date and tags; a hairline below.",
-            "html": "<article class=\"ds-quote\"><blockquote class=\"ds-content\">先把问题讲清楚，答案通常就出来了一半。</blockquote><p class=\"ds-byline\"><span class=\"ds-speaker\">主管</span> · <a href=\"#\">公司会议</a> 季度规划会议</p><p class=\"ds-foot\">2026-09-18 <a href=\"#\">#工作</a></p></article>",
-            "css": ".ds-quote { padding:1.25rem 0; border-bottom:1px solid #3a3835; background:#141312; color:#e8e4dc; } .ds-content { margin:0; font-family:'Noto Serif SC',serif; font-weight:600; font-size:1.1875rem; line-height:1.75; } .ds-byline { margin:.625rem 0 0; font-size:.8125rem; color:#9a948a; } .ds-speaker { color:#e8e4dc; } .ds-foot { margin:.5rem 0 0; font-size:.75rem; color:#9a948a; font-variant-numeric:tabular-nums; } .ds-quote a { color:inherit; text-decoration:none; } .ds-quote a:hover { text-decoration:underline; text-underline-offset:.3em; }"
+            "description": "A diary entry: the date in the margin, a lamp coloured margin rule, then the quote, its source, tags and the copy button.",
+            "html": "<article class=\"ds-quote\"><time class=\"ds-date\"><span>11月14日</span><small>2026</small></time><div class=\"ds-entry\"><blockquote class=\"ds-content\">嘴巴全是主義，口袋全是生意！</blockquote><p class=\"ds-byline\">—— <a href=\"#\">网络段子</a></p><p class=\"ds-foot\"><a href=\"#\">#讽刺</a> <a href=\"#\">#人性</a></p></div></article>",
+            "css": ".ds-quote { display:grid; grid-template-columns:4.5rem 1fr; column-gap:2.25rem; align-items:first baseline; padding:1.375rem 1rem; background:linear-gradient(#e0a84e47,#e0a84e47) 6.625rem 0 / 1px 100% no-repeat #14161a; color:#ece6d8; } .ds-date { display:flex; flex-direction:column; align-items:flex-end; gap:.125rem; font-size:.875rem; color:#c9c3b6; font-variant-numeric:tabular-nums; } .ds-date small { font-size:.6875rem; color:#8f8a7e; } .ds-content { margin:0; font-family:'LXGW WenKai Screen','Kaiti SC','KaiTi',serif; font-size:1.375rem; line-height:1.75; } .ds-byline { margin:.625rem 0 0; font-size:.875rem; color:#8f8a7e; } .ds-byline a { color:#c9c3b6; text-decoration:underline 1px #2a2e35; text-underline-offset:.3em; } .ds-foot { margin:.25rem 0 0; font-size:.75rem; color:#8f8a7e; } .ds-foot a { color:inherit; text-decoration:none; margin-right:.5rem; } .ds-foot a:hover { color:#e0a84e; }"
+        },
+        {
+            "name": "Copy button",
+            "kind": "button",
+            "refersTo": "copy-button",
+            "description": "Icon only. Copies the quote's content; turns into a lamp coloured check for 1.6s on success.",
+            "html": "<p class=\"ds-copyrow\"><button class=\"ds-copy\" aria-label=\"复制这句名句\"><svg viewBox=\"0 0 16 16\"><rect x=\"5.5\" y=\"5.5\" width=\"8\" height=\"8\" rx=\"1.5\"/><path d=\"M10.5 5.5V4A1.5 1.5 0 0 0 9 2.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5\"/></svg></button><button class=\"ds-copy ds-done\" aria-label=\"已复制\"><svg viewBox=\"0 0 16 16\"><path d=\"M3 8.5l3.2 3.2L13 4.8\"/></svg></button></p>",
+            "css": ".ds-copyrow { display:flex; gap:.5rem; margin:0; padding:1rem; background:#14161a; } .ds-copy { display:grid; place-items:center; width:2rem; height:2rem; background:none; border:0; border-radius:50%; color:#8f8a7e; cursor:pointer; } .ds-copy:hover { color:#ece6d8; background:#ece6d814; } .ds-copy:focus-visible { outline:2px solid #e0a84e; outline-offset:3px; } .ds-copy svg { width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-width:1.25; stroke-linecap:round; stroke-linejoin:round; } .ds-done { color:#e0a84e; background:#e0a84e24; }"
         },
         {
             "name": "Search hit",
             "kind": "custom",
-            "description": "Matched characters turn press red with an underline.",
-            "html": "<p class=\"ds-hit\">不要等准备好了才开始——<mark>小林</mark></p>",
-            "css": ".ds-hit { background:#141312; color:#e8e4dc; font-family:'Noto Serif SC',serif; font-size:1.1875rem; padding:1rem; margin:0; } .ds-hit mark { background:none; color:#d6493f; text-decoration:underline 2px; text-underline-offset:.25em; }"
+            "description": "Matched characters sit on a faint lamp coloured ground.",
+            "html": "<p class=\"ds-hit\">每次开会扣我<mark>money</mark>，还要骂我像个monkey</p>",
+            "css": ".ds-hit { background:#14161a; color:#ece6d8; font-family:'LXGW WenKai Screen','Kaiti SC','KaiTi',serif; font-size:1.375rem; padding:1rem; margin:0; } .ds-hit mark { background:#e0a84e38; color:#ece6d8; border-radius:2px; box-shadow:0 0 0 2px #e0a84e38; }"
         }
     ],
     "narrative": {
-        "northStar": "The Evening Supplement",
-        "overview": "Lines is set as an evening literary supplement printed for one person's collection: masthead, dateline, an index of sources and tags, a lead item and columns of short items. The frame carries the character; the reading column stays calm. Dark because of the use scene, never pure white or pure black.",
+        "northStar": "The Night Notebook",
+        "overview": "拾句 is set as a diary page left open at night: dates in the left margin, one margin rule, the copied lines to its right, and a lamp above. The margin, the rule and the lamp carry the character; the quotes stay calm in a readable hand face. Dark because of the use scene, never pure white or pure black.",
         "keyCharacteristics": [
-            "Heavy serif masthead with one red stop",
-            "Lead quote over two thirds, side column of three, columns below",
-            "Hierarchy from weight, size and rules, never cards or shadows",
-            "Every filter visible in the index"
+            "Every quote is a diary entry with its date in the margin",
+            "A lamp glow fixed to the top of the viewport; the newest quote sits under it",
+            "No rules between quotes; margin dates and whitespace separate them",
+            "Hierarchy from size and tone, never cards or shadows",
+            "Tags set as a notebook index: name, dotted leader, count"
         ],
         "rules": [
             {
-                "name": "The One Red Rule",
-                "body": "Press red marks only the masthead stop, the current filter and search hits.",
+                "name": "The Lamp Rule",
+                "body": "Lamp amber marks only what is current or just happened: the active filter, search hits, a successful copy, clear filters, the note rule, the faint margin rule, the subtitle, focus, selection and caret.",
                 "section": "colors"
             },
             {
-                "name": "Rules, not boxes",
-                "body": "Groups separate by double rules and hairlines; no cards, fills or shadows.",
+                "name": "One lamp",
+                "body": "The only depth on the page is the fixed glow and the paper grain; no shadows, cards or second gradient.",
                 "section": "elevation"
             }
         ],
         "dos": [
-            "Do make emphasis with weight or size",
-            "Do keep every quote's source and tags clickable"
+            "Do make emphasis with size or tone",
+            "Do keep every quote's source and tags clickable",
+            "Do keep the lamp and the grain fixed to the viewport"
         ],
         "donts": [
             "Don't use a pure white or pure black ground",
-            "Don't put kickers above quotes or number items",
-            "Don't add cards, shadows, gradients or rounded blocks",
-            "Don't use red anywhere else"
+            "Don't add rules, cards, shadows or fills between quotes",
+            "Don't colour the tags under a quote with lamp amber",
+            "Don't add inline scripts, inline styles or third-party resources; the CSP allows same-origin only"
         ]
     }
 }

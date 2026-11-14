@@ -13,7 +13,7 @@
 - **资料**：Astro content collections，`src/content/sources/` 里一个出处一个 YAML 档，schema（zod）写在 `src/content.config.ts`。
 - **前端互动**：只有筛选、搜索与复制，用原生 TypeScript script（`src/scripts/issue.ts`、`src/scripts/copy.ts`），不用 UI 框架。
 - **样式**：纯 CSS（`src/styles/global.css`），视觉见 [design.md](./design.md)。
-- **字体**：Noto Serif SC 用 `@fontsource` 自托管。
+- **字体**：霞鹜文楷屏幕阅读版（`lxgw-wenkai-screen-webfont`）自托管，不向外部网站要字体。
 - 所有套件使用当前最新稳定版本。写设定之前先查最新文档，不凭记忆。
 
 ## 部署方式
@@ -62,5 +62,5 @@ build 时会检查，不符合就 build 失败：
 
 ### 阶段（2026-11 改版）
 1. **清理与安装**：删除旧项目、安装 Impeccable、建立 Astro 项目与 content collection、把测试资料转成 YAML，build 能通过资料检查。✅
-2. **阅览页与重新设计**：用 Impeccable 定出视觉方向（晚报副刊）并做出阅览页（列表、标签与出处筛选、搜索），支援手机、平板、桌机；改写 docs。✅
+2. **阅览页与重新设计**：用 Impeccable 定出视觉方向并做出阅览页（列表、标签与出处筛选、搜索），支援手机、平板、桌机；改写 docs。第一版是晚报副刊，2026-11-14 改成夜里的摘抄本，见 docs/design.md。✅
 3. **部署**：列出建立 GitHub repo、接上 Cloudflare Pages、绑定网域的步骤，由我自己操作。

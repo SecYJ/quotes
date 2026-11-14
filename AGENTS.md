@@ -12,7 +12,7 @@
 | [docs/structure.md](docs/structure.md) | 项目结构：src/ 里的目录与设定档 |
 | [docs/coding-style.md](docs/coding-style.md) | Coding 规则（写 code 前必读）：函数写法、类型、Astro 与资料规则、样式、格式与 lint |
 | [docs/verification.md](docs/verification.md) | 验证规则（完成修改后必做）：fmt / lint / typecheck / build，再用 Playwright 跑一轮 |
-| [docs/design.md](docs/design.md) | 视觉设计（晚报副刊）：颜色 token、字体、版面、元件与刻意避免的写法 |
+| [docs/design.md](docs/design.md) | 视觉设计（夜里的摘抄本）：颜色 token、字体、版面、元件与刻意避免的写法 |
 | [PRODUCT.md](PRODUCT.md) | Impeccable 用的产品描述：使用者、目的、限制 |
 | [GLOSSARY.md](GLOSSARY.md) | 领域用语（名句、出处、标签、阅览页、站长…）：写 code 与文件时用这里的词 |
 | [.scratch/](.scratch/) | 新 feature 的 spec（`spec.md`）与 ticket（`issues/<NN>-<slug>.md`），一个 feature 一个资料夹 |

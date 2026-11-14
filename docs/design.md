@@ -1,129 +1,151 @@
 ---
-name: Lines
-description: 一个人的名句副刊：深色晚报版面，红色只做三件事
+name: 拾句
+description: 夜里的摘抄本：深墨蓝的一页日记本，一盏灯的琥珀色
 colors:
-    newsprint-black: '#141312'
-    bone-ink: '#e8e4dc'
-    ash: '#9a948a'
-    column-rule: '#3a3835'
-    press-red: '#d6493f'
+    night-ground: '#14161a'
+    page-ink: '#ece6d8'
+    soft-ink: '#c9c3b6'
+    pencil: '#8f8a7e'
+    ruling: '#2a2e35'
+    lamp: '#e0a84e'
 typography:
-    masthead:
-        fontFamily: "'Noto Serif SC', 'Songti SC', 'SimSun', serif"
-        fontSize: 'clamp(3rem, 1.6rem + 5vw, 6rem)'
-        fontWeight: 900
-        lineHeight: 0.95
-        letterSpacing: '-0.02em'
+    title:
+        fontFamily: "'LXGW WenKai Screen', 'Kaiti SC', 'KaiTi', serif"
+        fontSize: '2.5rem'
+        fontWeight: 700
+        lineHeight: 1.1
     lead-quote:
-        fontFamily: "'Noto Serif SC', 'Songti SC', 'SimSun', serif"
-        fontSize: 'clamp(1.875rem, 1.1rem + 2.6vw, 3.5rem)'
-        fontWeight: 900
-        lineHeight: 1.45
-        letterSpacing: '-0.01em'
+        fontFamily: "'LXGW WenKai Screen', 'Kaiti SC', 'KaiTi', serif"
+        fontSize: 'clamp(2rem, 1.3rem + 2.6vw, 3.25rem)'
+        fontWeight: 400
+        lineHeight: 1.55
     quote:
-        fontFamily: "'Noto Serif SC', 'Songti SC', 'SimSun', serif"
-        fontSize: '1.1875rem'
-        fontWeight: 600
+        fontFamily: "'LXGW WenKai Screen', 'Kaiti SC', 'KaiTi', serif"
+        fontSize: '1.375rem'
+        fontWeight: 400
         lineHeight: 1.75
+    index:
+        fontFamily: "'LXGW WenKai Screen', 'Kaiti SC', 'KaiTi', serif"
+        fontSize: '1.0625rem'
+        fontWeight: 400
+        lineHeight: 1.6
     body:
         fontFamily: "'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif"
-        fontSize: '0.9375rem'
+        fontSize: '0.875rem'
         fontWeight: 400
         lineHeight: 1.7
     label:
         fontFamily: "'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif"
-        fontSize: '0.8125rem'
+        fontSize: '0.75rem'
         fontWeight: 400
         lineHeight: 1.6
         fontFeature: '"tnum"'
 rounded:
     none: '0'
+    mark: '2px'
+    round: '50%'
 spacing:
-    gutter: 'clamp(1rem, 4vw, 6rem)'
-    column-gap: 'clamp(1.5rem, 3vw, 3.5rem)'
-    item: '1.25rem'
+    gutter: 'clamp(1.125rem, 4vw, 4rem)'
+    margin: '4.5rem'
+    margin-gap: '2.25rem'
+    item: '1.375rem'
 components:
     index-link:
-        textColor: '{colors.bone-ink}'
-        typography: '{typography.body}'
+        textColor: '{colors.soft-ink}'
+        typography: '{typography.index}'
     index-link-active:
-        textColor: '{colors.press-red}'
-        typography: '{typography.body}'
+        textColor: '{colors.lamp}'
+        typography: '{typography.index}'
     search-field:
-        backgroundColor: '{colors.newsprint-black}'
-        textColor: '{colors.bone-ink}'
+        backgroundColor: 'transparent'
+        textColor: '{colors.page-ink}'
         rounded: '{rounded.none}'
         padding: '0.5rem 0'
+    copy-button:
+        textColor: '{colors.pencil}'
+        rounded: '{rounded.round}'
+        size: '2rem'
+    copy-button-done:
+        textColor: '{colors.lamp}'
+        rounded: '{rounded.round}'
+        size: '2rem'
 ---
 
-# Design System: Lines
+# Design System: 拾句
 
 ## Overview
 
-**Creative North Star: "The Evening Supplement"（晚报副刊）**
+**Creative North Star: "The Night Notebook"（夜里的摘抄本）**
 
-Lines 排成一份只为一个人的收藏印的晚报副刊：报头、日期行、标签索引、一则头条、几栏短稿。版面的个性全在框架上（报头、双线、栏线、索引），句子所在的阅读栏保持安静：清楚的宋体、足够的对比、合理的行长。
+拾句排成一页夜里摊开的日记本：左边页边写日期，一条页边线，右边是一句一句抄下来的话，上方有一盏灯。个性来自这三样东西（页边、页边线、灯），句子本身用清楚的手写楷体，安静地排下去。
 
-深色不是因为「看起来高级」，而是使用情境：晚上看完剧、读完书，在床上用手机或在桌前回来翻。纸色是暖的报纸黑，不是纯黑；从不出现纯白底。
+深色是因为使用情境：晚上看完剧、刷完短视频、读完书，在床上用手机或在桌前回来翻。底色是带一点蓝的墨色，不是纯黑；从不出现纯白底。
 
 **Key Characteristics:**
 
-- 报头 `Lines.` 用最重的宋体，句点是唯一常驻的红色。
-- 头条是最新（或筛选后第一句）名句，占约三分之二宽；侧栏接着三句；其余进下方分栏。
-- 层次靠字重、字级与线（双线、细栏线），不靠卡片、底色块或阴影。
-- 标签与搜索并列在索引列；出处会一直增加，不列在索引，从名句上的出处连结筛选。
+- 一句名句是日记里的一条：日期写在页边，句子在页边线右边。
+- 灯钉在视窗上方不动，句子从灯下卷过去；最新一句最大，正好在灯下。
+- 句与句之间没有横线，靠页边的日期和留白分开。
+- 层次靠字级（最新一句 → 接着三句 → 其余）与颜色的明暗，不靠卡片、底色块或阴影。
+- 标签排成本子的目录：名称、点线、句数。出处不列在目录里，从名句上的出处连结筛选。
 
 ## Colors
 
-一个暖黑底、一个骨白墨色、一个灰阶、一条线色，加上一个被严格配给的印刷红。
+一个墨蓝底、三阶暖白的字、一条线色，加上一盏灯的琥珀色。
 
-- **Newsprint Black `#141312`**：整页底色，也是 `theme-color`。
-- **Bone Ink `#e8e4dc`**：句子、报头、说话人、可点的索引项。
-- **Ash `#9a948a`**：日期行、出处细节、笔记、计数、标签。对底色约 6:1，小字也可读。
-- **Column Rule `#3a3835`**：栏线、条目分隔线、捲轴颜色。
-- **Press Red `#d6493f`**：只做三件事 —— 报头句点、目前的筛选（索引里的 `aria-current`）、搜索命中的字（`mark`）。焦点框、文字选取与光标也用它，因为它们本来就是「现在在这里」的标记。
+- **Night Ground `#14161a`**：整页底色，也是 `theme-color`。
+- **Page Ink `#ece6d8`**：句子、站名、说话人。
+- **Soft Ink `#c9c3b6`**：出处、笔记、目录里的标签、页边的月日、状态列。
+- **Pencil `#8f8a7e`**：出处细节、句数、年份、名句下的标签、复制图标。对底色约 5.3:1，小字也可读。
+- **Ruling `#2a2e35`**：搜索框底线、出处连结的底线、目录的点线、捲轴。
+- **Lamp `#e0a84e`**：灯。见下面的规则。
 
-**The One Red Rule.** 红色是印刷时额外的一个色版，贵。除了上面列的地方，任何东西都不能是红的；需要强调就用字重或字级。
+**The Lamp Rule.** 琥珀色只照在「现在在这里」和「刚刚发生」的东西上：目前的筛选、搜索命中的字（淡底）、复制成功的图标、「清除筛选」、笔记左边的竖线、页边线（很淡）、副标题、以及焦点框、文字选取与光标。名句下的标签、出处、日期都不是琥珀色；要强调就用字级或明暗。
+
+页面上方那片光用的也是这个颜色（13% → 4% → 透明的椭圆渐层），整页还盖着一层很淡的纸纹。这两层是固定在视窗上的，不随页面卷动。
 
 ## Typography
 
-- **宋体（Noto Serif SC，自托管，依 unicode-range 切片下载）** 负责报头与所有句子：报头 900、头条 900、其余句子 600。
-- **系统黑体** 负责索引、日期行、出处、笔记与计数；数字一律 `tabular-nums` 对齐。
-- 字级只有几阶：报头 → 头条 → 侧栏句子 1.25rem → 一般句子 1.1875rem → 介面 0.9375rem → 标注 0.75–0.8125rem。
-- 头条 `text-wrap: pretty`，最长 24em；笔记最长 36rem。
-- 中文不用斜体；笔记用「笔记」前缀与灰色区分。
+- **霞鹜文楷屏幕阅读版（LXGW WenKai Screen，自托管，依 unicode-range 切片下载）** 负责站名、所有句子、笔记与目录里的标签。站名 700，其余 400。
+- **系统黑体** 负责日期、出处、句数、名句下的标签；数字一律 `tabular-nums` 对齐。
+- 字级：站名 2.5rem → 最新一句 2–3.25rem → 接着三句 1.5625rem → 一般句子 1.375rem → 目录 1.0625rem → 出处 0.875rem → 标注 0.6875–0.8125rem。
+- 最新一句只在标点后换行（`word-break: keep-all` 加 `text-wrap: balance`），一个分句一行；分句比栏宽还长时才从中间断。其余句子 `text-wrap: pretty`。
+- 中文不用斜体；笔记用左边一条琥珀色竖线与较暗的字色区分。
 
 ## Layout
 
-- 页面最宽 112rem，左右留 `--gutter`。
-- 窄于 48rem（手机）：单栏；搜索在报头下，「标签」收成 `<details>`，没有标签筛选时预设收起，让最新那句留在第一屏。
-- 48rem 以上：索引在左、搜索在右；头条与侧栏 2:1 并排，中间一条栏线；其余句子用 CSS columns（每栏至少 20rem）排在双线下方，栏间有细线。
-- 侧栏没有句子时（筛选后只剩一句），头条占满整行，不留空栏。
+- 页面最宽 92rem，左右留 `clamp(1.125rem, 4vw, 4rem)`。
+- 窄于 48rem（手机）：单栏。站名与副标题一行，下面是句数、搜索、收成 `<details>` 的「标签」（两栏排列；没有标签筛选时预设收起，让最新那句留在第一屏）。没有页边，日期变成句子上面的一行。
+- 48rem 以上：左边一条 13.5rem 的目录栏（sticky），右边是本子。本子里每句名句是两栏的 grid：4.5rem 的页边（日期靠右、与句子第一行的基线对齐），隔 2.25rem，接句子；页边线画在这段空隙的正中，从第一句一直到最后一句。句子栏最宽 44rem。
 - 带鱼屏：140rem 以上根字级 125%，200rem 以上 150%，整页等比放大而不是只多留白（目标 3440×1440）。
 
 ## Elevation & Depth
 
-完全平面。没有阴影、没有卡片、没有底色块；分组只靠线：报头下与页尾是 4px 双线，区块之间 1px 栏线。
+没有阴影、没有卡片。深度只有一处：上方那盏灯的光，加一层纸纹。除此之外是平的，分组靠留白与页边线。
 
 ## Shapes
 
-直角。输入框只有一条底线，聚焦时变红。唯一的圆角是焦点框的 1px。
+直角为主。输入框只有一条底线，聚焦时变琥珀色。圆的只有复制按钮（2rem 的圆，只在悬停与成功时有底色）；搜索命中的淡底与焦点框有 2px 圆角。
 
 ## Components
 
-- **报头**：左边 `Lines.`，右边日期行（「名句副刊」、最近更新日期、总句数），下方双线。
-- **索引**：一行「标签」，每项附灰色计数；目前的筛选为红色粗体加 2px 底线。再点一次已选的项目会取消它。
+- **站名**：`拾句`，副标题「夜里的摘抄本」（琥珀色），下面两行灰字：句数与出处数、最后写下的日期。
+- **搜索**：一条底线的输入框，搜句子、说话人与出处。
+- **标签目录**：「全部」加每个标签一行，名称、点线、句数；目前的筛选是琥珀色，它的点线也跟着变成琥珀色。再点一次已选的标签会取消它。
 - **状态列**：有筛选或搜索时出现，写出目前条件与句数，附「清除筛选」。
-- **名句**：句子（宋体）→ 说话人 · 出处（戏剧与书加书名号）与出处细节 → 笔记 → 日期与 `#标签`。出处与标签都是筛选连结。
-- **搜索命中**：命中的字变红并加底线，句子、说话人与出处都会标。
-- **空状态**：「没有符合的名句。」加「清除筛选」。
-- **动态**：只有一个 —— 头条换人时淡入并上移 0.5rem（0.5s，`cubic-bezier(0.16, 1, 0.3, 1)`）；`prefers-reduced-motion` 时关闭。
+- **名句**：页边的日期（月日，下面小字年份）→ 句子 → `—— 说话人 · 出处 出处细节`（戏剧与书加书名号；出处有淡底线，是筛选连结）→ 笔记 → `#标签`（筛选连结）与复制图标。
+- **复制图标**：只有图标，没有字，`aria-label` 是「复制这句名句」。只复制句子内容。成功时换成琥珀色的勾并垫一层淡琥珀底，1.6 秒后恢复；失败时换成叉。结果同时写进一个 `aria-live` 区域给读屏软件。
+- **搜索命中**：命中的字垫一层 22% 的琥珀底，句子、说话人与出处都会标。
+- **空状态**：「这本子里没有符合的句子。」加「清除筛选」。
+- **动态**：最新一句换人时从模糊淡入（0.6s，`cubic-bezier(0.16, 1, 0.3, 1)`）；复制图标变色 0.15s。`prefers-reduced-motion` 时都关闭。
 
 ## Do's and Don'ts
 
-- **Do** 把新的强调做成字重或字级的差别。
+- **Do** 把新的强调做成字级或明暗的差别。
 - **Do** 维持每句名句都带出处；出处与标签永远可以点。
+- **Do** 让灯和纸纹固定在视窗上，不跟着内容卷动。
 - **Don't** 用纯白底或纯黑底。
-- **Don't** 在句子上方放小标签（kicker / eyebrow），也不要给条目编号。
-- **Don't** 加卡片、阴影、渐层或圆角块。
-- **Don't** 让红色出现在上面三件事以外的地方。
+- **Don't** 在句与句之间加横线、卡片、阴影或底色块。
+- **Don't** 把琥珀色用在 The Lamp Rule 以外的地方，尤其不要给每句的标签上色。
+- **Don't** 加第二盏灯或别的渐层。
+- **Don't** 加 inline `<script>`、inline `style` 或外部来源的资源：`public/_headers` 的 CSP 只放行同源的脚本、样式与字体。
