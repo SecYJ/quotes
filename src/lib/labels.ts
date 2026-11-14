@@ -9,6 +9,11 @@ export function formatDate(date: Date) {
     return `${date.getUTCFullYear()} 年 ${date.getUTCMonth() + 1} 月 ${date.getUTCDate()} 日`
 }
 
+// 页边的日期：只写月日，年份另外小字标
+export function monthDay(date: Date) {
+    return `${date.getUTCMonth() + 1}月${date.getUTCDate()}日`
+}
+
 export function isoDate(date: Date) {
     return date.toISOString().slice(0, 10)
 }

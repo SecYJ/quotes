@@ -11,6 +11,7 @@ src/
   components/          QuoteItem.astro（一句名句）
   pages/index.astro    阅览页（唯一的页面）
   scripts/issue.ts     浏览器里的筛选、搜索、网址同步与头条/侧栏/下方分配
+  scripts/copy.ts      名句上的复制图标：把内容写进剪贴板
   styles/global.css    颜色 token 与所有样式（见 docs/design.md）
 astro.config.mjs       Astro 设定
 tsconfig.json          继承 astro/tsconfigs/strict，`@/*` → `src/*`
