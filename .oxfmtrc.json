@@ -4,5 +4,5 @@
     "tabWidth": 4,
     "semi": false,
     "singleQuote": true,
-    "ignorePatterns": ["pnpm-lock.yaml", "**/*.md", ".astro/**", "dist/**"]
+    "ignorePatterns": ["pnpm-lock.yaml", "**/*.md", ".astro/**", "dist/**", "dist-e2e/**"]
 }

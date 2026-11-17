@@ -5,7 +5,7 @@
 ```
 src/
   content/sources/     资料：一个出处一个 YAML 档，档名 = 出处 id
-  content.config.ts    content collection 与 zod schema（单一档案内的规则）
+  content.config.ts    content collection 与 zod schema（单一档案内的规则）；环境变数 LINES_SOURCES 可换资料目录
   lib/quotes.ts        loadQuotes()：读资料、检查跨档案规则、摊平成名句并按 added 排序
   lib/labels.ts        出处显示（书名号）、日期格式
   components/          QuoteItem.astro（一句名句）
@@ -14,8 +14,10 @@ src/
   scripts/copy.ts      名句上的复制图标：把内容写进剪贴板
   styles/global.css    颜色 token 与所有样式（见 docs/design.md）
 public/_headers        Cloudflare Pages 的回应标头：CSP、禁止被放进 iframe；build 时原样复制到 dist/
+tests/e2e/             Playwright E2E 测试：*.spec.ts、共用的 test.ts（@e2e/test）、fixtures/sources/ 测试资料
+playwright.config.ts   E2E 设定：用 LINES_SOURCES 指向测试资料 build 到 dist-e2e/，桌机与手机两个 project
 astro.config.mjs       Astro 设定（脚本与字体不内嵌，配合 CSP）
-tsconfig.json          继承 astro/tsconfigs/strict，`@/*` → `src/*`
+tsconfig.json          继承 astro/tsconfigs/strict，`@/*` → `src/*`，`@e2e/*` → `tests/e2e/*`
 pnpm-workspace.yaml    pnpm 设定（minimumReleaseAge 例外、@emnapi/runtime override）
 .oxlintrc.json         lint 设定（「只用 @/ import」、func-style、eslint-plugin-zod）
 knip.json              knip 设定（verify 脚本当 entry）
@@ -25,5 +27,6 @@ PRODUCT.md             Impeccable 用的产品描述
 .claude/skills/verify  用 Playwright 驱动网站、留下截图的 verify skill
 .claude/skills/<其余>  Emil Kowalski 的设计工程 skills（emilkowalski/skills，MIT）：改互动与动态时用 emil-design-eng 与 animate
 .scratch/              新 feature 的 spec 与 ticket
-tmp/                   verify 的截图与暂存（gitignore）
+tmp/                   verify 的截图、E2E 报告与暂存（gitignore）
+dist-e2e/              E2E 测试资料 build 出来的网站（gitignore）
 ```

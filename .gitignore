@@ -28,3 +28,6 @@ dist
 /.impeccable/questions/
 .vscode/
 .idea/
+
+# E2E 测试用测试资料 build 的网站（playwright.config.ts）
+/dist-e2e/

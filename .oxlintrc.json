@@ -39,5 +39,5 @@
         "builtin": true,
         "browser": true
     },
-    "ignorePatterns": ["**/dist/**", "**/.astro/**"]
+    "ignorePatterns": ["**/dist/**", "**/dist-e2e/**", "**/.astro/**"]
 }

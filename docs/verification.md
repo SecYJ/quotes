@@ -18,7 +18,12 @@ pnpm knip        # 没用到的档案、export、套件
 
 ## 2. Playwright 浏览器测试
 
-用 `verify` skill（`.claude/skills/verify/SKILL.md`）：`pnpm preview` 跑起 build 好的网站，再执行 `node .claude/skills/verify/scripts/shots.mjs`。它会检查筛选、搜索、上一页、分享网址与空状态，并在手机、平板、桌机、带鱼屏（3440×1440）各截一张图。
+用 `verify` skill（`.claude/skills/verify/SKILL.md`），分两步：
+
+1. `pnpm test:e2e`：E2E 测试。用 `tests/e2e/fixtures/` 的测试资料 build 一份，测筛选、搜索、上一页、分享网址、复制、手机面板与 CSP。案例清单在 `.scratch/e2e-tests/spec.md`，测试名称以案例 ID 开头。
+2. `pnpm preview` 跑起真实资料 build 的网站，执行 `node .claude/skills/verify/scripts/shots.mjs`，在手机、平板、桌机、带鱼屏（3440×1440）与筛选、搜索、空状态各截一张图。
+
+改了阅览页的行为就要有对应的测试：先在 spec 加案例，再写进 `tests/e2e/`。
 
 看过截图再回报；改到外观时，对照 [design.md](./design.md)。
 

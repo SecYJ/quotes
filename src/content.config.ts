@@ -20,8 +20,12 @@ const quoteSchema = z
     )
 
 // 一个出处一个 YAML 档，档名就是出处的 id（网址里用的）
+// E2E 测试用 LINES_SOURCES 换成 tests/e2e/fixtures/sources
 const sources = defineCollection({
-    loader: glob({ base: './src/content/sources', pattern: '**/*.yaml' }),
+    loader: glob({
+        base: process.env.LINES_SOURCES ?? './src/content/sources',
+        pattern: '**/*.yaml',
+    }),
     schema: z
         .object({
             type: z.enum(['drama', 'book', 'real_life', 'other']),

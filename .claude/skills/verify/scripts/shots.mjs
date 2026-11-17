@@ -1,4 +1,5 @@
-// 驱动 build 好的拾句（pnpm build && pnpm preview），检查行为并截图到 tmp/verify/<时间>/
+// 驱动 build 好的拾句（pnpm build && pnpm preview），在四种画面大小截图到 tmp/verify/<时间>/
+// 行为的检查在 tests/e2e（pnpm test:e2e）；这里只看真实资料的外观、横向捲动与 console error
 // 用法：node .claude/skills/verify/scripts/shots.mjs [baseURL]
 import { mkdirSync } from 'node:fs'
 import { chromium } from 'playwright'
@@ -33,9 +34,13 @@ async function shot(page, name, fullPage = false) {
     await page.screenshot({ path: `${out}/${name}.png`, fullPage })
 }
 
-function visible(page) {
-    return page.locator('.quote:not([hidden])').count()
-}
+const probe = await open('probe', 1440, 900)
+const firstTag = await probe
+    .locator('.index a[data-filter-tag]')
+    .nth(1)
+    .getAttribute('data-filter-tag')
+const firstWord = (await probe.locator('.content').first().textContent()).trim().slice(0, 3)
+await probe.close()
 
 // 画面大小
 for (const [name, w, h] of [
@@ -49,75 +54,16 @@ for (const [name, w, h] of [
     await page.close()
 }
 
-// 行为
-const page = await open('behavior', 1440, 900)
-const total = await page.locator('.quote').count()
-check('载入：所有名句都显示', (await visible(page)) === total, `${total} 句`)
-check('载入：头条只有一句', (await page.locator('.lead .quote').count()) === 1)
-check('索引：没有出处清单', (await page.locator('.index [data-filter-source]').count()) === 0)
-
-await page.locator('.index a[data-filter-tag]').nth(1).click()
-const tag = await page
-    .locator('.index a[data-filter-tag][aria-current]')
-    .getAttribute('data-filter-tag')
-const tagged = await visible(page)
-check('标签筛选：网址带 tag', new URL(page.url()).searchParams.get('tag') === tag, page.url())
-check('标签筛选：只剩有这个标签的句子', tagged > 0 && tagged < total, `${tagged} 句`)
-await shot(page, 'filter-tag')
-
-const sourceLink = page.locator('.quote:not([hidden]) a[data-filter-source]').first()
-const sourceTitle = (await sourceLink.textContent()).trim()
-await sourceLink.click()
-const combo = await visible(page)
-check('出处 + 标签：结果不多于只筛标签', combo > 0 && combo <= tagged, `${combo} 句`)
-check('出处 + 标签：网址两个都有', /source=.*tag=|tag=.*source=/.test(page.url()), page.url())
-check(
-    '出处 + 标签：状态列写出出处名称',
-    (await page.locator('.status-text').textContent()).includes(`出处：${sourceTitle}`),
-    await page.locator('.status-text').textContent(),
-)
-
-await page.goBack()
-check('上一页：回到只筛标签', (await visible(page)) === tagged)
-
-await page.locator('.status .clear').click()
-check('清除筛选：全部回来', (await visible(page)) === total)
-
-// 说话人是选填的：资料里有就搜说话人，没有就搜第一句内容的前几个字
-const hasSpeaker = (await page.locator('.speaker').count()) > 0
-const word = hasSpeaker
-    ? (await page.locator('.speaker').first().textContent()).trim()
-    : (await page.locator('.content').first().textContent()).trim().slice(0, 3)
-await page.fill('#q', word)
-const hits = await visible(page)
-check(`搜索${hasSpeaker ? '说话人' : '内容'}：有结果`, hits > 0, `「${word}」${hits} 句`)
-check('搜索：命中的字有标记', (await page.locator('.quote:not([hidden]) mark').count()) >= hits)
-check('搜索：网址带 q', new URL(page.url()).searchParams.get('q') === word)
-await shot(page, 'search')
-
-const title = sourceTitle.replace(/[《》]/g, '')
-await page.fill('#q', title)
-check('搜索出处：有结果', (await visible(page)) > 0, `「${title}」`)
-check(
-    '搜索出处：出处名称有标记',
-    (await page.locator('.quote:not([hidden]) .source-link mark').count()) > 0,
-)
-
-await page.fill('#q', 'zzzz-no-match')
-check('没有结果：显示空状态', await page.locator('.empty').isVisible())
-await shot(page, 'empty')
-await page.close()
-
-// 分享的网址直接打开
-const shared = await open('shared-url', 390, 844, `?tag=${encodeURIComponent(tag)}`)
-check('打开带筛选的网址：直接套用', (await visible(shared)) === tagged)
-check('手机：有标签筛选时展开', await shared.locator('.index-panel').evaluate((d) => d.open))
-await shot(shared, 'mobile-shared-url')
-await shared.close()
-
-const phone = await open('mobile-default', 390, 844)
-check('手机：没筛选时收起', !(await phone.locator('.index-panel').evaluate((d) => d.open)))
-await phone.close()
+// 筛选、搜索、空状态各截一张（行为对不对由 tests/e2e 负责）
+for (const [name, path] of [
+    ['filter-tag', `?tag=${encodeURIComponent(firstTag)}`],
+    ['search', `?q=${encodeURIComponent(firstWord)}`],
+    ['empty', `?q=${encodeURIComponent('没有这句话')}`],
+]) {
+    const page = await open(name, 1440, 900, path)
+    await shot(page, name)
+    await page.close()
+}
 
 check('没有 console error / page error', errors.length === 0, errors.join(' | '))
 await browser.close()

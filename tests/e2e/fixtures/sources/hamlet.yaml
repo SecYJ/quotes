@@ -1,0 +1,13 @@
+type: drama
+title: 哈姆雷特
+quotes:
+    - content: 生存还是毁灭，这是一个值得考虑的问题
+      speaker: 哈姆雷特
+      detail: 第三幕第一场
+      note: 每次犹豫的时候都会想起这句
+      tags: [人生, 爱情]
+      added: 2026-09-01
+    - content: 脆弱啊，你的名字是女人
+      speaker: 哈姆雷特
+      tags: [爱情]
+      added: 2026-08-01

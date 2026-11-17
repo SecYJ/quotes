@@ -12,7 +12,8 @@
 | `pnpm lint` / `pnpm lint:fix` | oxlint（含 `func-style` 与 eslint-plugin-zod 规则） |
 | `pnpm fmt` / `pnpm fmt:check` | oxfmt 格式化 / 只检查 |
 | `pnpm knip` | 找没用到的档案、export 与套件 |
-| `node .claude/skills/verify/scripts/shots.mjs` | 用 Playwright 截图各种画面大小与筛选状态（需要先 `pnpm build && pnpm preview`），见 docs/verification.md |
+| `pnpm test:e2e` | Playwright E2E 测试：用测试资料 build 到 `dist-e2e/` 并启动（port 4391），跑 `tests/e2e/`；报告在 `tmp/e2e/report/` |
+| `node .claude/skills/verify/scripts/shots.mjs` | 用真实资料截图各种画面大小与筛选状态（需要先 `pnpm build && pnpm preview`），见 docs/verification.md |
 
 ## 新增一句名句
 
