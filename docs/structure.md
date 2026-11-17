@@ -23,6 +23,7 @@ knip.json              knip 设定（verify 脚本当 entry）
 PRODUCT.md             Impeccable 用的产品描述
 .impeccable/           Impeccable 的 surface brief 与 design.json（mocks/、review/ 是本机草稿，已 gitignore）
 .claude/skills/verify  用 Playwright 驱动网站、留下截图的 verify skill
+.claude/skills/<其余>  Emil Kowalski 的设计工程 skills（emilkowalski/skills，MIT）：改互动与动态时用 emil-design-eng 与 animate
 .scratch/              新 feature 的 spec 与 ticket
 tmp/                   verify 的截图与暂存（gitignore）
 ```
